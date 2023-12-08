@@ -1,0 +1,586 @@
+<%- include("../../partials/head") %>
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Successfully Completed Cases </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                View all Successfully Completed Cases
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card mb-4">
+                <div class="card-header">Successfully Completed cases</div>
+                <div class="card-body">
+                    <div class="datatable table-responsive">
+                        <table border="0" cellspacing="5" cellpadding="5">
+                            <tbody>
+                                <tr>
+                                    <td>FROM:</td>
+                                    <td><input type="date" id="min" name="min"></td>
+                                </tr>
+                                <tr>
+                                    <td>TO:</td>
+                                    <td><input type="date" id="max" name="max"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <% if (permissions.includes('download_successful_excel')) { %>
+                        <button type="button" id="excel" name="excel" value="" class="btn btn-secondary">excel</button>
+                        <%}  %>
+
+                        <table class="table table-bordered table-hover text-nowrap table-condensed"
+                            id="contestCategoryTable" width="100%" cellspacing="0">
+
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>File NO</th>
+                                    <th>Bar code</th>
+                                    <th>Applicant Name</th>
+                                    <th>Applicant Type</th>
+                                    <th>Address type</th>
+                                    <th>Office name</th>
+                                    <th>Address</th>
+                                    <th>Pincode</th>
+                                    <th>Branch</th>
+                                    <th>Area</th>
+                                    <th>Mobile no</th>
+                                    <th>Bank</th>
+                                    <th>Product</th>
+
+                                    <th>Case Upload</th>
+                                    <th>Case Upload time</th>
+                                    <th>Manager</th>
+                                    <th>Manager Assigned Date</th>
+                                    <th>Manager Assigned Time</th>
+                                    <th>Manager submit date</th>
+                                    <th>Manager submit time</th>
+
+                                    <th>senior supervisor </th>
+                                    <th>senior supervisor Assigned date </th>
+                                    <th>senior supervisor Assigned Time </th>
+                                    <th>senior supervisor submit Date</th>
+                                    <th>senior supervisor submit Time</th>
+
+                                    <th>supervisor</th>
+                                    <th>supervisor Assigned Date</th>
+                                    <th>supervisor Assigned Time</th>
+
+                                    <th>supervisor submit Date</th>
+                                    <th>supervisor submit Time</th>
+
+                                    <th>admin</th>
+                                    <th>admin submit Date</th>
+                                    <th>admin submit Time</th>
+
+                                    <th>Field executive</th>
+                                    <th>Field executive Assigned Date</th>
+                                    <th>Field executive Assigned Time</th>
+
+                                    <th>Field executive Accept Date</th>
+                                    <th>Field executive Accept Time</th>
+
+                                    <th>Field executive Submit Date</th>
+                                    <th>Field executive Submit Time</th>
+
+                                    <th>km</th>
+                                    <th>status</th>
+                                    <th>Negative Or Refer</th>
+                                    <th>remarks</th>
+                                    <th>tat</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot style="display:table-header-group" id="mine2">
+                                <tr>
+                                    <th></th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>File NO</th>
+                                    <th>Bar code</th>
+                                    <th>Applicant Name</th>
+                                    <th>Applicant Type</th>
+                                    <th>Address type</th>
+                                    <th>Office name</th>
+                                    <th>Address</th>
+                                    <th>Pincode</th>
+                                    <th>Branch</th>
+                                    <th>Area</th>
+                                    <th>Mobile no</th>
+                                    <th>Bank</th>
+                                    <th>Product</th>
+
+                                    <th>Case Upload</th>
+                                    <th>Case Upload time</th>
+                                    <th>Manager</th>
+                                    <th>Manager Assigned Date</th>
+                                    <th>Manager Assigned Time</th>
+                                    <th>Manager submit date</th>
+                                    <th>Manager submit time</th>
+
+                                    <th>senior supervisor </th>
+                                    <th>senior supervisor Assigned date </th>
+                                    <th>senior supervisor Assigned date </th>
+                                    <th>senior supervisor submit Date</th>
+                                    <th>senior supervisor submit Time</th>
+
+                                    <th>supervisor</th>
+                                    <th>supervisor Assigned Date</th>
+                                    <th>supervisor Assigned Time</th>
+
+                                    <th>supervisor submit Date</th>
+                                    <th>supervisor submit Time</th>
+
+                                    <th>admin</th>
+                                    <th>admin submit Date</th>
+                                    <th>admin submit Time</th>
+
+                                    <th>Field executive</th>
+                                    <th>Field executive Assigned Date</th>
+                                    <th>Field executive Assigned Time</th>
+
+                                    <th>Field executive Accept Date</th>
+                                    <th>Field executive Accept Time</th>
+
+                                    <th>Field executive Submit Date</th>
+                                    <th>Field executive Submit Time</th>
+
+                                    <th>km</th>
+                                    <th>status</th>
+                                    <th>Negative Or Refer</th>
+                                    <th>remarks</th>
+                                    <th>tat</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+
+                            <tfoot id="mine1">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>File NO</th>
+                                    <th>Bar code</th>
+                                    <th>Applicant Name</th>
+                                    <th>Applicant Type</th>
+                                    <th>Address type</th>
+                                    <th>Office name</th>
+                                    <th>Address</th>
+                                    <th>Pincode</th>
+                                    <th>Branch</th>
+                                    <th>Area</th>
+                                    <th>Mobile no</th>
+                                    <th>Bank</th>
+                                    <th>Product</th>
+                                    <th>Case Upload</th>
+                                    <th>Case Upload time</th>
+
+                                    <% if (role=="admin" ) { %>
+                                    <th>Manager</th>
+                                    <th>Manager Assigned Date</th>
+                                    <th>Manager Assigned Time</th>
+                                    <th>Manager submit date</th>
+                                    <th>Manager submit time</th>
+                                    <%} %>
+
+                                    <% if (role=="manager" ||role=="admin" ) { %>
+                                    <th>senior supervisor </th>
+                                    <th>senior supervisor Assigned date </th>
+                                    <th>senior supervisor Assigned time </th>
+                                    <th>senior supervisor submit Date</th>
+                                    <th>senior supervisor submit Time</th>
+                                    <th>supervisor</th>
+                                    <th>supervisor Assigned Date</th>
+                                    <th>supervisor Assigned Time</th>
+                                    <th>supervisor submit Date</th>
+                                    <th>supervisor submit Time</th>
+
+                                    <%} %>
+
+                                    <% if (role=="senior-supervisor" ) { %>
+                                    <th>supervisor</th>
+                                    <th>supervisor Assigned Date</th>
+                                    <th>supervisor Assigned Time</th>
+                                    <th>supervisor submit Date</th>
+                                    <th>supervisor submit Time</th>
+
+                                    <%} %>
+
+
+                                    <th>admin</th>
+                                    <th>admin submit Date</th>
+                                    <th>admin submit Time</th>
+
+                                    <th>Field executive</th>
+                                    <th>Field executive Assigned Date</th>
+                                    <th>Field executive Assigned Time</th>
+
+                                    <th>Field executive Accept Date</th>
+                                    <th>Field executive Accept Time</th>
+
+                                    <th>Field executive Submit Date</th>
+                                    <th>Field executive Submit Time</th>
+
+                                    <th>km</th>
+                                    <th>status</th>
+                                    <th>Negative Or Refer</th>
+                                    <th>remarks</th>
+                                    <th>tat</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <span class="float-right"></span>
+                    </div>
+                </div>
+            </div>
+            <%- include("../../partials/footer") %>
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    var permissions = "<%=permissions%>".trim().split(",");
+    var minDate, maxDate;
+    $(document).ready(function () {
+        $('#contestCategoryTable #mine2 th').each(function () {
+            var title = $(this).text();
+            if (title != "") {
+                $(this).html('<input style=width:8em  type="text"  />');
+            }
+            if (title == "Action") {
+                $(this).html('');
+            }
+            if (title == "remarks") {
+                $(this).html('');
+            }
+        });
+        $.fn.dataTable.ext.errMode = "none";
+        var table = $("#contestCategoryTable").DataTable({
+            "bLengthChange": false,
+            orderCellsTop: true,
+            fixedHeader: true,
+            paging: true,
+            processing: true,
+            serverSide: true,
+            searching: true,
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+                        $('input', this.footer()).keypress(function (e) {
+                            if (e.keyCode == 13) {
+                                e.preventDefault()
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            }
+                        });
+                    });
+            },
+            language: {
+                zeroRecords: "No records to display",
+            },
+            ajax: {
+                url: `/case/successFullyCompletedCaseDataTable`,
+                cache: false,
+                type: "post",
+                datatype: "json",
+                data: function (data) {
+                    var startDate = $('#min').val();
+                    var endDate = $('#max').val();
+                    data.startDate = startDate;
+                    data.endDate = endDate;
+                    if (permissions.includes('download_successful_excel')) {
+                        data.excel = $("#excel").val()
+                    }
+
+                },
+                "dataSrc": function (json) {
+                    $("#preloader_admin").hide();
+                    if (json == "SUCCESS") {
+                        // window.location.href = "/succEx/newFile.xlsx"
+                        var file_path = '/succEx/newFile.xlsx';
+                        var a = document.createElement('A');
+                        a.href = file_path;
+                        a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    } else if (json == "FAILED") {
+                        alert("Some error occured while downloading excel")
+                    } else if (json == "limit") {
+                        alert("downloading cases are more than 2500,kindly reduce the date gap")
+                    } else if (json == "noData") {
+                        alert("no data found for selected filters")
+                    }
+                    $("#excel").val("")
+                    if (json.data) {
+                        return json.data
+                    } else {
+                        $("#preloader_admin").show();
+                        table.draw()
+                    }
+                }
+            },
+            columns: [{
+                    data: "count",
+                },
+                {
+                    data: "date",
+                },
+                {
+                    data: "time",
+                },
+                {
+                    data: "fileNo",
+                },
+                {
+                    data: "barCode",
+                },
+                {
+                    data: "applicantName",
+                },
+                {
+                    data: "applicantType",
+                },
+                {
+                    data: "addressType",
+                },
+                {
+                    data: "officeName",
+                },
+                {
+                    data: "address",
+                },
+                {
+                    data: "pinCode",
+                },
+                {
+                    data: "branch",
+                },
+                {
+                    data: "area",
+                },
+                {
+                    data: "mobileNo",
+                },
+                {
+                    data: "bank",
+                },
+                {
+                    data: "product",
+                },
+                {
+                    data: "caseUploaded"
+                },
+                {
+                    data: "caseUploadTime"
+                },
+
+                {
+                    data: "Manager"
+                },
+                {
+                    data: "ManagerAssignedDate"
+                },
+                {
+                    data: "ManagerAssignedTime"
+                },
+                {
+                    data: "ManagerSubmitDate"
+                },
+                {
+                    data: "ManagerSubmitTime"
+                },
+                {
+                    data: "seniorSupervisor"
+                },
+                {
+                    data: "seniorSupervisorAssignedDate"
+                },
+                {
+                    data: "seniorSupervisorAssignedTime"
+                },
+                {
+                    data: "seniorSupervisorSubmitDate"
+                },
+                {
+                    data: "seniorSupervisorSubmitTime"
+                },
+                {
+                    data: "supervisor"
+                },
+                {
+                    data: "supervisorAssignedDate"
+                },
+                {
+                    data: "supervisorAssignedTime"
+                },
+                {
+                    data: "supervisorSubmitDate"
+                },
+                {
+                    data: "supervisorSubmitTime"
+                },
+                {
+                    data: "admin"
+                },
+                {
+                    data: "adminSubmitDate"
+                },
+                {
+                    data: "adminSubmitTime"
+                },
+                {
+                    data: "fieldExecutive",
+                },
+                {
+                    data: "fieldExecutiveAssignedDate",
+                },
+                {
+                    data: "fieldExecutiveAssignedTime",
+                },
+                {
+                    data: "fieldExecutiveAcceptedDate",
+                },
+                {
+                    data: "fieldExecutiveAcceptedTime",
+                },
+                {
+                    data: "fieldExecutiveSubmitDate",
+                },
+                {
+                    data: "fieldExecutiveSubmitTime",
+                },
+                {
+                    data: "km",
+                },
+                {
+                    data: "status",
+                },
+                {
+                    data: "negativeOrRefer",
+                },
+                {
+                    data: "remarks",
+                },
+                {
+                    data: "tat",
+                },
+                {
+                    data: "action",
+                },
+            ],
+            columnDefs: [{
+                render: function (data, type, full, meta) {
+                    return "<div class='text-wrap width-200'>" + data + "</div>";
+                },
+                targets: 46
+            }]
+        });
+        $('#min, #max').on('change', function () {
+            table.draw();
+        });
+        $("#excel").click(function () {
+            if ($("#min").val() && $("#max").val()) {
+                // date1 = moment($("#min").val()).format('YYYY/MM/DD')
+                // date2 = moment($("#max").val()).add(1, 'days').format('YYYY/MM/DD');
+                // let dateDiff = moment(date2).diff(moment(date1), 'days')
+                // if (dateDiff <= 10) {
+                // alert("downloading excel for the selected date range")
+                $("#excel").val("excel")
+                $("#preloader_admin").show();
+                table.draw();
+                // } else {
+                //     alert("Date must be in between 10 days")
+                // }
+            }
+
+            if (!$("#min").val() && !$("#max").val()) {
+                alert("downloading excel for last 10 days")
+                $("#excel").val("excel")
+                $("#preloader_admin").show();
+                table.draw();
+            }
+            if ($("#min").val() && !$("#max").val()) {
+                alert("downloading excel for selected day")
+                $("#excel").val("excel")
+                $("#preloader_admin").show();
+                table.draw();
+            }
+
+        })
+
+        $("#contestCategoryTable_filter").css('display', 'none')
+    });
+</script>
+
+<script>
+    $(window).on("load", function () {
+        $("#preloader_admin").hide();
+    });
+    $(document).ready(function () {
+        var table = $("#contestCategoryTable").DataTable();
+        if ("<%=role%>" == "manager") {
+            table.column(18).visible(false);
+            table.column(19).visible(false);
+            table.column(20).visible(false);
+            table.column(21).visible(false);
+            table.column(22).visible(false);
+        }
+        if ("<%=role%>" == "senior-supervisor") {
+            table.column(18).visible(false);
+            table.column(19).visible(false);
+            table.column(20).visible(false);
+            table.column(21).visible(false);
+            table.column(22).visible(false);
+            table.column(23).visible(false);
+            table.column(24).visible(false);
+            table.column(25).visible(false);
+            table.column(26).visible(false);
+            table.column(27).visible(false);
+        }
+        if ("<%=role%>" == "supervisor") {
+            table.column(18).visible(false);
+            table.column(19).visible(false);
+            table.column(20).visible(false);
+            table.column(21).visible(false);
+            table.column(22).visible(false);
+            table.column(23).visible(false);
+            table.column(24).visible(false);
+            table.column(25).visible(false);
+            table.column(26).visible(false);
+            table.column(27).visible(false);
+            table.column(28).visible(false);
+            table.column(29).visible(false);
+            table.column(30).visible(false);
+            table.column(31).visible(false);
+            table.column(32).visible(false);
+        }
+
+    });
+</script>

@@ -1,0 +1,207 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class="text-capitalize">
+                                    Invoice-From Template
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Add Invoice-From Template
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/invoice/invoiceFromList"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View all Managers"><i class="fa fa-eye"></i>&nbsp;
+                            View Invoice-From Lists</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header"> Add Invoice-From Template</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+                            <form method="POST" action="/invoice/submitAddInvoiceFrom" accept-charset="UTF-8"
+                                id="j-forms" class="j-forms row mx-0">
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="invoiceTemplateName">Invoice Template
+                                        Name<span>*</span></label>
+                                    <input name="templateName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Template name" required id="templateName">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="companyName">Company
+                                        Name<span>*</span></label>
+                                    <input name="companyName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Company Name" required id="companyName">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="address">Address<span>*</span></label>
+                                    <input name="address" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Address" required id="address">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="pan">PAN<span>*</span></label>
+                                    <input name="pan" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter PAN" required id="pan">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="gstNumber">GST
+                                        Number<span>*</span></label>
+                                    <input name="gstNumber" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter GST Number" required id="gstNumber">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="gstRegistrationState">GST Registration
+                                        State<span>*</span></label>
+                                    <input name="gstRegistrationState" class="form-control form-control-solid"
+                                        type="text" placeholder="Please enter GST Registration State" required
+                                        id="gstRegistrationState">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="reverseCharge">Reverse
+                                        Charge<span>*</span></label>
+                                    <input name="reverseCharge" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Reverse Charge" required id="reverseCharge">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="serviceCategory">Service
+                                        Category<span>*</span></label>
+                                    <input name="serviceCategory" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Service Category" required id="serviceCategory">
+                                </div>
+
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="iboxId">Ibox ID<span>*</span></label>
+                                    <input name="iboxId" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Ibox ID" required id="iboxId">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="regdNo">Registration
+                                        Number<span>*</span></label>
+                                    <input name="regdNo" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Registration Number" required id="regdNo">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="cin">CIN<span>*</span></label>
+                                    <input name="cin" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter CIN" required id="cin">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="email">Email<span>*</span></label>
+                                    <input name="email" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Email" required id="email">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="agencyCode">Agency
+                                        Code<span>*</span></label>
+                                    <input name="agencyCode" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Agency Code" required id="agencyCode">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="ifscNumber">IFSC
+                                        Number<span>*</span></label>
+                                    <input name="ifscNumber" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter IFSC Number" required id="ifscNumber">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="state">State<span>*</span></label>
+                                    <input name="state" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter State" required id="state">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="stateCode">State
+                                        Code<span>*</span></label>
+                                    <input name="stateCode" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter State Code" required id="stateCode">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="branch">Branch<span>*</span></label>
+                                    <input name="branch" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Branch" required id="branch">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="accountNo">Account
+                                        No<span>*</span></label>
+                                    <input name="accountNo" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Account No" required id="accountNo">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="hsnSac">Hsn/Sac code</label>
+                                    <input name="hsnSac" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Account No" required id="hsnSac">
+                                </div>
+                                <div class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include("../../partials/footer") %>
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        });
+
+
+        // Wait for the DOM to be ready
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to handle form field changes
+            function handleFormFieldChange() {
+                // Get the form element
+                var form = document.getElementById('j-forms');
+
+                // Attach a change event listener to form fields
+                form.addEventListener('change', function (event) {
+                    // Get the changed input element
+                    var changedInput = event.target;
+
+                    // Store the value in the session using sessionStorage
+                    sessionStorage.setItem(changedInput.name, changedInput.value);
+                });
+            }
+
+            // Function to fill form fields from session storage
+            function fillFormFieldsFromSession() {
+                // Get the form element
+                var form = document.getElementById('j-forms');
+
+                // Loop through each form field
+                form.querySelectorAll('input, select, textarea').forEach(function (element) {
+                    // Get the stored value from session storage
+                    var storedValue = sessionStorage.getItem(element.name);
+
+                    // If a value is stored, set it as the field's value
+                    if (storedValue !== null) {
+                        element.value = storedValue;
+                    }
+                });
+            }
+
+            // Call the functions to handle form field changes and fill form fields
+            handleFormFieldChange();
+            fillFormFieldsFromSession();
+        });
+    </script>
+</div>

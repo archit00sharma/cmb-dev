@@ -1,0 +1,95 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class="text-capitalize">
+                                    Bank Details Template
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Edit Bank Details Template
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/invoice/bankDetailsList"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View all Managers"><i class="fa fa-eye"></i>&nbsp;
+                            View Bank Details Lists</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header"> Edit Bank Details Template</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+                            <form method="POST" action="/invoice/submitAddBankDetails" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="bankDetailsName">Bank Details Name<span>*</span></label>
+                                    <input name="templateName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Template Name" required id="templateName">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="bankName">Bank Name<span>*</span></label>
+                                    <input name="bankName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Bank Name" required id="bankName">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="branch">Branch<span>*</span></label>
+                                    <input name="branch" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Branch" required id="branch">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="accountNo">Account Number<span>*</span></label>
+                                    <input name="accountNo" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Account Number" required id="accountNo">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="rtgsCode">RTGS Code<span>*</span></label>
+                                    <input name="rtgsCode" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter RTGS Code" required id="rtgsCode">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="ifscCode">IFSC Code<span>*</span></label>
+                                    <input name="ifscCode" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter IFSC Code" required id="ifscCode">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="accountHolderName">Account Holder Name<span>*</span></label>
+                                    <input name="accountHolderName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Account Holder Name" required id="accountHolderName">
+                                </div>
+                                <!-- ...rest of your form... -->
+                                <div class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;Update
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include("../../partials/footer") %>
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        })
+    </script>
+</div>

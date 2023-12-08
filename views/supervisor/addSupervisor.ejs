@@ -1,0 +1,407 @@
+<%- include("../partials/head") %>
+
+<%- include("../partials/bodyStartWithNavBar") %>
+<%- include("../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Supervisor
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Add Supervisor
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/supervisor/viewSupervisor"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View All Supervisor"><i class="fa fa-eye"></i>&nbsp;
+                            View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+
+            <script>
+                $(window).on("load", function () {
+
+                    var success = '';
+                    var danger = '';
+                    var error = '';
+                    var warning = '';
+
+                    if (success) {
+                        $("#toastBasic4").toast('show');
+                    }
+
+                    if (danger || error) {
+                        $("#toastBasic3").toast('show');
+                    }
+
+                    if (warning) {
+                        $("#toastBasic2").toast('show');
+                    }
+                });
+            </script>
+
+            <div class="card">
+                <div class="card-header">Add Supervisor</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+
+                            <form method="POST" action="/supervisor/addSupervisorData" accept-charset="UTF-8"
+                                id="j-forms" class="j-forms row mx-0">
+
+
+                                <div style="display:none;" class="form-group col-md-6 col-12">
+                                    <input name="addMember" class="form-control form-control-solid" type="text"
+                                        id="addMember" value="supervisor">
+                                </div>
+
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="first-name">Name<span>*</span></label>
+                                    <input name="name" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter name" required id="first-name">
+                                </div>
+
+
+
+
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="email">Email<span class>*</span></label>
+                                    <input name="email" class="form-control form-control-solid" type="email"
+                                        placeholder="Please enter email" required id="email">
+                                </div>
+
+                                <% if (role=="admin" ) { %>
+                                <div id="supervisorFields" class="form-icon-wrap">
+                                    <div id="inSupervisorFields" class="form-wrapper">
+                                        <div id="addarea" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="area">Area<span></span></label>
+                                            <select multiple id="area0" required
+                                                class=" chosen-select form-control form-control-solid" name="area[0][]">
+                                                
+                                                <% for (let i=0; i <area.length; i++ ) { %>
+                                                <option id="<%=area[i].area%>" value="<%=area[i].area%>">
+                                                    <%=area[i].area%>
+                                                </option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+
+                                        <div id="addProduct" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold"
+                                                for="product[]">Product<span></span></label>
+
+                                            <select multiple id="product0" required
+                                                data-placeholder="Begin typing a name to filter..."
+                                                class="chosen-select form-control form-control-solid"
+                                                name="product[0][]">
+                                                
+                                                <% for (let i=0; i <product.length; i++ ) { %>
+                                                <option id="<%=product[i]._id%>" value="<%=product[i].product%>">
+                                                    <%=product[i].product%>
+                                                </option>
+                                                <% } %>
+                                            </select>
+
+                                        </div>
+
+                                        <div id="addBank" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="bank">Bank<span></span></label>
+                                            <select multiple id="bank0" required
+                                                data-placeholder="Begin typing a name to filter..."
+                                                class="chosen-select form-control form-control-solid" name="bank[0][]">
+                                               
+                                                <% for (let i=0; i <bank.length; i++ ) { %>
+                                                <option value="<%=bank[i].bank%>">
+                                                    <%=bank[i].bank%>
+                                                </option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div id="plus" class="icon">
+                                        <div class="icon-wrap">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <%} %>
+
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="password">Password<span
+                                            class>*</span></label>
+                                    <input name="password" class="form-control form-control-solid" type="password"
+                                        minlength="5" placeholder="Please enter password" required id="password">
+                                </div>
+
+
+                                <div class="form-group col-12 mt-2">
+                                    <label class="control-label text-2x" for="first-name">Permissions<span
+                                            class="required"></span></label>
+                                    <div class="row">
+
+                                        <!-- Music Category Manger -->
+                                        <div class="col-lg-4 col-md-6 col-12 my-2">
+                                            <div class="row shadow bg-white rounded-10 py-3 px-2 mx-0 h-100">
+                                                <div class="form-group col-md-12 mb-0">
+                                                    <label class="control-label text-primary"><i
+                                                            class="fad fa-shield-alt"></i>
+                                                        Supervisor
+                                                        Permisions
+                                                    </label>
+
+                                                    <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            name="selectall" id="selectallmusiccategorymanager">
+
+                                                        <label
+                                                            class="custom-control-label fs-14 text-uppercase font-weight-900"
+                                                            for="selectallmusiccategorymanager">Select
+                                                            all
+                                                            Permissions</label>
+                                                        <script>
+                                                            $(document).ready(function () {
+                                                                $("#selectallmusiccategorymanager").click(
+                                                                    function () {
+                                                                        if (this.checked) {
+                                                                            $('.selectallmusiccategorymanager')
+                                                                                .each(
+                                                                                    function () {
+                                                                                        $(".selectallmusiccategorymanager")
+                                                                                            .prop('checked',
+                                                                                                true);
+                                                                                    })
+                                                                        } else {
+                                                                            $('.selectallmusiccategorymanager')
+                                                                                .each(
+                                                                                    function () {
+                                                                                        $(".selectallmusiccategorymanager")
+                                                                                            .prop('checked',
+                                                                                                false);
+                                                                                    })
+                                                                        }
+                                                                    });
+                                                            });
+                                                        </script>
+                                                    </div>
+
+
+
+
+
+                                                    <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-view_contest_category"
+                                                            value="field-executive" name="permissions[]">
+
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-view_contest_category">Add
+                                                            Field-Executive</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-download_review_excel"
+                                                            value="download_review_excel" name="permissions[]">
+
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-download_review_excel">Download
+                                                            Review Excel</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-download_successful_excel"
+                                                            value="download_successful_excel" name="permissions[]">
+
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-download_successful_excel">Download
+                                                            Successful Excel</label>
+                                                    </div>
+
+
+                                                    <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-download_pending_excel"
+                                                            value="download_pending_excel" name="permissions[]">
+
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-download_pending_excel">Download
+                                                            Pending Excel</label>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Music Category Manger -->
+
+                                    </div>
+                                </div>
+                                <div class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../partials/footer") %>
+
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        })
+    </script>
+
+    <script>
+        $('#special').on('click', function () {
+            mySelect.find('option:selected').prop('disabled', true);
+            mySelect.selectpicker('refresh');
+        });
+
+        $('#special2').on('click', function () {
+            mySelect.find('option:disabled').prop('disabled', false);
+            mySelect.selectpicker('refresh');
+        });
+
+        $('#basic2').selectpicker({
+            liveSearch: true,
+            maxOptions: 1
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('#accordionSidenavPages a').hasClass('active')) {
+                $('#accordionSidenavPages a.active').parent().parent().prev('a').removeClass('collapsed');
+                $('#accordionSidenavPages a.active').parent().parent().addClass('show');
+             
+            } else {
+                $('#takeonebar').addClass('slamdown');
+            }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#select_all').on('click', function () {
+                if (this.checked) {
+                    $('.checkbox').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.checkbox').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+            $('.checkbox').on('click', function () {
+                if ($('.checkbox:checked').length == $('.checkbox').length) {
+                    $('#select_all').prop('checked', true);
+                } else {
+                    $('#select_all').prop('checked', false);
+                }
+            });
+        });
+    </script>
+    <script>
+        let count = 1;
+        let managerImportantFields = []
+        $("#plus").click(function () {
+            $("#supervisorFields").append(`<div id="inSupervisorFields${count}" class="form-wrapper">
+                                                    <div id="addarea${count}" class="form-group form-info"
+                                                        style="position: relative">
+                                                        <select multiple required id="area${count}"
+                                                            class=" chosen-select form-control form-control-solid"
+                                                            name="area[${count}][]">
+                                                            
+                                                            <% for (let i=0; i <area.length; i++ ) { %>
+                                                                <option value="<%=area[i].area%>">
+                                                                    <%=area[i].area%>
+                                                                </option>
+                                                                <% } %>
+                                                        </select>
+                                                    </div>
+
+                                                    <div id="addProduct${count}" class="form-group form-info"
+                                                        style="position: relative">
+                                                        
+
+                                                        <select multiple required id="product${count}"
+                                                            data-placeholder="Begin typing a name to filter..."
+                                                            class="chosen-select form-control form-control-solid"
+                                                            name="product[${count}][]">
+                                                           
+                                                            <% for (let i=0; i <product.length; i++ ) { %>
+                                                                <option id="<%=product[i]._id%>"
+                                                                    value="<%=product[i].product%>">
+                                                                    <%=product[i].product%>
+                                                                </option>
+                                                                <% } %>
+                                                        </select>
+                                                    </div>
+                                                    <div id="addBank${count}" class="form-group form-info"
+                                                        style="position: relative">
+                                                        <select multiple required id="bank${count}" data-placeholder="Begin typing a name to filter..."
+                                                            class="chosen-select form-control form-control-solid"
+                                                            name="bank[${count}][]">
+                                                            
+                                                            <% for (let i=0; i <bank.length; i++ ) { %>
+                                                                <option value="<%=bank[i].bank%>">
+                                                                    <%=bank[i].bank%>
+                                                                </option>
+                                                                <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="${count}minus" class="icon icon2" onclick="deleteMinus(this.id)" >
+                                                        <div class="icon-wrap">
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </div>
+                                                </div>`)
+
+            count++
+
+        })
+
+        function deleteMinus(x) {
+            let y = parseInt(x)
+         
+            $(`#inSupervisorFields${y}`).remove()
+            $(`#${x}`).remove()
+            count--
+
+        }
+    </script>

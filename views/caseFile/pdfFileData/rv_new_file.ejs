@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Page Title</title>
+</head>
+
+<style>
+    .image-box {
+        display: flex;
+        /* To align image columns horizontally */
+        justify-content: center;
+        /* To distribute columns evenly */
+        margin-bottom: 10px;
+        /* Add some spacing between image boxes */
+
+    }
+
+    .column {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .image {
+        width: 350px;
+        height: 350px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<body style="font-family: Arial, Helvetica, sans-serif; text-align: center;">
+    <h1
+        style="padding: 20px 40px; font-weight: normal; text-align: center; border: 1px solid #000; border-radius: 20px; display: flex; flex-direction: column; align-items: center;">
+        <% if (caseData[0].agencyName == "MB_MANAGEMENT") { %>
+        MB MANAGEMENT
+        <% } %>
+        <% if (caseData[0].agencyName == "CMB_MANAGEMENT_SOLUTION_PVT_LTD") { %>
+        CMB MANAGEMENT SOLUTION PVT LTD
+        <img src="/Group3.png" width="80px"></img>
+        <% } %>
+        <% if (caseData[0].agencyName == "TIME_MANAGEMENT_SERVICES") { %>
+        TIME MANAGEMENT SERVICES
+        <% } %>
+    </h1>
+
+    <table border="1" cellpadding="10" cellspacing="0" width="100%"
+        style="text-align: left; font-family: 'Times New Roman', Times, serif;">
+        <tr>
+            <th width="20%">Applicant id</th>
+            <td width="40%" colspan="3"><%=caseData[0].fileNo%></td>
+            <th width="20%">Verification Type</th>
+            <td width="20%"><%=caseData[0].addressType%></td>
+        </tr>
+        <tr>
+            <th>FI Reference No </th>
+            <td colspan="5"><%=caseData[0].barCode%></td>
+        </tr>
+        <tr>
+            <th>Applicant’s Name </th>
+            <td colspan="3"><%=caseData[0].applicantName%></td>
+            <th>Applicant’s
+                Contact Number</th>
+            <td><%=caseData[0].mobileNo%></td>
+        </tr>
+        <tr>
+            <th>Residence Address</th>
+            <td colspan="5"><%=caseData[0].address%></td>
+        </tr>
+        <tr>
+            <th>Allocation Date & Time</th>
+            <td style="text-align: center;">
+                <%= (caseData[0].fieldExecutive?.assignedDate) ? (new Date(caseData[0].fieldExecutive.assignedDate)).toISOString().substring(0, 10) : '' %>
+                <br><%= (caseData[0].fieldExecutive?.assignedDate) ? (new Date(caseData[0].fieldExecutive.assignedDate)).toISOString().substr(11, 8) : '' %>
+            </td>
+            <th style="text-align: center;"><b>Visit Date & Time</b> </th>
+            <td style="text-align: center;"><%=caseData[0].dateVisit%><br> <%=caseData[0].timeVisit%></td>
+            <th>FOS Name </th>
+
+            <% if (caseData[0] && caseData[0].fieldExecutiveId && caseData[0].fieldExecutiveId[0] && caseData[0].fieldExecutiveId[0].fullName) { %>
+            <td><b><%= caseData[0].fieldExecutiveId[0].fullName %></b></td>
+            <% } else { %>
+            <td><b></b></td>
+            <% } %>
+
+        </tr>
+        <tr>
+            <th>Report Status </th>
+            <td colspan="3"><%=caseData[0].caseStatus%></td>
+            <th>Photo Count</th>
+            <td>&nbsp;<%=caseData[0].photoCount%></td>
+        </tr>
+        <tr>
+            <th>Negative Sub Status</th>
+            <td colspan="5" style="text-align: center;">
+                <%=(caseData[0].caseStatus==='NEGATIVE'||caseData[0].caseStatus==='REFER_TO_CREDIT')?caseData[0].caseStatusRemarks:""%>
+            </td>
+        </tr>
+        <tr>
+            <th>Address Confirmed</th>
+            <td colspan="3" style="text-align: center;"><%=caseData[0].addressConfirm%></td>
+            <th style="text-align: center;">Landmark</th>
+            <td style="text-align: center;"><%=caseData[0].landMark%></td>
+        </tr>
+    </table>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: left;">The following are based on
+        information
+        obtained from applicant/ Met Person</h3>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%"
+        style="text-align: left; font-family: 'Times New Roman', Times, serif;">
+        <tr>
+            <th width="20%">Name of Person Met</th>
+            <td width="40%" style="text-align: center;"><%=caseData[0].contactedPersonName%></td>
+            <th width="20%">Relationship with Applicant</th>
+            <td style="text-align: center;" width="20%">
+                <%=caseData[0].contactedPersonDesignation.replace('OTHER',"")%>
+                <%=caseData[0].contactedPersonDesignation==='OTHER'?caseData[0].contactedPersonDesignationRemarks:""%>
+            </td>
+        </tr>
+        <tr>
+            <th>No of Yrs in present Address</th>
+            <td style="text-align: center;"><%=caseData[0].workingFrom%></td>
+            <th>Ownership</th>
+            <td style="text-align: center;">
+                <%=caseData[0].premisesResidence.replace('OTHER','')%><%=caseData[0].premisesResidence==='OTHER'?caseData[0].premisesResidenceRemarks:""%>
+            </td>
+        </tr>
+    </table>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: left;">The following are based on
+        verifier’s
+        observation </h3>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%"
+        style="text-align: center; font-family: 'Times New Roman', Times, serif;">
+        <tr>
+            <th width="20%">Is Name Plate Seen</th>
+            <td width="40%"><%=caseData[0].businessBoard%> </td>
+            <th width="20%">If Mismatch/ Temporary, Pls Specif</th>
+            <td width="20%">&nbsp;
+                <%=(caseData[0].businessBoard==='MISMATCH'||caseData[0].businessBoard==='TEMPORARY')?caseData[0].businessBoardSpecify:""%>
+            </td>
+        </tr>
+        <tr>
+            <th>Type of Locality</th>
+            <td><%=caseData[0].locationOfResi%></td>
+            <th>Residence Type</th>
+            <td><%=caseData[0].typeOfResi%></td>
+        </tr>
+        <tr>
+            <th>Exterior Detail</th>
+            <td colspan="3"><%=caseData[0].resiExterior%></td>
+        </tr>
+
+
+        <tr>
+            <th>Entry and Inside Images Allowed</th>
+            <td><%=caseData[0].imageAllowed?.status%></td>
+            <th>If No, Please specify Reason </th>
+            <td>&nbsp;<%=caseData[0].imageAllowed?.reason%></td>
+        </tr>
+
+        <tr>
+            <th>Setup Details</th>
+            <td colspan="3"><%=caseData[0].resiInterior%></td>
+
+
+        </tr>
+        <tr>
+            <th>Does Applicant stay at this address</th>
+            <td><%=caseData[0].addressConfirmByFieldExecutive%></td>
+            <th>If Not same, Please specify reason</th>
+            <td><%=caseData[0].addressConfirmByFieldExecutiveRemarks%></td>
+
+        </tr>
+        <tr>
+            <th>Neighbor Name 1</th>
+            <td>&nbsp;<%=caseData[0].neighbourCheck1%></td>
+            <th>Address/Details</th>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <th>Neighbor Feedback 1</th>
+            <td><%=caseData[0].neighbourCheck1Remarks%></td>
+            <th>If Negative, Pls Specify/th>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <th>Neighbor Name 2</th>
+            <td>&nbsp;<%=caseData[0].neighbourCheck2%></td>
+            <th>Address/Details</th>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <th>Neighbor Feedback 2</th>
+            <td><%=caseData[0].neighbourCheck2Remarks%></td>
+            <th>If Negative, Pls Specify/th>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: left;">ESG Checklist</h3>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%"
+        style="text-align: center; font-family: 'Times New Roman', Times, serif;">
+        <tr>
+            <th width="20%" rowspan="7">Any other suspicious Activity Seen </th>
+            <th width="30%">Forced Labour/ Child Labour</th>
+            <td width="10%"><%=caseData[0]?.esg?.forcedLabourChildLabour?.status%></td>
+            <th width="10%" rowspan="7">If Yes, Please Specify</th>
+            <td width="20%">&nbsp;<%=caseData[0]?.esg?.forcedLabourChildLabour?.specify%></td>
+        </tr>
+        <tr>
+            <th>Political Connection (PEP)</th>
+            <td><%=caseData[0]?.esg?.politicalConnection?.status%></td>
+            <td>&nbsp;<%=caseData[0]?.esg?.politicalConnection?.specify%></td>
+        </tr>
+        <tr>
+            <th>Gambling</th>
+            <td><%=caseData[0]?.esg?.gambling?.status%></td>
+            <td>&nbsp;<%=caseData[0]?.esg?.gambling?.specify%></td>
+        </tr>
+        <tr>
+            <th>Tobacco Trading</th>
+            <td><%=caseData[0]?.esg?.tobaccoTrading?.status%></td>
+            <td>&nbsp;<%=caseData[0]?.esg?.tobaccoTrading?.specify%></td>
+        </tr>
+        <tr>
+            <th>Pornography</th>
+            <td><%=caseData[0]?.esg?.pornography?.status%></td>
+            <td>&nbsp;<%=caseData[0]?.esg?.pornography?.specify%></td>
+        </tr>
+        <tr>
+            <th>Arms & Ammunition</th>
+            <td><%=caseData[0]?.esg?.armsAmmunition?.status%></td>
+            <td>&nbsp;<%=caseData[0]?.esg?.armsAmmunition?.specify%></td>
+        </tr>
+        <tr>
+            <th>Others</th>
+            <td><%=caseData[0]?.esg?.other?.status%></td>
+            <td>&nbsp;<%=caseData[0]?.esg?.other?.specify%></td>
+        </tr>
+    </table>
+    <h3 style="font-family: 'Times New Roman', Times, serif; text-align: left;">Summary</h3>
+    <table border="1" cellpadding="10" cellspacing="0" width="100%"
+        style="text-align: left; font-family: 'Times New Roman', Times, serif;">
+        <tr>
+            <th width="30%">Verifier Name</th>
+            <td width="70%">&nbsp;<%=caseData[0]?.managerId[0]?.fullName%></td>
+        </tr>
+        <tr>
+            <th height="150px">Other Details/Summary</th>
+            <td height="150px">&nbsp;GIVEN ADDRESS CONFIRM <%=caseData[0].addressConfirm%>
+                <%if(caseData[0].applicantAge){%> APPLICANT AGE
+                <%=caseData[0].applicantAge%> <%}else{%>
+                APPLICANT AGE NA <%}%>
+                    <% if(caseData[0].contactedPersonName){%> PERSON MET
+                <%=caseData[0].contactedPersonName%>
+                <%=caseData[0].contactedPersonDesignation.replace(/[^a-zA-Z0-9 ]/g, "").replace("OTHER","")%>
+                <%=caseData[0].contactedPersonDesignationRemarks%> <%}else{%>
+                PERSON MET NA <%}%> <% if(caseData[0].premisesResidence){%>
+                RESIDENCE OWNERSHIP PREMISES
+                <%=caseData[0].premisesResidence.replace(/[^a-zA-Z0-9 ]/g, "").replace("OTHER","")%>
+                <%=caseData[0].premisesResidenceRemarks%> LOCATION OF RESIDENCE
+                <%=caseData[0].locationOfResi.replace(/[^a-zA-Z0-9 ]/g, "")%> TYPE OF
+                RESIDENCE <%=caseData[0].typeOfResi.replace(/[^a-zA-Z0-9 ]/g, "").replace("OTHER","")%>
+                <%=caseData[0].typeOfResiRemarks%> AREA
+                LOCALITY <%=caseData[0].areaLocality.replace(/[^a-zA-Z0-9 ]/g, "")%> <%}else{%> RESIDENCE OWNERSHIP
+                NA
+                <%}%>  <% if(caseData[0].workingFrom){%> NO OF YEAR STAY
+                <%=caseData[0].workingFrom.replace(/[^a-zA-Z0-9 ]/g, "")%> <%}else{%> NO OF YEAR STAY NA
+                <%}%> <% if(caseData[0].noOfFMember){%>
+                FAMILY MEMBER
+                <%=caseData[0].noOfFMember%> <%}else{%> FAMILY MEMBER NA <%}%> <% if(caseData[0].noEarningMember){%>
+                EARNING MEMBER
+                <%=caseData[0].noEarningMember%> <%}else{%> EARNING MEMBER NA
+                <%}%><% if(caseData[0].maritalStatus){%>
+                MARITIAL STATUS
+                <%=caseData[0].maritalStatus%> <%}else{%> maritalStatus NA
+                <%}%><% if(caseData[0].isSpouseWorking=="YES"){%> SPOUSE WORKING DETAIL WORKING
+                PLACE <%=caseData[0].spouseWorkingPlace%> WORKING
+                SINCE <%=caseData[0].spouseWorkingSince.replace(/[^a-zA-Z0-9 ]/g, "")%> SALARY
+                <%=caseData[0].spouseSalary%>
+                <%}else{%> SPOUSE WORKING DETAIL NA <%}%> <% if(caseData[0].vehicle){%> VEHICLE DETAIL
+                <%=caseData[0].vehicle%> <%=caseData[0].vehicleRemarks%> <%}else{%> VEHICLE DETAIL NA
+                <%}%> <% if(caseData[0].houseArea){%> OBSERVATION DETAIL HOUSE AREA <%=caseData[0].houseArea%>
+                INTERIOR
+                CONDITION <%=caseData[0].resiInterior.replace(/[^a-zA-Z0-9 ]/g, "")%> EXTERIOR CONDITION
+                <%=caseData[0].resiExterior.replace(/[^a-zA-Z0-9 ]/g, "")%> HOUSE
+                CONDITION <%=caseData[0].houseCondition%>
+                <%}else{%> OBSERVATION DETAIL NA <%}%><% if(caseData[0].remarks){%> AGRI
+                DETAIL <%=caseData[0].remarks%> <%}else{%> AGRI DETAIL NA <%}%> <%
+                                                                   if(caseData[0].neighbourCheck1){%>
+                NEIGHBOUR
+                CHECK NAME1
+                <%=caseData[0].neighbourCheck1%>
+                <%=caseData[0].neighbourCheck1Remarks%>
+
+                NAME2
+                <%=caseData[0].neighbourCheck2%>
+                <%=caseData[0].neighbourCheck2Remarks%>
+
+
+                <%}else{%>
+                NEIGHBOUR
+                CHECK
+                NA
+                <%}%>
+                                                                               
+          
+                                                                               <%
+                                                                                 if(caseData[0].distance){%>
+                DISTANCE
+                FROM
+                BRANCH
+
+                <%=caseData[0].distance%>
+
+                <%}else{%>
+                DISTANCE
+                FROM
+                BRANCH
+                NA
+                <%}%>
+          
+                                                                                       
+                                                                                       <%
+                                                                                         if(caseData[0].caseStatus){%>
+                STATUS
+                <%=caseData[0].caseStatus.replace(/[^a-zA-Z0-9 ]/g, "")%> <%=caseData[0].caseStatusRemarks%>
+                <%}else{%>
+                STATUS
+                NA
+                <%}%>
+          
+                                                                                               
+                                                                                               <%
+                                                                                                 if(caseData[0].lat){%>
+                LAT LON
+
+                <%=caseData[0].lat%>
+
+                <%=caseData[0].long%>
+
+                <%}else{%>
+                LAT LON
+                NA
+                <%}%></td>
+        </tr>
+        <tr>
+            <th>Latitude and Longitude</th>
+            <td>&nbsp;<%=caseData[0].lat? caseData[0].lat +' ,  '+ caseData[0].long :""%></td>
+        </tr>
+    </table>
+    <div style="text-align: right;">
+        <div>
+            <h1 style="padding: 20px 40px; font-weight: normal; text-align: center; border: 1px solid green; border-radius: 20px; display: inline-block;">
+                <% if (caseData[0].agencyName == "MB_MANAGEMENT") { %>
+                <img src="/agencySeal/MB.jpg" width="80" height="80" hspace="5" vspace="2" />
+                <% } %> 
+                <% if (caseData[0].agencyName == "CMB_MANAGEMENT_SOLUTION_PVT_LTD") { %>
+                <img src="/agencySeal/CMB.jpg" width="80" height="80" hspace="5" vspace="2" />
+                <% } %> 
+                <% if (caseData[0].agencyName == "TIME_MANAGEMENT_SERVICES") { %>
+                <img src="/agencySeal/TIME.jpg" width="80" height="80" hspace="5" vspace="2" />
+                <% } %>
+            </h1>
+        </div>
+        <div>
+            <span style="font-size: smaller; font-weight: bold;">
+                <% if (caseData[0].agencyName == "MB_MANAGEMENT") { %>
+                MB MANAGEMENT
+                <% } %> 
+                <% if (caseData[0].agencyName == "CMB_MANAGEMENT_SOLUTION_PVT_LTD") { %>
+                CMB MANAGEMENT SOLUTION PVT LTD
+                <% } %> 
+                <% if (caseData[0].agencyName == "TIME_MANAGEMENT_SERVICES") { %>
+                TIME MANAGEMENT SERVICES
+                <% } %>
+            </span>
+        </div>
+    </div>
+    <tr>
+        <div style="font-weight: bold; font-size: larger; margin-bottom: 20px;">
+            <th >Images</th></div>
+        
+        <td>
+            <% if(x[0]){%>
+            <div class="image-box">
+                <div class="column">
+                    <img src="<%=x[0]%>" alt="Image 1" class="image" style="margin-right: 15px;">
+                    <img src="<%=x[1]%>" alt="Image 2" class="image">
+                </div>
+            </div>
+            <%}%>
+
+            <% if(x[2]){%>
+            <div class="image-box">
+                <div class="column">
+                    <img src="<%=x[2]%>" alt="Image 3" class="image" style="margin-right: 15px;">
+                    <img src="<%=x[3]%>" alt="Image 4" class="image">
+                </div>
+            </div>
+            <%}%>
+
+            <% if(x[4]){%>
+            <div class="image-box">
+                <div class="column">
+                    <img src="<%=x[4]%>" alt="Image 5" class="image" style="margin-right: 15px;">
+                    <img src="<%=x[5]%>" alt="Image 6" class="image">
+                </div>
+
+            </div>
+            <%}%>
+            <% if(x[6]){%>
+            <div class="image-box">
+                <div class="column">
+                    <img src="<%=x[6]%>" alt="Image 7" class="image" style="margin-right: 15px;">
+                    <img src="<%=x[7]%>" alt="Image 8" class="image">
+                </div>
+            </div>
+            <%}%>
+        </td>
+    </tr>
+    <button id="pdfFileButton" onclick="printFunction()">
+        Print this page
+      </button>
+</body>
+
+</html>
+
+<script>
+   async function printFunction() {
+      $("#pdfFileButton").hide();
+      window.print();
+      $("#pdfFileButton").show();
+    }
+  </script>

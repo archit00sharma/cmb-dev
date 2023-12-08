@@ -1,0 +1,92 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Field Executive Routes
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Field Executive Routes
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+
+
+            <div class="card">
+                <div class="card-header"> Field Executive Routes </div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+                            <form method="POST" action="/case/calGoogleRoute" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <div id="selectRoute" class="form-icon-wrap">
+
+                                    <div id="route" class="form-wrapper">
+                                        <div id="selectRoute" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="googleRoute">choose field
+                                                executive Route<span></span></label>
+                                            <input style="display: none;" value="<%=id%>" name="id" id="id">
+                                            <input style="display: none;" value="<%=min%>" name="min" id="min">
+                                            <input style="display: none;" value="<%=route%>" name="route" id="route">
+                                            <select id="googleRoute" required
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="googleRoute">
+                                                <option value="" selected disabled>Select the field executive route
+                                                </option>
+                                                <% if (route=="no") { %>
+                                                <option value="singleRoute">route1 </option>
+                                                <%} else if(route=="yes") { %>
+                                                <option value="cordinate1">
+                                                    route 1 </option>
+                                                <option value="cordinate2">
+                                                    route 2</option>
+                                                <% }else if(route=="noRecord"){ %>
+                                                    <option disabled value="">No route found </option>
+                                                <% }%>
+                                            </select>
+                                        </div>
+                                        <!-- <div id="selectCordinate2" class="form-group form-info"
+                                            style="position: relative">
+                                            <input class="btn btn-sm btn-success text-uppercase" type="submit"
+                                                name="cordinate2" value="" id="cordinate2" />
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div id="submitButton" class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../../partials/footer") %>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        });
+    </script>

@@ -1,0 +1,501 @@
+<%- include("../../partials/head") %>
+<%-include("../../partials/bodyStartWithNavBar/") %> <%-
+include("../../partials/sideNav") %>
+<div id="layoutSidenav_content">
+  <main>
+    <%- include("../../partials/alertMsg") %>
+    <div class="page-header pb-10 page-header-dark">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="page-header-content">
+              <h1 class="page-header-title fs-md-35 fs-20">
+                <div class="page-header-icon">
+                  <i class="fad fa-at text-white"></i>
+                </div>
+                <span class="text-capitalize"> cases </span>
+              </h1>
+              <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                View all pending cases
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt-n10">
+      <div class="card mb-4">
+        <div class="card-header">cases</div>
+        <div class="card-body">
+          <div class="datatable table-responsive">
+            <table border="0" cellspacing="5" cellpadding="5">
+              <tbody>
+                <tr>
+                  <td>From:</td>
+                  <td><input type="date" id="min" name="min"></td>
+                </tr>
+                <tr>
+                  <td>To:</td>
+                  <td><input type="date" id="max" name="max"></td>
+                </tr>
+              </tbody>
+            </table>
+            <% if (permissions.includes('download_pending_excel')) { %>
+            <button type="button" id="excel" name="excel" value="" class="btn btn-secondary">excel</button>
+            <%}  %>
+
+            <% if (role=="admin") { %>
+            <a id="myBtn" class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip"
+              title="Delete Multiple cases" data-original-title="Edit">
+              <i class="far fa-trash-alt"></i>
+            </a>
+            <%} %>
+
+            <table class="table table-bordered table-hover text-nowrap" id="contestCategoryTable" width="100%"
+              cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Sno.</th>
+                  <th>File NO</th>
+                  <th>Case Upload date</th>
+                  <th>Case Upload time</th>
+                  <th>Manager Name</th>
+                  <th>Manager Assigned Date</th>
+                  <th>Manager Assigned Time</th>
+                  <th>Senior Supervisor Name</th>
+                  <th>senior Supervisor Assigned Date</th>
+                  <th>senior Supervisor Assigned Time</th>
+                  <th>Supervisor Name</th>
+                  <th>Supervisor Assigned Date</th>
+                  <th>Supervisor Assigned Time</th>
+                  <th>Field executive Name</th>
+                  <th>Field executive Assigned Date</th>
+                  <th>Field executive Assigned Time</th>
+                  <th>Field executive Accepted Date</th>
+                  <th>Field executive Accepted Time</th>
+                  <th>Applicant Name</th>
+                  <th>Address Type</th>
+                  <th>Address</th>
+                  <th>Product</th>
+                  <th>Area</th>
+                  <th>Bank</th>
+                  <th>Mobile NO</th>
+                  <th>Manager</th>
+                  <th>senior supervisor</th>
+                  <th>supervisor</th>
+                  <th>Field Executive</th>
+                  <th>Action</th>
+                  <th>caseId</th>
+                </tr>
+              </thead>
+              <tfoot style="display:table-header-group" id="mine2">
+                <tr>
+                  <th>Sno.</th>
+                  <th>File NO</th>
+                  <th>Case Upload date</th>
+                  <th>Case Upload time</th>
+                  <th>Manager Name</th>
+                  <th>Manager Assigned Date</th>
+                  <th>Manager Assigned Time</th>
+                  <th>Senior Supervisor Name</th>
+                  <th>senior Supervisor Assigned Date</th>
+                  <th>senior Supervisor Assigned Time</th>
+                  <th>Supervisor Name</th>
+                  <th>Supervisor Assigned Date</th>
+                  <th>Supervisor Assigned Time</th>
+                  <th>Field executive Name</th>
+                  <th>Field executive Assigned Date</th>
+                  <th>Field executive Assigned Time</th>
+                  <th>Field executive Accepted Date</th>
+                  <th>Field executive Accepted Time</th>
+                  <th>Applicant Name</th>
+                  <th>Address Type</th>
+                  <th>Address</th>
+                  <th>Product</th>
+                  <th>Area</th>
+                  <th>Bank</th>
+                  <th>Mobile NO</th>
+                  <th>Manager</th>
+                  <th>senior supervisor</th>
+                  <th>supervisor</th>
+                  <th>Field Executive</th>
+                  <th>Action</th>
+                  <th>caseId</th>
+                </tr>
+              </tfoot>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <%- include("../../partials/footer") %>
+    </div>
+  </main>
+</div>
+
+
+<script>
+  $(window).on("load", function () {
+    $("#preloader_admin").hide();
+  });
+</script>
+
+
+<script type="text/javascript">
+  var permissions = "<%=permissions%>".trim().split(",");
+  var minDate, maxDate;
+  let columnDefs = []
+  if ("<%=role%>" == "admin") {
+    columnDefs.push({
+      orderable: false,
+      className: 'select-checkbox',
+      targets: 0
+    }, )
+  }
+  $(document).ready(function () {
+    $('#contestCategoryTable #mine2 th').each(function () {
+      var title = $(this).text();
+      if (title != "") {
+        $(this).html('<input style=width:8em  type="text"  />');
+      }
+      if (title == "Action") {
+        $(this).html('');
+      }
+      if (title == "Manager") {
+        $(this).html('');
+      }
+      if (title == "senior supervisor") {
+        $(this).html('');
+      }
+      if (title == "supervisor") {
+        $(this).html('');
+      }
+      if (title == "Field Executive") {
+        $(this).html('');
+      }
+      if (title == "Sno.") {
+        $(this).html('');
+      }
+
+    });
+    $.fn.dataTable.ext.errMode = "none";
+    var table = $("#contestCategoryTable").DataTable({
+      columnDefs: columnDefs,
+      select: {
+        style: 'multi',
+        selector: 'td:first-child'
+      },
+      order: [
+        [0, 'asc']
+      ],
+      "bLengthChange": false,
+      orderCellsTop: true,
+      fixedHeader: true,
+      paging: true,
+      processing: true,
+      serverSide: true,
+      searching: true,
+      initComplete: function () {
+        // Apply the search
+        this.api()
+          .columns()
+          .every(function () {
+            var that = this;
+            $('input', this.footer()).keypress(function (e) {
+              if (e.keyCode == 13) {
+                e.preventDefault()
+                if (that.search() !== this.value) {
+                  that.search(this.value).draw();
+                }
+              }
+            });
+          });
+      },
+
+      language: {
+        zeroRecords: "No records to display",
+      },
+      ajax: {
+        url: `/case/pendingCasesDatatable`,
+        cache: false,
+        type: "post",
+        datatype: "json",
+        data: function (data) {
+          var startDate = $('#min').val();
+          var endDate = $('#max').val();
+          data.startDate = startDate;
+          data.endDate = endDate;
+          if (permissions.includes('download_pending_excel')) {
+            data.excel = $("#excel").val()
+          }
+        },
+        "dataSrc": function (json) {
+          $("#preloader_admin").hide();
+          if (json == "SUCCESS") {
+            // window.location.href = "/succEx/newFile.xlsx"
+            var file_path = '/pendingEx/newFile.xlsx';
+            var a = document.createElement('A');
+            a.href = file_path;
+            a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          } else if (json == "FAILED") {
+            alert("Some error occured while downloading excel")
+          } else if (json == "limit") {
+            alert("downloading cases are more than 3000,kindly reduce the date gap")
+          } else if (json == "noData") {
+            alert("no data found for selected filters")
+          }
+          $("#excel").val("")
+          if (json.data) {
+            return json.data
+          } else {
+            $("#preloader_admin").show();
+            table.draw()
+          }
+        }
+      },
+      columns: [{
+          data: "count",
+        },
+        {
+          data: "fileNo",
+        },
+        {
+          data: "caseUploaded"
+        },
+        {
+          data: "caseUploadTime"
+        },
+        {
+          data: "managerName"
+        },
+        {
+          data: "managerAssignedDate"
+        },
+        {
+          data: "managerAssignedTime"
+        },
+
+        {
+          data: "seniorSupervisorName"
+        },
+        {
+          data: "seniorSupervisorAssignedDate"
+        },
+        {
+          data: "seniorSupervisorAssignedTime"
+        },
+
+        {
+          data: "supervisorName"
+        },
+        {
+          data: "supervisorAssignedDate"
+        },
+        {
+          data: "supervisorAssignedTime"
+        },
+        {
+          data: "fieldExecutiveName"
+        },
+        {
+          data: "fieldExecutiveAssignedDate"
+        },
+        {
+          data: "fieldExecutiveAssignedTime"
+        },
+        {
+          data: "fieldExecutiveAcceptedDate",
+        },
+        {
+          data: "fieldExecutiveAcceptedTime",
+        },
+
+        {
+          data: "applicantName",
+        },
+        {
+          data: "addressType",
+        },
+        {
+          data: "address",
+        },
+
+        {
+          data: "product",
+        },
+        {
+          data: "area",
+        },
+        {
+          data: "bank",
+        },
+        {
+          data: "mobileNo",
+        },
+        {
+          data: "manager",
+        },
+        {
+          data: "seniorSupervisor",
+        },
+        {
+          data: "supervisor",
+        },
+        {
+          data: "fieldExecutive",
+        },
+        {
+          data: "action",
+        },
+        {
+          data: "caseId",
+        },
+      ],
+
+    });
+    $('#min, #max').on('change', function () {
+      table.draw();
+    });
+    $("#excel").click(function () {
+      if ($("#min").val() && $("#max").val()) {
+        // date1 = moment($("#min").val()).format('YYYY/MM/DD')
+        // date2 = moment($("#max").val()).add(1, 'days').format('YYYY/MM/DD');
+        // let dateDiff = moment(date2).diff(moment(date1), 'days')
+        // if (dateDiff <= 10) {
+        //   alert("downloading excel for the selected date range")
+        $("#excel").val("excel")
+        $("#preloader_admin").show();
+        table.draw();
+        // } else {
+        //   alert("Date must be in between 10 days")
+        // }
+      }
+
+      if (!$("#min").val() && !$("#max").val()) {
+        alert("downloading excel for last 10 days")
+        $("#excel").val("excel")
+        $("#preloader_admin").show();
+        table.draw();
+      }
+      if ($("#min").val() && !$("#max").val()) {
+        alert("downloading excel for selected day")
+        $("#excel").val("excel")
+        $("#preloader_admin").show();
+        table.draw();
+      }
+
+    })
+
+    $("#contestCategoryTable_filter").css('display', 'none')
+
+
+    $('#myBtn').click(function () {
+      let x = table.rows('.selected').data().toArray()
+      if (x.length > 0) {
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "btn btn-sm btn-success",
+            cancelButton: "btn btn-sm btn-danger",
+          },
+          buttonsStyling: false,
+        });
+        swalWithBootstrapButtons
+          .fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "success",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true,
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              let result = ""
+              let id = []
+              for (let i = 0; i < x.length; i++) {
+                id[i] = x[i].caseId
+              }
+
+              let data = {
+                id: id
+              }
+              $.ajax({
+                url: "/case/deletePendingCases",
+                data: data,
+                type: "post",
+                success: function (data) {
+                  if (data == "success") {
+                    swalWithBootstrapButtons.fire(
+                      "Deleted!",
+                      "Your files has been deleted.",
+                      "success"
+                    );
+                    window.location.reload();
+                  } else {
+                    alert("one or more cases not found in database")
+                    window.location.reload();
+
+                  }
+
+                }
+              })
+
+
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire(
+                "Cancelled",
+                "Your imaginary file is safe :)",
+                "error"
+              );
+            }
+          });
+      }
+
+    })
+  });
+</script>
+<script>
+  $(document).ready(function () {
+    var table = $("#contestCategoryTable").DataTable();
+    table.column(30).visible(false);
+    if ("<%=role%>" == "manager") {
+      table.column(4).visible(false);
+      table.column(5).visible(false);
+      table.column(6).visible(false);
+      table.column(25).visible(false);
+    }
+    if ("<%=role%>" == "senior-supervisor") {
+      table.column(4).visible(false);
+      table.column(5).visible(false);
+      table.column(6).visible(false);
+      table.column(7).visible(false);
+      table.column(8).visible(false);
+      table.column(9).visible(false);
+      table.column(25).visible(false);
+      table.column(26).visible(false);
+
+    }
+    if ("<%=role%>" == "supervisor") {
+      table.column(4).visible(false);
+      table.column(5).visible(false);
+      table.column(6).visible(false);
+      table.column(7).visible(false);
+      table.column(8).visible(false);
+      table.column(9).visible(false);
+      table.column(10).visible(false);
+      table.column(11).visible(false);
+      table.column(12).visible(false);
+      table.column(25).visible(false);
+      table.column(26).visible(false);
+      table.column(27).visible(false);
+    }
+  });
+</script>

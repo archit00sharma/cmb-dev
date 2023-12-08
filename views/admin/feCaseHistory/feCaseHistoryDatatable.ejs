@@ -1,0 +1,258 @@
+<%- include("../../partials/head") %>
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Fe Cases </span>
+                            </h1>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card mb-4">
+                <div class="card-header">Cases</div>
+                <div class="card-body">
+                    <div style="background-color: #f9f9f9; 
+                    padding: 20px; 
+                    border: 1px solid #ddd; 
+                    border-radius: 10px; 
+                    margin: 20px; 
+                    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+                    text-align: center;">
+            <h2 style="font-size: 20px; 
+                       color: #333; 
+                       text-transform: uppercase; 
+                       margin-bottom: 15px;">
+                Field Executive's Name: <span style="font-weight: bold; color: #555;"><%= fullName %></span>
+            </h2>
+            
+            <p style="font-size: 16px; 
+                      color: #777; 
+                      margin-top: 10px;">
+                Date Range Selected: 
+                <span style="font-weight: bold; 
+                              color: #333;"> <%= min %> </span>
+                <span style="margin: 0 10px;"> to </span>
+                <span style="font-weight: bold; 
+                              color: #333;"> <%= max %> </span>
+            </p>
+        </div>
+        
+                    <div class="datatable table-responsive">
+
+
+
+                        <table class="table table-bordered table-hover text-nowrap table-condensed"
+                            id="contestCategoryTable" width="100%" cellspacing="0">
+
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Assigned Date</th>
+                                    <th>Assigned Time</th>
+                                    <th>Accepted Date</th>
+                                    <th>Accepted Time</th>
+                                    <th>Submitted Date</th>
+                                    <th>Submitted Time</th>
+                                    <th>File No</th>
+                                    <th>Applicant Name</th>
+                                    <th>Address Type</th>
+                                    <th>Address</th>
+                                    <th>Bank</th>
+                                    <th>Product</th>
+
+                                </tr>
+                            </thead>
+                            <tfoot style="display:table-header-group" id="mine2">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Assigned Date</th>
+                                    <th>Assigned Time</th>
+                                    <th>Accepted Date</th>
+                                    <th>Accepted Time</th>
+                                    <th>Submitted Date</th>
+                                    <th>Submitted Time</th>
+                                    <th>File No</th>
+                                    <th>Applicant Name</th>
+                                    <th>Address Type</th>
+                                    <th>Address</th>
+                                    <th>Bank</th>
+                                    <th>Product</th>
+
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+
+                            <tfoot id="mine1">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Assigned Date</th>
+                                    <th>Assigned Time</th>
+                                    <th>Accepted Date</th>
+                                    <th>Accepted Time</th>
+                                    <th>Submitted Date</th>
+                                    <th>Submitted Time</th>
+                                    <th>File No</th>
+                                    <th>Applicant Name</th>
+                                    <th>Address Type</th>
+                                    <th>Address</th>
+                                    <th>Bank</th>
+                                    <th>Product</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <span class="float-right"></span>
+                    </div>
+                </div>
+            </div>
+            <%- include("../../partials/footer") %>
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#contestCategoryTable #mine2 th').each(function () {
+            var title = $(this).text();
+            if (title != "") {
+                $(this).html('<input style=width:8em  type="text"  />');
+            }
+            if (title == "Sno.") {
+                $(this).html('');
+            }
+            if (title == "Assigned Date") {
+                $(this).html('');
+            }
+            if (title == "Assigned Time") {
+                $(this).html('');
+            }
+            if (title == "Accepted Date") {
+                $(this).html('');
+            }
+            if (title == "Accepted Time") {
+                $(this).html('');
+            }
+            if (title == "Submitted Time") {
+                $(this).html('');
+            }
+            if (title == "Applicant Name") {
+                $(this).html('');
+            }
+            if (title == "Address Type") {
+                $(this).html('');
+            }
+            if (title == "Address") {
+                $(this).html('');
+            }
+            if (title == "Bank") {
+                $(this).html('');
+            }
+            if (title == "Product") {
+                $(this).html('');
+            }
+        });
+        $.fn.dataTable.ext.errMode = "none";
+        var table = $("#contestCategoryTable").DataTable({
+            "bLengthChange": false,
+            orderCellsTop: true,
+            fixedHeader: true,
+            paging: true,
+            processing: true,
+            serverSide: true,
+            searching: true,
+            initComplete: function () {
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+                        $('input', this.footer()).keypress(function (e) {
+                            if (e.keyCode == 13) {
+                                e.preventDefault()
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            }
+                        });
+                    });
+            },
+            language: {
+                zeroRecords: "No records to display",
+            },
+            ajax: {
+                url: `/admin/feCaseHistoryDatatable`,
+                cache: false,
+                type: "post",
+                datatype: "json",
+                data: {
+                    id: "<%=member%>",
+                    date1: "<%=min%>",
+                    date2: "<%=max%>"
+                }
+            },
+            columns: [{
+                    data: "count",
+                },
+                {
+                    data: "assignedDate",
+                },
+                {
+                    data: "assignedTime",
+                },
+                {
+                    data: "acceptedDate",
+                },
+                {
+                    data: "acceptedTime",
+                },
+                {
+                    data: "submittedDate",
+                },
+                {
+                    data: "submittedTime",
+                },
+                {
+                    data: "fileNo",
+                },
+                {
+                    data: "applicantName",
+                },
+                {
+                    data: "addressType",
+                },
+                {
+                    data: "address",
+                },
+                {
+                    data: "bank",
+                },
+                {
+                    data: "product",
+                },
+            ],
+
+        });
+
+        $("#contestCategoryTable_filter").css('display', 'none')
+    });
+</script>
+
+<script>
+    $(window).on("load", function () {
+        $("#preloader_admin").hide();
+    });
+</script>

@@ -1,0 +1,130 @@
+<%- include("../../partials/head") %>
+<%- include("../../partials/bodyStartWithNavBar/") %>
+<%- include("../../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Bank Details </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Bank Details Templates
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/invoice/addbankDetails"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
+                            data-toggle="tooltip" title="Add New Allocation"><i class="fas fa-plus"></i>&nbsp;
+                            Add Bank Details Template</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mt-n10">
+            <div class="card mb-4">
+                <div class="card-header">Bank Details Templates</div>
+                <div class="card-body">
+
+                    <div class="datatable table-responsive">
+
+                        <table class="table table-bordered table-hover text-nowrap" id="contestCategoryTable"
+                            width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Template Name </th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot style="display:table-header-group" id="mine2">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Template Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <%- include("../../partials/footer") %>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        $(window).on("load", function () {
+            $("#preloader_admin").hide();
+        });
+
+        $(document).ready(function () {
+
+            $('#contestCategoryTable tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                if (title == "Action") {
+                    $(this).html('');
+                }
+                if (title == "Sno.") {
+                    $(this).html('');
+                }
+            });
+            $.fn.dataTable.ext.errMode = "none";
+            const table = $("#contestCategoryTable").DataTable({
+                "bLengthChange": false,
+                orderCellsTop: true,
+                fixedHeader: true,
+                paging: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var that = this;
+                            $('input', this.footer()).keypress(function (e) {
+                                if (e.keyCode == 13) {
+                                    e.preventDefault()
+                                    if (that.search() !== this.value) {
+                                        that.search(this.value).draw();
+                                    }
+                                }
+                            });
+                        });
+                },
+                language: {
+                    zeroRecords: "No records to display",
+                },
+                ajax: {
+                    url: `/invoice/bankDetailsDataTable`,
+                    type: "post",
+                },
+                columns: [{
+                        data: "count",
+                    },
+                    {
+                        data: "templateName",
+                    },
+                    {
+                        data: "action",
+                    },
+                   
+                ],
+            });
+            $("#contestCategoryTable_filter").css('display', 'none')
+        });
+    </script>

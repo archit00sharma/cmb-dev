@@ -1,0 +1,139 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Team Performance
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Team Performance
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/admin/viewTatFiles"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
+                            data-toggle="tooltip" title="Add New Area"><i class="fa-regular fa-eye"></i>&nbsp;
+                            view TAT Files</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div id="myModal" class="modal">
+                <div class="modal-content  modal-lg">
+                    <span class="close">&times;</span>
+                    <div class="card">
+                        <div class="card-header">Team Efficiency & T.A.T</div>
+                        <div class="card-body">
+                            <div class="sbp-preview">
+                                <div class="sbp-preview-content p-4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">Team Efficiency & T.A.T</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+
+                            <form method="POST" action="/case/tatToExcel" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <input type="text" style="display: none;" name="name" id="name" value="">
+                                <div id="selectMember" class="form-icon-wrap">
+                                    <div id="selectMembers" class="form-wrapper">
+                                        <div class="form-group form-info" style="position: relative">
+                                            <table border="0" cellspacing="5" cellpadding="5">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>FROM:</td>
+                                                        <td><input type="date" required id="min" name="min"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TO:</td>
+                                                        <td><input type="date" required id="max" name="max"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div id="selectMember" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="member">choose member
+                                                role<span></span></label>
+                                            <select id="member" required
+                                                class=" chosen-select form-control form-control-solid" name="member">
+                                                <option value="" selected disabled>Select the member role</option>
+                                                <option id="manager" value="manager">
+                                                    Manager
+                                                </option>
+                                                <option id="seniorSupervisor" value="seniorSupervisor">
+                                                    seniorSupervisor
+                                                </option>
+                                                <option id="supervisor" value="supervisor">
+                                                    supervisor
+                                                </option>
+                                                <option id="fieldExecutive" value="fieldExecutive">
+                                                    fieldExecutive
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class=" col-12 text-right mt-4 mb-2">
+                                    <button id="submitButton" class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../../partials/footer") %>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+            $("#member").val("")
+        });
+
+        $("#submitButton").click(function (e) {
+            e.preventDefault()
+            if (!$("#member option:selected").val() || !$("#min").val() || !$("#max").val()) {
+                alert(" select all the fields")
+            } else {
+                e.preventDefault()
+                date1 = moment($("#min").val()).format('YYYY/MM/DD')
+                date2 = moment(moment($("#max").val()).format('YYYY/MM/DD')).add(1, 'days').format(
+                    'YYYY/MM/DD');
+                let dateDiff = moment(date2).diff(moment(date1), 'days')
+                if (dateDiff <= 31) {
+                    $("form").submit()
+                } else {
+                    alert("Date must be in between 31 days")
+                }
+            }
+        })
+    </script>

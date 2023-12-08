@@ -1,0 +1,266 @@
+<%- include("../partials/head") %> <%-
+include("../partials/bodyStartWithNavBar") %> <%- include("../partials/sideNav")
+%>
+<div id="layoutSidenav_content">
+  <main>
+    <%- include("../partials/alertMsg") %>
+    <div class="page-header pb-10 page-header-dark">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="page-header-content">
+              <h1 class="page-header-title fs-md-35 fs-20">
+                <div class="page-header-icon">
+                  <i class="fad fa-at text-white"></i>
+                </div>
+                <span class="text-capitalize"> Dashboard </span>
+              </h1>
+              <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize"></div>
+            </div>
+          </div>
+          <div class="col-auto mb-md-0 mb-3"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt-n10">
+      <div class="row dashboard_row_2 mt-4">
+
+        <div class="col-xl-4 col-md-4 mb-4">
+          <!-- Dashboard info widget 3-->
+          <div class="card h-100 border-0 verified-card warning-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <div class="small font-weight-bold text-capitalize text-warning mb-1">
+                    Pending Cases
+                  </div>
+                  <div class="h5"></div>
+                  <div class="text-xs font-weight-bold text-warning d-inline-flex align-items-center">
+                    <a href="/case/pendingCases" class="btn btn-warning text-uppercase btn-xs px-2">OPEN &nbsp; &nbsp;
+                      <i class="fad fa-chevron-right"></i></a>
+                  </div>
+                </div>
+                <div class="ml-2 fs-50 position-relative">
+                  <i class="fad fa-university"></i>
+                  <i
+                    class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-warning"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-4 mb-4">
+          <!-- Dashboard info widget 1-->
+          <div class="card h-100 border-0 request-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <div class="small font-weight-bold text-capitalize text-primary mb-1">
+                    Cases For Review
+                  </div>
+                  <div class="h5"></div>
+                  <div class="text-xs font-weight-bold d-inline-flex align-items-center">
+                    <% if (role=="admin" ) { %>
+                    <a href="/case/reviewAdminCase" class="btn btn-primary text-uppercase btn-xs px-2">OPEN &nbsp;
+                      &nbsp; <i class="fad fa-chevron-right"></i></a>
+                    <%}%> <% if (role=="manager" ) { %>
+                    <a href="/case/reviewManagerCase" class="btn btn-primary text-uppercase btn-xs px-2">OPEN &nbsp;
+                      &nbsp; <i class="fad fa-chevron-right"></i></a>
+                    <%}%> <% if (role=="senior-supervisor" ) { %>
+                    <a href="/case/reviewSeniorSupervisorCase" class="btn btn-primary text-uppercase btn-xs px-2">OPEN
+                      &nbsp; &nbsp; <i class="fad fa-chevron-right"></i></a>
+                    <%}%> <% if (role=="supervisor" ) { %>
+                    <a href="/case/reviewSupervisorCase" class="btn btn-primary text-uppercase btn-xs px-2">OPEN &nbsp;
+                      &nbsp; <i class="fad fa-chevron-right"></i></a>
+                    <%}%>
+                  </div>
+                </div>
+                <div class="ml-2 fs-50 position-relative">
+                  <i class="fad fa-university"></i>
+                  <i
+                    class="fas fa-info-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-primary"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-4 mb-4">
+          <!-- Dashboard info widget 3-->
+          <div class="card h-100 border-0 verified-card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                  <div
+                    class="small font-weight-bold text-capitalize text-success mb-1"
+                  >
+                    successfully completed cases
+                  </div>
+                  <div class="h5"></div>
+                  <div
+                    class="text-xs font-weight-bold text-success d-inline-flex align-items-center"
+                  >
+                    <a
+                      href="/case/successfullyCompletedCase"
+                      class="btn btn-success text-uppercase btn-xs px-2"
+                      >OPEN &nbsp; &nbsp; <i class="fad fa-chevron-right"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="ml-2 fs-50 position-relative">
+                  <i class="fad fa-university"></i>
+                  <i
+                    class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-success"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <% if (role == "admin") { %>
+                    <div class="col-xl-4 col-md-4 mb-4">
+                      <!-- Dashboard info widget 3-->
+                      <div class="card h-100 border-0 verified-card info-card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                              <div class="small font-weight-bold text-capitalize text-info mb-1">
+                                Team Performance
+                              </div>
+                              <div class="h5"></div>
+                              <div class="text-xs font-weight-bold text-info d-inline-flex align-items-center">
+                                <a href="/case/teamEfficiency" class="btn btn-info text-uppercase btn-xs px-2">OPEN
+                                  &nbsp; &nbsp; <i class="fad fa-chevron-right"></i></a>
+                              </div>
+                            </div>
+                            <div class="ml-2 fs-50 position-relative">
+                              <i class="fad fa-university"></i>
+                              <i
+                                class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-info"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-xl-4 col-md-4 mb-4">
+                      <!-- Dashboard info widget 3-->
+                      <div class="card h-100 border-0 verified-card info-card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                              <div class="small font-weight-bold text-capitalize text-info mb-1">
+                                google map
+                              </div>
+                              <div class="h5"></div>
+                              <div class="text-xs font-weight-bold text-info d-inline-flex align-items-center">
+                                <a href="/case/calculateDistance" class="btn btn-info text-uppercase btn-xs px-2">OPEN
+                                  &nbsp; &nbsp; <i class="fad fa-chevron-right"></i></a>
+                              </div>
+                            </div>
+                            <div class="ml-2 fs-50 position-relative">
+                              <i class="fad fa-university"></i>
+                              <i
+                                class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-info"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-4 mb-4">
+                      <!-- Dashboard info widget 3-->
+                      <div class="card h-100 border-0 verified-card info-card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                              <div class="small font-weight-bold text-capitalize text-info mb-1">
+                                TAT Excel
+                              </div>
+                              <div class="h5"></div>
+                              <div class="text-xs font-weight-bold text-info d-inline-flex align-items-center">
+                                <a href="/case/calculateTatExcel" class="btn btn-info text-uppercase btn-xs px-2">OPEN
+                                  &nbsp; &nbsp; <i class="fad fa-chevron-right"></i></a>
+                              </div>
+                            </div>
+                            <div class="ml-2 fs-50 position-relative">
+                              <i class="fad fa-university"></i>
+                              <i
+                                class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-info"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-xl-4 col-md-4 mb-4">
+                      <!-- Dashboard info widget 3-->
+                      <div class="card h-100 border-0 verified-card info-card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                              <div class="small font-weight-bold text-capitalize text-info mb-1">
+                                FieldExecutive Case History
+                              </div>
+                              <div class="h5"></div>
+                              <div class="text-xs font-weight-bold text-info d-inline-flex align-items-center">
+                                <a href="/admin/feCaseHistory" class="btn btn-info text-uppercase btn-xs px-2">OPEN
+                                  &nbsp; &nbsp; <i class="fad fa-chevron-right"></i></a>
+                              </div>
+                            </div>
+                            <div class="ml-2 fs-50 position-relative">
+                              <i class="fad fa-university"></i>
+                              <i
+                                class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-info"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-xl-4 col-md-4 mb-4">
+                      <div class="card h-100 border-0 verified-card info-card">
+                        <div class="card-body">
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                              <div class="small font-weight-bold text-capitalize text-info mb-1">
+                              Create Invoices
+                              </div>
+                              <div class="h5"></div>
+                              <div class="text-xs font-weight-bold text-info d-inline-flex align-items-center">
+                                <a href="/invoice/invoiceList" class="btn btn-info text-uppercase btn-xs px-2">OPEN
+                                  &nbsp; &nbsp; <i class="fad fa-chevron-right"></i></a>
+                              </div>
+                            </div>
+                            <div class="ml-2 fs-50 position-relative">
+                              <i class="fad fa-university"></i>
+                              <i
+                                class="fas fa-check-circle position-absolute fs-22 top-8px right-n8px rounded-pill bg-white text-info"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <%}  %>
+                  </div>
+                </div>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+  <script>
+    $(window).on("load", function () {
+      $("#preloader_admin").hide();
+    });
+  </script>
+
+</div>

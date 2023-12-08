@@ -1,0 +1,185 @@
+<html>
+<style>
+  /* Optional: Makes the sample page fill the window. */
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #container {
+    height: 100%;
+    display: flex;
+  }
+
+  #sidebar {
+    flex-basis: 15rem;
+    flex-grow: 1;
+    padding: 1rem;
+    max-width: 30rem;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+  #map {
+    flex-basis: 0;
+    flex-grow: 4;
+    height: 100%;
+  }
+
+  #directions-panel {
+    margin-top: 10px;
+  }
+</style>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
+  <title>Waypoints in Directions</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="map"></div>
+    <div id="sidebar">
+      <div id="directions-panel"></div>
+    </div>
+  </div>
+
+  <!-- 
+      The `defer` attribute causes the callback to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises
+      with https://www.npmjs.com/package/@googlemaps/js-api-loader.
+      -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUMUgJQIRTory9M8pEsRktz42HyO5VacA&callback=initMap&v=weekly"
+    defer></script>
+</body>
+
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+  integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+  let directionsService
+  let directionsRenderer
+
+  let cordinatesArray = []
+  let wayPointsArray = []
+
+  let origin = ""
+  let destination = ""
+  
+  let data = {
+    id: "<%=id%>",
+    min: "<%=min%>",
+    googleRoute: "<%=googleRoute%>"
+  }
+
+
+  $.ajax({
+    url: "/case/calGoogleFinalRoute",
+    type: "post",
+    data: data,
+    success: async function (data) {
+     
+      cordinatesArray = data;
+      origin = `${data[0].coordinates.lat_long[1]},${data[0].coordinates.lat_long[0]}`;
+      destination = `${data[data.length - 1].coordinates.lat_long[1]},${data[data.length - 1].coordinates.lat_long[0]}`
+      for (let i = 1; i < data.length - 1; i++) {
+        wayPointsArray.push({
+          location: `${data[i].coordinates.lat_long[1]},${data[i].coordinates.lat_long[0]}`,
+          stopover: true,
+        })
+      }
+
+      async function initMap() {
+        directionsService = new google.maps.DirectionsService();
+        directionsRenderer = new google.maps.DirectionsRenderer();
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 6,
+          center: {
+            lat: 20.5937,
+            lng: 78.9629
+          },
+        });
+
+        directionsRenderer.setMap(map);
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
+
+      }
+
+
+      async function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+        await directionsService
+          .route({
+            origin: origin,
+            destination: destination,
+            waypoints: wayPointsArray,
+            optimizeWaypoints: true,
+            travelMode: google.maps.TravelMode.DRIVING,
+          })
+          .then((response) => {
+            directionsRenderer.setDirections(response);
+
+            const route = response.routes[0];
+
+            const summaryPanel = document.getElementById("directions-panel");
+
+            if (cordinatesArray.length > 1) {
+              summaryPanel.innerHTML ="";
+
+
+              for (let i = 0; i < route.legs.length; i++) {
+                let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+                  "P",
+                  "Q", "R",
+                  "S", "T", "U", "V", "W", "X", "Y", "Z"
+                ]
+
+
+
+                const routeSegment = i + 1;
+
+
+                summaryPanel.innerHTML += `<b> ${alphabet[i]} to ${alphabet[i + 1]}  : ` +
+                  `${cordinatesArray[i].coordinates.status.replace("on", "Day On").replace("off", "Day Off").replace("case", "Case Submitted")} to ${cordinatesArray[i + 1].coordinates.status.replace("on", "Day On").replace("off", "Day Off").replace("case", "Case Submitted")} ` +
+                  "</b><br>";
+
+
+                summaryPanel.innerHTML += route.legs[i].start_address +
+                  ` <b>${moment(cordinatesArray[i].coordinates.date ? cordinatesArray[i].coordinates.date : cordinatesArray[i].coordinates.date).utc().format('YYYY-MM-DD HH:mm:ss')}</b>` +
+                  "<br><b> to </b><br>";
+
+                summaryPanel.innerHTML += route.legs[i].end_address +
+                  ` <b>${moment(cordinatesArray[i + 1].coordinates.date ? cordinatesArray[i + 1].coordinates.date : cordinatesArray[i + 1].coordinates.date).utc().format('YYYY-MM-DD HH:mm:ss')}</b> ` +
+                  "<br>";
+
+                summaryPanel.innerHTML += route.legs[i].distance.text + "<br><br>";
+
+              }
+            }else{
+              summaryPanel.innerHTML += `<b> A : ` +
+                  `${cordinatesArray[0].coordinates.status.replace("on", "Day On").replace("off", "Day Off").replace("case", "Case Submitted")} ` +
+                  "</b><br>";
+
+
+                summaryPanel.innerHTML += route.legs[0].start_address +
+                  ` <b>${moment(cordinatesArray[0].coordinates.date ? cordinatesArray[0].coordinates.date : cordinatesArray[0].coordinates.date).utc().format('YYYY-MM-DD HH:mm:ss')}</b>` +
+                  "<br><b> </b><br>";
+            }
+          })
+          .catch((e) => window.alert("Directions request failed due to " + e));
+      }
+
+     await initMap()
+    }
+  })
+</script>

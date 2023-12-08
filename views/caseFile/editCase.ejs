@@ -1,0 +1,123 @@
+<%- include("../partials/head") %>
+<%- include("../partials/bodyStartWithNavBar") %>
+<%- include("../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    case
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Edit case
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/case/viewCase"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View All Cases"><i class="fa fa-eye"></i>&nbsp;
+                            View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header">Edit Case</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+
+                            <form method="POST" action="/case/editCase" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <div style="display:none;" class="form-group col-md-6 col-12">
+                                    <input name="id" class="form-control form-control-solid" type="text" id="id"
+                                        value="<%=id%>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="fileNo"><span>*File
+                                            NO</span></label>
+                                    <input required name="name" class="form-control form-control-solid"
+                                        value="<%=caseData.fileNo%>" readonly id="fileNo">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="date"><span>*date</span></label>
+                                    <input required name="name" class="form-control form-control-solid"
+                                        value="<%=caseData.date%>" readonly id="date">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="fileNo"><span>*time</span></label>
+                                    <input required name="time" class="form-control form-control-solid"
+                                        value="<%=caseData.time%>" readonly id="time">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="applicantName">Applicant
+                                        Name<span>*</span></label>
+                                    <input type="text" name="applicantName" class="form-control form-control-solid"
+                                        value="<%=caseData.applicantName%>" required id="applicantName">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="addressType">Address
+                                        Type<span>*</span></label>
+                                    <input readonly type="text" name="addressType"
+                                        class="form-control form-control-solid" value="<%=caseData.addressType%>"
+                                        required id="addressType">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="address">Address
+                                        <span>*</span></label>
+                                    <input type="text" name="address" class="form-control form-control-solid"
+                                        value="<%=caseData.address%>" required id="address">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="pinCode">pinCode
+                                        <span>*</span></label>
+                                    <input type="text" name="pinCode" class="form-control form-control-solid"
+                                        value="<%=caseData.pinCode%>" id="pinCode">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="applicantType">Applicant
+                                        Type
+                                        <span>*</span></label>
+                                    <select required class="form-control form-control-solid" name="applicantType"
+                                        id="applicantType">
+                                        <option value="" selected disabled>select the Applicant Type
+                                        </option>
+                                        <option id="APPLICANT" value="APPLICANT">APPLICANT</option>
+                                        <option id="CO-APPLICANT" value="CO-APPLICANT">CO-APPLICANT
+                                        </option>
+                                        <option id="GUARANTOR" value="GUARANTOR">GUARANTOR</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../partials/footer") %>
+
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        })
+    </script>
+
+    <script>
+        $("#<%=caseData.applicantType%>").attr('selected', 'selected')
+    </script>

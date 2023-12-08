@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;500&display=swap");
+
+.card-title {
+    font-family: "Poppins";
+    font-size: 32px;
+    font-weight: 500;
+    color: #000000;
+}
+#first {
+    background-color: #eeeeee;
+}
+#second {
+    background-color: #eeeeee;
+}
+#third {
+    background-color: #eeeeee;
+}
+#fourth {
+    background-color: #eeeeee;
+}
+#fifth {
+    background-color: #eeeeee;
+}
+#sixth {
+    background-color: #eeeeee;
+}
+h5,
+h6,
+p {
+    font-family: "Poppins";
+    font-weight: 500;
+}
+h6 {
+    font-size: 20px;
+    color: #e11900;
+    margin-top: 2rem;
+}
+#Security {
+    margin-top: 3rem;
+    font-size: 18px;
+    font-weight: 500;
+}
+p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #545454;
+}
+.btn {
+    width: 24rem;
+    height: 3rem;
+    margin-top: 90px;
+}
+#otp {
+    width: 25rem;
+}
+input {
+    font: bold;
+    font-size: 20px;
+}
+
+/* pharmacy information */
+
+h5,
+h6,
+p {
+    font-family: "Poppins";
+    font-weight: 500;
+}
+h6 {
+    font-size: 20px;
+    color: #e11900;
+    margin-top: 2rem;
+}
+#Security {
+    margin-top: 3rem;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: "Poppins";
+    font-weight: 500;
+}
+p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #545454;
+}
+.btn {
+    width: 23rem;
+    height: 3rem;
+    margin-top: 40px;
+}
+#centers {
+    margin-top: 40px;
+    font-family: "Poppins";
+    width: 370px;
+}
+#contact {
+    background-color: #eeeeee;
+}
+
+#box1 {
+    top: 200px;
+}
+
+p {
+    color: #757575;
+}
+
+.card {
+    font-family: "Poppins";
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+#otp {
+    width: 25rem;
+}
+#num {
+    margin-left: 160px;
+}
+#num2 {
+    margin-left: 190px;
+}
+#num3 {
+    margin-left: 160px;
+}
+
+.flash-message {
+    background-color: aliceblue;
+    font-size: 14px;
+    border-radius: 10px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 0px;
+    height: auto;
+    transition: all 0.3s linear;
+    word-break: keep-all;
+    word-wrap: initial;
+    overflow: hidden;
+}
+
+.flash-message.active {
+    width: 300px;
+    padding: 8px 20px 8px 20px;
+}
+
+.bg-black {
+    background-color: #000000 !important;
+}
+
+.w-25rem {
+    width: 25rem !important;
+}
+
+.security-nmber-block {
+    outline: none;
+    border: none;
+    font-weight: bold;
+}
+
+.security-nmber-block:focus {
+    border:2px solid black;
+}
+
+.pharmacy-info-block{
+    font-size: 15px;
+    height: 47px;
+    font-weight: 300;
+    box-shadow: none;
+    outline: none;
+    border:none;
+}
+
+.pharmacy-info-block:focus {
+    box-shadow: none;
+    outline: none;
+    border:none;
+}
+.watermark {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    color: #AFAFAF;
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+}
+
+.watermark>span {
+    color: #276EF1;
+    font-weight: 500;
+}

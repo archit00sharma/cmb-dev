@@ -1,0 +1,275 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Invoice
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Invoice
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div id="myModal" class="modal">
+                <div class="modal-content  modal-lg">
+                    <span class="close">&times;</span>
+                    <div class="card">
+                        <div class="card-header">Create Invoice</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">Create Invoice</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+
+                            <form method="POST" action="/invoice/addInvoiceSubmit" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <input type="text" style="display: none;" name="name" id="name" value="">
+                                <div id="selectMember" class="form-icon-wrap">
+                                    <div id="selectMembers" class="form-wrapper">
+                                        <div class="form-group form-info" style="position: relative">
+                                            <table border="0" cellspacing="5" cellpadding="5">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>FROM:</td>
+                                                        <td><input type="date" required id="min" name="min"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>TO:</td>
+                                                        <td><input type="date" required id="max" name="max"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div id="invoiceFormat" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="member">Choose Invoice Format
+                                            </label>
+                                            <select id="selectInvoiceFormat" required
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="invoiceFormat">
+                                                <option value="" selected disabled>Select the Invoice Format</option>
+                                                <option id="format_1" value="format_1">
+                                                    format_1
+                                                </option>
+                                                <option id="format_2" value="format_2">
+                                                    format_2
+                                                </option>
+                                                <option id="format_3" value="format_3">
+                                                    format_3
+                                                </option>
+                                                <option id="format_4" value="format_4">
+                                                    format_4
+                                                </option>
+                                                <option id="format_5" value="format_5">
+                                                    format_5
+                                                </option>
+                                                <option id="format_6" value="format_6">
+                                                    format_6
+                                                </option>
+                                                <option id="format_7" value="format_7">
+                                                    format_7
+                                                </option>
+                                                <option id="format_8" value="format_8">
+                                                    format_8
+                                                </option>
+                                                <option id="format_9" value="format_9">
+                                                    format_9
+                                                </option>
+                                                <option id="format_10" value="format_10">
+                                                    format_10
+                                                </option>
+                                                <option id="format_11" value="format_11">
+                                                    format_11
+                                                </option>
+                                                <option id="format_12" value="format_12">
+                                                    format_12
+                                                </option>
+                                                <option id="format_13" value="format_13">
+                                                    format_13
+                                                </option>
+                                                <option id="format_14" value="format_14">
+                                                    format_14
+                                                </option>
+                                                <option id="format_15" value="format_15">
+                                                    format_15
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div id="invoiceExcelFormat" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="invoiceExcelFormat">Choose Invoice Excel Format
+                                            </label>
+                                            <select id="selectInvoiceExcelFormat" required
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="invoiceExcelFormat">
+                                                <option value="" selected disabled>Select the Invoice Excel Format</option>
+                                                <option id="common_format" value="common_format">
+                                                    Common Format
+                                                </option>
+                                                <option id="csl_format" value="csl_format">
+                                                    CSL Format
+                                                </option>
+                                                <option id="bandhan_format" value="bandhan_format">
+                                                    Bandhan Format
+                                                </option>
+                                                <option id="hdfc_format" value="hdfc_format">
+                                                    HDFC Format
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div id="invoiceFromTemplate" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="member">Choose Invoice-From Template
+                                            </label>
+                                            <select id="selectInvoiceFromTemplate" required data-live-search="true" data-container="body" 
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="invoiceFromTemplate">
+                                                <option value="" selected disabled>Select the Invoice-from Template</option>
+                                                <% invoiceFromList.forEach((template, index) => { %>
+                                                    <option id="format_<%= index + 1 %>" value="<%= template._id %>">
+                                                        <%= template.templateName %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <div id="invoiceToTemplate" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="member">Choose Invoice-To Template
+                                            </label>
+                                            <select id="selectInvoiceToTemplate" required data-live-search="true" data-container="body" 
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="invoiceToTemplate">
+                                                <option value="" selected disabled>Select the Invoice-To Template</option>
+                                                <% invoiceToList.forEach((template, index) => { %>
+                                                    <option id="format_<%= index + 1 %>" value="<%= template._id %>">
+                                                        <%= template.templateName %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <div id="bankDetails" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="bankDetails">Choose Bank Details Template
+                                            </label>
+                                            <select id="selectbankDetails" required
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="bankDetailsTemplate">
+                                                <option value="" selected disabled>Select the Bank Details Template</option>
+                                                <% bankDetailsList.forEach((template, index) => { %>
+                                                    <option id="format_<%= index + 1 %>" value="<%= template._id %>">
+                                                        <%= template.templateName %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <div id="product" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="product">Choose Product(s)</label>
+                                            <select id="selectProduct" data-live-search="true" data-container="body"  required multiple class="chosen-select form-control form-control-solid selectpicker" name="product[]">
+                                               
+                                                <% productList.forEach((template, index) => { %>
+                                                    <option id="format_<%= index + 1 %>" value="<%= template.product %>">
+                                                        <%= template.product %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <div id="area" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="area">Choose Area(s)</label>
+                                            <select id="selectInvoiceFromTemplate" data-live-search="true" data-container="body"  required multiple class="chosen-select form-control form-control-solid selectpicker" name="area[]">
+                                                
+                                                <% areaList.forEach((template, index) => { %>
+                                                    <option id="format_<%= index + 1 %>" value="<%= template.area %>">
+                                                        <%= template.area %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <div id="bank" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="bank">Choose Bank
+                                            </label>
+                                            <select id="selectBank" required
+                                                class=" chosen-select form-control form-control-solid"
+                                                name="bank">
+                                                <option value="" selected disabled>Select the Bank</option>
+                                                <% bankList.forEach((template, index) => { %>
+                                                    <option id="format_<%= index + 1 %>" value="<%= template.bank %>">
+                                                        <%= template.bank %>
+                                                    </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+
+                                        <div id="conveyanceInput" class="form-group form-info" style="position: relative; display: none;">
+                                            <label class="control-label text-bold" for="conveyance">Conveyance</label>
+                                            <input type="number" id="conveyance" name="conveyance" placeholder="Enter Conveyance">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="submitButton" class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../../partials/footer") %>
+
+    <script>
+       
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+            
+        });
+        $(document).ready(function () {
+        // Get a reference to the select element
+        var selectExcelFormat = $('#selectInvoiceExcelFormat');
+
+        // Get a reference to the conveyance input field
+        var conveyanceInput = $('#conveyanceInput');
+
+        // Add an event listener to the select element
+        selectExcelFormat.on('change', function () {
+            // Check if "CSL" is selected
+            if (selectExcelFormat.val() === 'csl_format') {
+                // Show the conveyance input field
+                conveyanceInput.show();
+            } else {
+                // Hide the conveyance input field
+                conveyanceInput.hide();
+            }
+        });
+    });
+       
+    </script>

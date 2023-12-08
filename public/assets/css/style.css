@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Poppins', sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    margin: 0px;
+    padding: 0px;
+}
+ul,li{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+input::-webkit-input-placeholder { 
+    font-family: 'Poppins', sans-serif;
+}
+  
+input:-ms-input-placeholder {
+    font-family: 'Poppins', sans-serif;
+}
+
+input::placeholder {
+    font-family: 'Poppins', sans-serif;
+}
+
+a{}
+a:hover{}
+
+img{}
+
+.btn{
+    padding: 10px 20px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.btn-primary{
+    background: #000000;
+}
+.input_icon{width: 20px;height: 15px;position: absolute;top: 39px;right: 13px;background-size: contain !important;background-repeat: no-repeat !important;}
+.check{
+    background: url(../images/check.svg);
+}
+.eye{
+    background: url(../images/eye.svg);   
+}
+
+.eye-open{
+    background: url(../images/eyeopen.svg);   
+}
+
+.form-group{
+    margin-bottom: 20px;
+    position: relative;
+}
+.form-control{
+    background: #EEEEEE;
+    border-radius: 6px;
+    border: none;
+    width: 100%;
+    height: 40px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+}
+.form-control:hover{
+    border: 2px solid #000;
+    outline: none;
+    box-shadow: none;
+}
+.container{max-width: 1280px;margin: 0px auto;}
+
+
+header{padding: 10px 0px;}
+header .header{}
+header .header .logo{}
+header .header .logo a{}
+header .header .logo a img{}
+
+
+.password_box{
+    max-width: 375px;
+    margin: 0px auto;
+    padding: 80px 0px;
+}
+.password_box h3{
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 50px;
+}
+.password_box .form-group{}
+.password_box .form-group label{
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 24px;
+}
+
+
+.password_box .pass_regex{}
+.password_box .pass_regex h5{
+    color: #757575;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.password_box .pass_regex ul{}
+.password_box .pass_regex ul li{
+    font-size: 14px;
+    line-height: 16px;
+    padding-bottom: 5px;
+    position: relative;
+    padding-left: 20px;
+}
+.password_box .pass_regex ul li.error{
+    color: #E11900;
+}
+.password_box .pass_regex ul li.success{
+    color: #05944F;
+}
+.password_box .pass_regex ul li.error::before{
+    content: '';
+    background: url(../images/close.svg);
+    width: 10px !important;
+    height: 10px !important;
+    background-size: cover !important;
+    position: absolute;
+    left: 2px;
+    top: 3px;
+}
+.password_box .pass_regex ul li.success::before{
+    content: '';
+    background: url(../images/check.svg);
+    width: 14px !important;
+    height: 10px !important;
+    background-size: cover !important;
+    position: absolute;
+    left: 2px;
+    top: 3px;
+}
+.password_box .button{
+    margin-top: 70px;
+}
+.password_box .button a{
+    background: #000000;
+    border-radius: 6px;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+}
+
+
+footer{
+    color: #AFAFAF;
+    padding: 10px 0px;
+    text-align: center;
+}
+footer .footer{}
+footer .footer .copyright_text{}
+footer .footer .copyright_text span{
+    font-size: 12px;
+}
+footer .footer .copyright_text span a{
+    color: #276EF1;
+    text-decoration: none;
+    margin-left: 12px;
+}

@@ -1,0 +1,627 @@
+<%- include("../../../partials/head") %>
+<%- include("../../../partials/bodyStartWithNavBar/") %>
+<%- include("../../../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <style>
+        .form-scroll-container {
+            width: 100%;
+            overflow: auto;
+            max-height: 400px;
+            border: 2px solid #3498db;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f7f7f7;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+        }
+
+        .modal {
+            z-index: 1050;
+        }
+
+        .custom-modal-dialog {
+            max-width: 600px;
+        }
+
+        .custom-modal-content {
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            background-color: #f7f7f7;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-modal-header {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+        }
+
+        .custom-modal-title {
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .custom-modal-close {
+            color: #fff;
+        }
+
+        .custom-modal-body {
+            padding: 20px;
+        }
+
+        .custom-label {
+            font-weight: bold;
+        }
+
+        .custom-input {
+            background-color: #fff;
+        }
+
+        .custom-modal-footer {
+            border: none;
+        }
+
+        .custom-btn-secondary {
+            background-color: #ccc;
+            color: #fff;
+        }
+
+        .custom-btn-primary {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .custom-modal-dialog {
+            max-width: 800px;
+            /* Adjust the width as needed */
+        }
+
+        .custom-modal-content {
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            background-color: #f7f7f7;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <main>
+        <%- include("../../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Invoice </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                             Excel Data
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mt-n10">
+            <div class="modal fade" id="editRateModal" tabindex="-1" role="dialog" aria-labelledby="editRateModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editRateModalLabel">Edit Case</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editRateForm">
+                                <input type="text" class="form-control" id="id" name="id" hidden required>
+                                <input type="text" class="form-control" id="bank" name="bank" hidden required>
+                                <input type="text" class="form-control" id="addressType" name="addressType" hidden
+                                    required>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editApplicationId">Application Id:</label>
+                                            <input type="text" class="form-control" id="editApplicationId"
+                                                name="editApplicationId" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editCustomerName">Customer Name:</label>
+                                            <input type="text" class="form-control" id="editCustomerName"
+                                                name="editCustomerName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editFiToBeConducted">Fi To Be Conducted:</label>
+                                            <input type="text" class="form-control" id="editFiToBeConducted"
+                                                name="editFiToBeConducted" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editProduct">Product Name:</label>
+                                            <input type="text" class="form-control" id="editProduct" name="editBarcode"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editRv">Residence Address:</label>
+                                            <input type="text" class="form-control" id="editRv" name="editRv" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editBv">Office Address:</label>
+                                            <input type="text" class="form-control" id="editBv" name="editBv" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editPv">Permanent Address:</label>
+                                            <input type="text" class="form-control" id="editPv" name="editProduct"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editDate">FI Date:</label>
+                                            <input type="text" class="form-control" id="editDate" name="editAddress"
+                                                required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editArea">Place:</label>
+                                            <select id="editArea" required
+                                                class="chosen-select form-control form-control-solid" name="editArea">
+                                                <option value="" selected disabled>Select the Place
+                                                </option>
+                                                <% areaList.forEach((template, index)=> { %>
+                                                <option id="format_<%= index + 1 %>" value="<%= template.area %>">
+                                                    <%= template.area %>
+                                                </option>
+                                                <% }); %>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editRvKm">(Rv/Pv)Km:</label>
+                                            <input type="number" class="form-control" id="editRvKm" name="editRvKm"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editBranch">LOCATION:</label>
+                                            <input type="text" class="form-control" id="editBranch" name="editBranch"
+                                                required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editStatus">Status:</label>
+                                            <select id="editStatus" required
+                                                class="chosen-select form-control form-control-solid" name="editStatus">
+                                                <option value="" selected disabled>Select the Status
+                                                </option>
+                                                <option value="POSITIVE">POSITIVE</option>
+                                                <option value="NEGATIVE">NEGATIVE</option>
+                                                <option value="REFER_TO_CREDIT">REFER_TO_CREDIT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editPoint">Point:</label>
+                                            <input type="number" class="form-control" id="editPoint" name="editPoint"
+                                                required oninput="validPoints(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editBvKm">(Bv)Km:</label>
+                                            <input type="number" class="form-control" id="editBvKm" name="editBvKm"
+                                                required>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editRate">Rate:</label>
+                                            <input type="number" class="form-control" id="editRate" name="editRate"
+                                                required readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editResiRemark">Resi Remark:</label>
+                                            <textarea type="text" class="form-control" id="editResiRemark"
+                                                name="editRate" required readonly> </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editOfficeRemark">Office Remark:</label>
+                                            <textarea type="text" class="form-control" id="editOfficeRemark"
+                                                name="editRate" required readonly></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editFinalRemark">Final Remark:</label>
+                                            <input type="text" class="form-control" id="editFinalRemark" name="editRate"
+                                                required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="editCpvBy">Cpv By:</label>
+                                            <input type="text" class="form-control" id="editCpvBy" name="editRate"
+                                                required readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveChanges">Save
+                                Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">HDFC Format</div>
+                <div class="card-body">
+                    <div class="datatable table-responsive">
+                        <table class="table table-bordered table-hover text-nowrap" id="contestCategoryTable"
+                            width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Application Id</th>
+                                    <th>Customer Name</th>
+                                    <th>FI to be Conducted</th>
+                                    <th>Product Name</th>
+                                    <th>Residence Address</th>
+                                    <th>Office Address</th>
+                                    <th>Permanent Address</th>
+                                    <th>FI Date</th>
+                                    <th>PLACE</th>
+                                    <th>KM</th>
+                                    <th>LOCATION</th>
+                                    <th>STATUS</th>
+                                    <th>Point</th>
+                                    <th>Km</th>
+                                    <th>Rate</th>
+                                    <th>RESI REMARK</th>
+                                    <th>OFFICE Remark</th>
+                                    <th>FINAL REMARK</th>
+                                    <th>CPV BY</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot style="display:table-header-group" id="mine2">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Application Id</th>
+                                    <th>Customer Name</th>
+                                    <th>FI to be Conducted</th>
+                                    <th>Product Name</th>
+                                    <th>Residence Address</th>
+                                    <th>Office Address</th>
+                                    <th>Permanent Address</th>
+                                    <th>FI Date</th>
+                                    <th>PLACE</th>
+                                    <th>KM</th>
+                                    <th>LOCATION</th>
+                                    <th>STATUS</th>
+                                    <th>Point</th>
+                                    <th>Km</th>
+                                    <th>Rate</th>
+                                    <th>RESI REMARK</th>
+                                    <th>OFFICE Remark</th>
+                                    <th>FINAL REMARK</th>
+                                    <th>CPV BY</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <%- include("../../../partials/footer") %>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        $(window).on("load", function () {
+            $("#preloader_admin").hide();
+        });
+
+        function validPoints(input) {
+            if (input.value < 0) input.value = 0;
+            if (input.value > 2) input.value = 2;
+        }
+
+        $(document).ready(function () {
+            const data = {
+                id: "<%=id%>",
+                invoiceExcelFormat: "<%=invoiceExcelFormat%>"
+            }
+
+            $('#contestCategoryTable tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+                if (title == "Action") {
+                    $(this).html('');
+                }
+                if (title == "Sno.") {
+                    $(this).html('');
+                }
+                if (title == "status") {
+                    $(this).html('');
+                }
+                if (title == "Error") {
+                    $(this).html('');
+                }
+            });
+            $.fn.dataTable.ext.errMode = "none";
+            const table = $("#contestCategoryTable").DataTable({
+                "bLengthChange": false,
+                orderCellsTop: true,
+                fixedHeader: true,
+                paging: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var that = this;
+                            $('input', this.footer()).keypress(function (e) {
+                                if (e.keyCode == 13) {
+                                    e.preventDefault()
+                                    if (that.search() !== this.value) {
+                                        that.search(this.value).draw();
+                                    }
+                                }
+                            });
+                        });
+                },
+                language: {
+                    zeroRecords: "No records to display",
+                },
+                ajax: {
+                    url: `/invoice/invoiceExcelDataDataTable`,
+                    type: "post",
+                    data: data
+                },
+                columnDefs: [{
+                    render: function (data, type, row, meta) {
+                        if (type === 'display' && data && data.length > 20 && meta.col !== (
+                                meta.settings.aoColumns.length - 1)) {
+                            return '<span title="' + data + '">' + data.substr(0, 20) +
+                                '...</span>';
+                        } else {
+                            return data;
+                        }
+                    },
+                    targets: "_all" // Apply to all columns
+                }],
+                columns: [{
+                        data: "count",
+                    },
+                    {
+                        data: "applicationId",
+                    },
+                    {
+                        data: "customerName",
+                    },
+                    {
+                        data: "fiToBeConducted",
+                    },
+                    {
+                        data: "product",
+                    },
+                    {
+                        data: "rv",
+                    },
+                    {
+                        data: "bv",
+                    },
+                    {
+                        data: "pv",
+                    },
+                    {
+                        data: "date",
+                    },
+                    {
+                        data: "area",
+                    },
+                    {
+                        data: "rvKm",
+                    },
+                    {
+                        data: "branch",
+                    },
+                    {
+                        data: "status",
+                    },
+                    {
+                        data: "point",
+                    },
+                    {
+                        data: "bvKm",
+                    },
+                    {
+                        data: "rate",
+                    },
+                    {
+                        data: "resiRemark",
+                    },
+                    {
+                        data: "officeRemark",
+                    },
+                    {
+                        data: "remark",
+                    },
+                    {
+                        data: "cpvBy",
+                    },
+                    {
+                        data: "action",
+                    },
+
+                ],
+            });
+            $("#contestCategoryTable tbody").on("click", "button.btn-warning", function () {
+                const button = $(this);
+                const id = button.data("id");
+                const bank = button.data("bank");
+                const addressType = button.data("addressType")
+
+                const rowData = table.row($(this).parents("tr")).data();
+
+                $("#editApplicationId").val(rowData.applicationId);
+                $("#editCustomerName").val(rowData.customerName);
+                $("#editFiToBeConducted").val(rowData.fiToBeConducted);
+                $("#editProduct").val(rowData.product);
+                $("#editRv").val(rowData.rv);
+                $("#editBv").val(rowData.bv);
+                $("#editPv").val(rowData.pv);
+                $("#editDate").val(rowData.date);
+                $("#editArea").val(rowData.area);
+                $("#editRvKm").val(rowData.rvKm);
+                $("#editBranch").val(rowData.branch);
+                $("#editStatus").val(rowData.status);
+                $("#editPoint").val(rowData.point);
+                $("#editBvKm").val(rowData.bvKm);
+                $("#editRate").val(rowData.rate);
+                $("#editResiRemark").val(rowData.resiRemark);
+                $("#editOfficeRemark").val(rowData.officeRemark);
+                $("#editFinalRemark").val(rowData.remark);
+                $("#editCpvBy").val(rowData.cpvBy);
+
+
+                $("#id").val(id);
+                $("#bank").val(bank);
+                $("#addressType").val(addressType);
+
+                $("#editRateModal").modal("show");
+            });
+            $("#contestCategoryTable_filter").css('display', 'none')
+        });
+        $("#saveChanges").on("click", function () {
+            let km
+            const rate = $("#editRate").val();
+
+            const product = $("#editProduct").val();
+            const area = $("#editArea").val();
+            const status = $("#editStatus").val();
+            const branch = $("#editBranch").val();
+            const point = $("#editPoint").val();
+            const bank = $("#bank").val();
+            const invoiceExcelFormat = "<%=invoiceExcelFormat%>";
+            const addressType = $("#addressType").val();
+
+            if (addressType === 'PV') {
+                km = $("#editRvKm").val();
+            } else {
+                if ($("#editRv").val() && $("#editBv").val()) {
+                    km = $("#editRvKm").val() >= $("#editBvKm").val() ? $("#editRvKm").val() : $("#editBvKm")
+                        .val();
+                } else if ($("#editRv").val()) {
+                    km = $("#editRvKm").val()
+                } else if ($("#editBv").val()) {
+                    km = $("#editBvKm").val()
+                }
+
+            }
+
+            const pv = {
+                address: $("#editPv").val(),
+                remark: $("#editResiRemark").val(),
+                distance: $("#editRvKm").val()
+            }
+            const bv = {
+                address: $("#editBv").val(),
+                remark: $("#editOfficeRemark").val(),
+                distance: $("#editBvKm").val()
+            }
+            const rv = {
+                address: $("#editRv").val(),
+                remark: $("#editResiRemark").val(),
+                distance: $("#editRvKm").val()
+            }
+
+            if (!rate || rate < 0) {
+                alert("Please fill in all required fields and ensure that rate and km are positive.");
+            } else {
+                const data = {
+                    km,
+                    product,
+                    bank,
+                    rate,
+                    area,
+                    status,
+                    branch,
+                    point,
+                    invoiceExcelFormat
+                };
+                if (addressType === 'PV') {
+                    data.pv = pv
+                } else {
+                    data.rv = rv;
+                    data.bv = bv;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
+                    data: data,
+                    success: function (response) {
+                        window.location.reload();
+                    },
+                });
+
+            }
+
+        });
+    </script>

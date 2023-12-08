@@ -1,0 +1,146 @@
+openapi: 3.0.3
+info:
+  title: CMB API 
+  description: CMB Rest APIs documentation
+  version: 1.0.0
+servers:
+  - url: 'http://13.233.114.39:8000/api/'
+    description: Live server
+  - url: 'http://127.0.0.1:8000/api'
+    description: Local Development server
+tags:
+  - name: common
+    description: common API
+  - name: auth
+    description: auth API
+  - name: users
+    description: users API
+paths:
+  /:
+    get:
+      summary: Check server up/down status
+      operationId: rootpoint
+      tags:
+        - common
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Server Error
+
+  /get-configs/{type}:
+    get:
+      summary: get config values
+      operationId: config
+      tags:
+        - common
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: type
+          schema:
+            type: string
+            enum:
+              - s3
+          required: true
+          description: config type
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Server Error
+
+  /aws-presigned:
+    get:
+      summary: Get Presigned url from amazon aws
+      operationId: presignedUrl
+      tags:
+        - common
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: query
+          name: path
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: type
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Server Error
+  
+  
+  /auth/login:
+    post:
+      summary: Login
+      operationId: login
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: vasimkhan658@gmail.com
+                password:
+                  type: string
+                  example: '123456'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '500':
+          description: Server Error
+  
+
+  
+
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    User:
+      properties:
+        firstName:
+          type: string
+          example: Vaseem
+        lastName:
+          type: string
+          example: Khan
+        password:
+          type: string
+          example: '1234567'
+        gender:
+          type: string
+          example: male
+        dob:
+          type: number
+          example: 1623152805000
+        profileImage:
+          type: string
+          example: default.png
+        address:
+          type: string
+          example: Jaipur, Rajasthan India
+       
+        
+    

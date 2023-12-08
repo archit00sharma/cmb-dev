@@ -1,0 +1,31 @@
+{
+    "env": "production",
+    "siteTitle": "CMB",
+    "siteUrl": "https://cmbmanagement.in",
+    "dbConfig": {
+        "host": "3.108.79.91",
+        "database": "cmbmanagement",
+        "port": 27941,
+        "username": "cmbmanagement",
+        "password": "pRaJEvO86-Wa5rUcRIpE"
+    },
+    "awsS3": {
+        "prefix": "production/",
+        "accessKeyId": "AKIATF3V6HB74VMB556W",
+        "secretAccessKey": "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",
+        "bucketName": "cmb-management",
+        "bucketRegion": "ap-south-1",
+        "secretEndPoint": "s3-ap-south-1.amazonaws.com",
+        "url": "https://cmb-management.s3.ap-south-1.amazonaws.com/"
+    },
+    "secretKey": "6229d687MYNASIF4dc56229dHSDFFFBAbfdc543ca821de5b6543BDFSUDca821de5b52",
+    "recordLimit": 10,
+    "admin": {
+        "fullName": "admin",
+        "name": "cmb",
+        "mobile": "+919999999999",
+        "email": "cmbmanegment@gmail.com",
+        "password": "cL5@10FUTou4",
+        "permissions": ["manager", "senior-supervisor", "supervisor", "field-executive", "bank-member", "download_review_excel", "download_successful_excel"]
+    }
+}

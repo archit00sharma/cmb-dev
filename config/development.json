@@ -1,0 +1,30 @@
+{
+    "env": "development",
+    "siteTitle": "CMB",
+    "siteUrl": "https://dev.cmbmanagement.in",
+    "dbConfig": {
+        "host": "development.eilyyq5.mongodb.net",
+        "database": "cmbmanagement-dev",
+        "port": 27941,
+        "username": "mbmanegment",
+        "password": "sEEhVkBuysaxohUk"
+    },
+    "awsS3": {
+        "prefix": "development/",
+        "accessKeyId": "AKIATF3V6HB74VMB556W",
+        "secretAccessKey": "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",
+        "bucketName": "cmb-management",
+        "bucketRegion": "ap-south-1",
+        "secretEndPoint": "s3-ap-south-1.amazonaws.com",
+        "url": "https://cmb-management.s3.ap-south-1.amazonaws.com/"
+    },
+    "secretKey": "6229d687MYNASIF4dc56229dHSDFFFBAbfdc543ca821de5b6543BDFSUDca821de5b52",
+    "recordLimit": 10,
+    "admin": {
+        "fullName": "cmb",
+        "mobile": "+919999999999",
+        "email": "cmb@yopmail.com",
+        "password": "123456",
+        "permissions": ["manager", "senior-supervisor", "supervisor", "field-executive", "bank-member", "download_review_excel", "download_successful_excel"]
+    }
+}

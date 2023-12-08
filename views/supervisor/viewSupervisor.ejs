@@ -1,0 +1,169 @@
+<%- include("../partials/head") %>
+<%- include("../partials/bodyStartWithNavBar/") %>
+<%- include("../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Supervisors</span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                View all Supervisors Created
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/supervisor/addSupervisor"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
+                            data-toggle="tooltip" title="Add New Manager"><i class="fas fa-plus"></i>&nbsp;
+                            Add</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card mb-4">
+                <div class="card-header">Supervisors</div>
+                <div class="card-body">
+                    <div class="datatable table-responsive">
+                        <table class="table table-bordered table-hover text-nowrap" id="contestCategoryTable"
+                            width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Supervisor Name</th>
+                                    <th>Supervisor Email</th>
+                                    <th>Allocations</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Supervisor Name</th>
+                                    <th>Supervisor Email</th>
+                                    <th>Allocations</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <!-- <span class="float-right"></span> -->
+                    </div>
+                </div>
+            </div>
+            <%- include("../partials/footer") %>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#contestCategoryTable tfoot th').each(function () {
+                var title = $(this).text();
+                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+            });
+            $.fn.dataTable.ext.errMode = "none";
+            $("#contestCategoryTable").DataTable({
+                initComplete: function () {
+                    // Apply the search
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var that = this;
+
+                            $('input', this.footer()).on('keyup change clear',
+                                function () {
+                                    if (that.search() !== this.value) {
+                                        that.search(this.value).draw();
+                                    }
+                                });
+                        });
+                },
+                searching: true,
+                language: {
+                    zeroRecords: "No records to display",
+                },
+                ajax: {
+                    url: `/supervisor/viewSupervisorDatatable`,
+                    type: "post",
+                },
+                columns: [{
+                        data: "count",
+                    },
+                    {
+                        data: "name",
+                    },
+                    {
+                        data: "email",
+                    },
+                    {
+                        data: "allocation",
+                    },
+                    {
+                        data: "action",
+                    },
+                   
+                ],
+            });
+        });
+    </script>
+
+
+
+
+    <script>
+        $(window).on("load", function () {
+            $("#preloader_admin").hide();
+        });
+
+        if (`<%=role%>` == "admin") {
+            function delete_sweet_alert(url, msg) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-sm btn-success ml-2",
+                        cancelButton: "btn btn-sm btn-danger",
+                    },
+                    buttonsStyling: false,
+                });
+                swalWithBootstrapButtons
+                    .fire({
+                        title: msg,
+                        text: "You won't be able to revert this!",
+                        icon: "success",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        reverseButtons: true,
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            swalWithBootstrapButtons.fire("", "Successfully Done", "success");
+                            window.location.href = url;
+                        } else if (
+                            result.dismiss === Swal.DismissReason.cancel
+                        ) {
+                            swalWithBootstrapButtons.fire(
+                                "Cancelled",
+                                "Cancelled successfully :)",
+                                "error"
+                            );
+                            return false;
+                        }
+                    });
+            }
+        }
+
+        
+
+    </script>

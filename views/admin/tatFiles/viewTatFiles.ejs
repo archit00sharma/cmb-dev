@@ -1,0 +1,176 @@
+<%- include("../../partials/head") %>
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> TAT FILES </span>
+                            </h1>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card mb-4">
+                <div class="card-header">Files</div>
+                <div class="card-body">
+                    <div class="datatable table-responsive">
+
+
+
+                        <table class="table table-bordered table-hover text-nowrap table-condensed"
+                            id="contestCategoryTable" width="100%" cellspacing="0">
+
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>File Name</th>
+                                    <th>Status</th>
+                                    <th>Error</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tfoot style="display:table-header-group" id="mine2">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>File Name</th>
+                                    <th>Status</th>
+                                    <th>Error</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </tfoot>
+                            <tbody></tbody>
+
+                            <tfoot id="mine1">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>File Name</th>
+                                    <th>Status</th>
+                                    <th>Error</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <span class="float-right"></span>
+                    </div>
+                </div>
+            </div>
+            <%- include("../../partials/footer") %>
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#contestCategoryTable #mine2 th').each(function () {
+            var title = $(this).text();
+            if (title != "") {
+                $(this).html('<input style=width:8em  type="text"  />');
+            }
+            if (title == "Sno.") {
+                $(this).html('');
+            }
+            if (title == "File Name") {
+                $(this).html('');
+            }
+            if (title == "Error") {
+                $(this).html('');
+            }
+            if (title == "Time") {
+                $(this).html('');
+            }
+            if (title == "Action") {
+                $(this).html('');
+            }
+
+        });
+        $.fn.dataTable.ext.errMode = "none";
+        var table = $("#contestCategoryTable").DataTable({
+            "bLengthChange": false,
+            orderCellsTop: true,
+            fixedHeader: true,
+            paging: true,
+            processing: true,
+            serverSide: true,
+            searching: true,
+            initComplete: function () {
+
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+                        $('input', this.footer()).keypress(function (e) {
+                            if (e.keyCode == 13) {
+                                e.preventDefault()
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            }
+                        });
+                    });
+            },
+            language: {
+                zeroRecords: "No records to display",
+            },
+            ajax: {
+                url: `/admin/viewTatFilesDatatable`,
+                cache: false,
+                type: "post",
+                datatype: "json",
+                data: {}
+            },
+            columns: [{
+                    data: "count",
+                },
+                {
+                    data: "name",
+                },
+                {
+                    data: "status",
+                },
+                {
+                    data: "error",
+                },
+                {
+                    data: "date",
+                },
+                {
+                    data: "time",
+                },
+                {
+                    data: "action",
+                },
+            ],
+
+        });
+
+        $("#contestCategoryTable_filter").css('display', 'none')
+    });
+</script>
+
+<script>
+    $(window).on("load", function () {
+        $("#preloader_admin").hide();
+    });
+</script>

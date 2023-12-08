@@ -1,0 +1,526 @@
+<%- include("../partials/head") %> <%- include("../partials/bodyStartWithNavBar/") %> <%- include("../partials/sideNav")
+            %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> cases </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                View all cases Created
+                            </div>
+                        </div>
+                    </div>
+                    <%if(role=="admin"||role=="senior-supervisor"){%>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/case/uploadCase"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
+                            data-toggle="tooltip" title="Upload New Case File"><i class="fas fa-plus"></i>&nbsp; Add</a>
+                    </div>
+                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid mt-n10">
+
+                            <div class="card mb-4">
+                                <div class="card-header">cases</div>
+                                <div class="card-body">
+                                    <a id="myBtn" class="btn w-35px h-35px mr-1 btn-blue text-uppercase btn-sm"
+                                        data-toggle="tooltip" title="Assign multiple Field-executive"
+                                        data-original-title="Edit">
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                    </a>
+
+                                    <a id="myBtn2" class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm"
+                                        data-toggle="tooltip" title="Delete Multiple cases" data-original-title="Edit">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+
+                                    <div id="myModal" class="modal">
+                                        <div class="modal-content">
+                                            <form action="/case/assignAllFe" method="post">
+                                                <span class="close">&times;</span>
+                                                <select id="fieldExecutiveData" required
+                                                    data-placeholder="Begin typing a name to filter..."
+                                                    class="chosen-select form-control form-control-solid"
+                                                    name="fieldExecutiveId">
+                                                    <option value="" selected disabled>
+                                                        Select the fieldExecutive
+                                                    </option>
+                                                    <% for (let i=0; i <fieldExecutive.length; i++ ) { %>
+                    <option
+                        value="<%=fieldExecutive[i]._id%>,<%=fieldExecutive[i].fullName.replace(/[^a-zA-Z0-9 ]/g, "")%>">
+                        <%=fieldExecutive[i].fullName%>
+                    </option>
+                    <% } %>
+                    </select>
+                    <input id="caseId" type="text" name="caseId[]" style="display: none" value="" />
+                    <div class="col-12 text-right mt-4 mb-2">
+                        <button class="btn btn-sm btn-success text-uppercase">
+                            <i class="far fa-check-circle"></i>&nbsp;Submit
+                        </button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="datatable table-responsive">
+                <table class="table table-bordered table-hover text-nowrap display" id="contestCategoryTable"
+                    width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Sno.</th>
+                            <th>File NO</th>
+                            <th>Mobile NO</th>
+                            <th>Applicant Name</th>
+                            <th>Address Type</th>
+                            <th>Address</th>
+                            <th id="kkr">Manager Assigned</th>
+                            <th>Senior supervisor Assigned</th>
+                            <th>Supervisor Assigned</th>
+                            <th>Field Executive Assigned</th>
+                            <th>Product</th>
+                            <th>Area</th>
+                            <th>Bank</th>
+                            <th>Case Uploaded Date</th>
+                            <th>Case Uploaded Time</th>
+                            <th>Action</th>
+                            <th>caseId</th>
+                        </tr>
+                    </thead>
+                   
+                    <tfoot style="display:table-header-group" id="mine2">
+                        <tr>
+                            <th>Sno.</th>
+                            <th>File NO</th>
+                            <th>Mobile NO</th>
+                            <th>Applicant Name</th>
+                            <th>Address Type</th>
+                            <th>Address</th>
+                            <th>Manager Assigned</th>
+                            <th>senior supervisor Assigned</th>
+                            <th>supervisor Assigned</th>
+                            <th>Field Executive Assigned</th>
+                            <th>Product</th>
+                            <th>Area</th>
+                            <th>Bank</th>
+                            <th>Case Uploaded Date</th>
+                            <th>Case Uploaded Time</th>
+                            <th>Action</th>
+                            <th>caseId</th>
+                        </tr>
+                    </tfoot>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#contestCategoryTable #mine2 th").each(function () {
+            var title = $(this).text();
+            if (title != "") {
+                    $(this).html('<input style=width:8em  type="text"  />');
+                }
+            
+        });
+        $.fn.dataTable.ext.errMode = "none";
+        let dataTable = $("#contestCategoryTable").DataTable({
+            columnDefs: [{
+                orderable: false,
+                className: "select-checkbox",
+                targets: 0,
+            }, ],
+            select: {
+                style: "multi",
+                selector: "td:first-child",
+            },
+            order: [
+                [0, "asc"]
+            ],
+            "bLengthChange": false,
+            orderCellsTop: true,
+            fixedHeader: true,
+            paging: true,
+            processing: true,
+            serverSide: true,
+            searching: true,
+            initComplete: function () {
+                // Apply the search
+                this.api()
+                    .columns()
+                    .every(function () {
+                        var that = this;
+                        $('input', this.footer()).keypress(function (e) {
+                            if (e.keyCode == 13) {
+                                e.preventDefault()
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            }
+                        });
+                    });
+            },
+            language: {
+                zeroRecords: "No records to display",
+            },
+            ajax: {
+                url: `/case/viewCaseDatatable`,
+                type: "post",
+            },
+            columns: [{
+                    data: "count",
+                },
+                {
+                    data: "fileNo",
+                },
+                {
+                    data: "mobileNo",
+                },
+                {
+                    data: "applicantName",
+                },
+                {
+                    data: "addressType",
+                },
+                {
+                    data: "address",
+                },
+                {
+                    data: "managerAssigned",
+                },
+                {
+                    data: "seniorSupervisorAssigned",
+                },
+                {
+                    data: "supervisorAssigned",
+                },
+                {
+                    data: "fieldExecutiveAssigned",
+                },
+                {
+                    data: "product",
+                },
+                {
+                    data: "area",
+                },
+                {
+                    data: "bank",
+                },
+                {
+                    data: "date",
+                },
+                {
+                    data: "time",
+                },
+
+                {
+                    data: "action",
+                },
+                {
+                    data: "caseId",
+                },
+            ],
+        });
+        // $('#contestCategoryTable tbody').on('click', ' td:first-child', function () {
+        //     $(this).toggleClass('selected');
+        // });
+        $("#contestCategoryTable_filter").css('display', 'none')
+        
+        if (`<%=role%>` != "supervisor") {
+            $("#myBtn").click(function () {
+                let x = dataTable.rows(".selected").data().toArray();
+                let count = 0;
+                for (let i = 0; i < x.length; i++) {
+                    if (x[i].supervisorAssigned.length > 50) {
+                        count = count + 1;
+                    }
+                }
+                if (count > 0) {
+                    alert(`supervisor not present in ${count} cases`);
+                }
+                let id = [];
+                for (let i = 0; i < x.length; i++) {
+                    id[i] = x[i].caseId;
+                }
+                $("#caseId").val(id);
+                var modal = document.getElementById("myModal");
+                var btn = document.getElementById("myBtn");
+                var span = document.getElementsByClassName("close")[0];
+                if (x.length > 0) {
+                    modal.style.display = "block";
+                }
+
+                span.onclick = function () {
+                    modal.style.display = "none";
+                };
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                };
+            });
+        }
+       
+        $('#myBtn2').click(function () {
+            let x = dataTable.rows('.selected').data().toArray()
+            if (x.length > 0) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-sm btn-success",
+                        cancelButton: "btn btn-sm btn-danger",
+                    },
+                    buttonsStyling: false,
+                });
+                swalWithBootstrapButtons
+                    .fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "success",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes, delete it!",
+                        cancelButtonText: "No, cancel!",
+                        reverseButtons: true,
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            let result = ""
+                            let id = []
+                            for (let i = 0; i < x.length; i++) {
+                                id[i] = x[i].caseId
+                            }
+
+                            let data = {
+                                id: id
+                            }
+                            $.ajax({
+                                url: "/case/deletePendingCases",
+                                data: data,
+                                type: "post",
+                                success: function (data) {
+                                    if (data == "success") {
+                                        swalWithBootstrapButtons.fire(
+                                            "Deleted!",
+                                            "Your files has been deleted.",
+                                            "success"
+                                        );
+                                        window.location.reload();
+                                    } else {
+                                        alert("one or more cases cannot be deleted")
+                                        window.location.reload();
+
+                                    }
+
+                                }
+                            })
+
+
+                        } else if (
+                            /* Read more about handling dismissals below */
+                            result.dismiss === Swal.DismissReason.cancel
+                        ) {
+                            swalWithBootstrapButtons.fire(
+                                "Cancelled",
+                                "Your imaginary file is safe :)",
+                                "error"
+                            );
+                        }
+                    });
+            }
+
+        })
+
+    });
+</script>
+</div>
+</main>
+<%- include("../partials/footer") %>
+
+<script>
+    $(window).on("load", function () {
+        $("#preloader_admin").hide();
+    });
+</script>
+<script>
+    $("#b1").click(function () {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-sm btn-success",
+                cancelButton: "btn btn-sm btn-danger",
+            },
+            buttonsStyling: false,
+        });
+        swalWithBootstrapButtons
+            .fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true,
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        "Deleted!",
+                        "Your file has been deleted.",
+                        "success"
+                    );
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        "Cancelled",
+                        "Your imaginary file is safe :)",
+                        "error"
+                    );
+                }
+            });
+    });
+</script>
+<script>
+    if (`<%=role%>` == "admin") {
+        function delete_sweet_alert(url, msg) {
+            // sweet alert
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-sm btn-success ml-2",
+                    cancelButton: "btn btn-sm btn-danger",
+                },
+                buttonsStyling: false,
+            });
+            swalWithBootstrapButtons
+                .fire({
+                    title: msg,
+                    text: "You won't be able to revert this!",
+                    icon: "success",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    reverseButtons: true,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        swalWithBootstrapButtons.fire("", "Successfully Done", "success");
+                        window.location.href = url;
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            "Cancelled",
+                            "Cancelled successfully :)",
+                            "error"
+                        );
+                        return false;
+                    }
+                });
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        var table = $("#contestCategoryTable").DataTable();
+        table.column(16).visible(false);
+        if ("<%=role%>" == "manager") {
+            table.column(6).visible(false);
+        }
+        if ("<%=role%>" == "senior-supervisor") {
+            table.column(6).visible(false);
+            table.column(7).visible(false);
+        }
+        if ("<%=role%>" == "supervisor") {
+            table.column(6).visible(false);
+            table.column(7).visible(false);
+            table.column(8).visible(false);
+        }
+    });
+</script>
+<script>
+    function assignFieldExecutive(url, msg) {
+        // sweet alert
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-sm btn-success ml-2",
+                cancelButton: "btn btn-sm btn-danger",
+            },
+            buttonsStyling: false,
+        });
+        swalWithBootstrapButtons
+            .fire({
+                title: msg,
+                text: "You won't be able to revert this!",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                reverseButtons: true,
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire("", "Successfully Done", "success");
+                    window.location.href = url;
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        "Cancelled",
+                        "Cancelled successfully :)",
+                        "error"
+                    );
+                    return false;
+                }
+            });
+    }
+
+    function direct_to_supervisor(url, msg) {
+        // sweet alert
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-sm btn-success ml-2",
+                cancelButton: "btn btn-sm btn-danger",
+            },
+            buttonsStyling: false,
+        });
+        swalWithBootstrapButtons
+            .fire({
+                title: msg,
+                text: "You won't be able to revert this!",
+                icon: "success",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                reverseButtons: true,
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire("", "Successfully Done", "success");
+                    window.location.href = url;
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        "Cancelled",
+                        "Cancelled successfully :)",
+                        "error"
+                    );
+                    return false;
+                }
+            });
+    }
+</script>
+</div>

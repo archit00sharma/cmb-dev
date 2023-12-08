@@ -1,0 +1,440 @@
+<%- include("../partials/head") %>
+<%- include("../partials/bodyStartWithNavBar") %>
+<%- include("../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Bank Member
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Edit Bank Member
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/bankMember/viewBankMember" style="margin-left: 20px;"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View All Bank Members"><i class="fa fa-eye"></i>&nbsp;
+                            View</a>
+
+                        <a href="/bankMember/allocations?id=<%= encodeURIComponent(id) %>&name=<%= encodeURIComponent(bankMemberData.fullName) %>"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View All Managers" style="margin-left: 10px;"><i
+                                class="fa fa-eye"></i>&nbsp;
+                            View Allocations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header">Edit Bank Member</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+                            <form method="POST" action="/bankMember/editBankMember" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <div style="display:none;" class="form-group col-md-6 col-12">
+                                    <input name="addMember" class="form-control form-control-solid" type="text"
+                                        id="addMember" value="bankMember">
+                                    <input name="myUrl" class="form-control form-control-solid" type="text" id="myUrl"
+                                        value="" />
+                                </div>
+                                <div style="display:none;" class="form-group col-md-6 col-12">
+                                    <input name="id" class="form-control form-control-solid" type="text" id="id"
+                                        value="<%=id%>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="first-name">Name<span>*</span></label>
+                                    <input name="name" class="form-control form-control-solid" type="text"
+                                        value="<%=bankMemberData.fullName%>" placeholder="Please enter name" required
+                                        id="first-name">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="email">Email<span
+                                            class="">*</span></label>
+                                    <input name="email" class="form-control form-control-solid" type="email"
+                                        value="<%=bankMemberData.email%>" placeholder="Please enter email" required
+                                        id="email">
+                                </div>
+                                <div id="managerFields2" class="form-icon-wrap contenttext">
+                                    <div id="inManagerFields0" class="form-wrapper mannger-text">
+
+                                        <div id="addProduct" class="form-group form-info" style="position: relative">
+
+                                            <label class="control-label text-bold"
+                                                for="product[]">Product<span></span></label>
+                                        </div>
+                                        <div id="addBank" class="form-group form-info" style="position: relative">
+
+                                            <label class="control-label text-bold" for="bank">Bank<span></span></label>
+                                        </div>
+                                    </div>
+                                    <div class="plus-minus-wrap plus-button mannger-plus">
+                                        <div id="plus" class="icon">
+                                            <div class="icon-wrap">
+                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class="control-label text-bold" for="password">Password<span
+                                            class=""></span></label>
+                                    <input name="password" class="form-control form-control-solid" type="password"
+                                        minlength="5" placeholder="Please enter password" id="password">
+                                </div>
+                                <div class="form-group col-12 mt-2">
+                                    <label class="control-label text-2x" for="first-name">Permissions<span
+                                            class="required"></span></label>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-12 my-2">
+                                            <div class="row shadow bg-white rounded-10 py-3 px-2 mx-0 h-100">
+                                                <div class="form-group col-md-12 mb-0">
+                                                    <label class="control-label text-primary"><i
+                                                            class="fad fa-shield-alt"></i>Bank Member
+                                                        Permisions
+                                                    </label>
+
+                                                    <div class="custom-control custom-switch">
+
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            name="selectall" id="selectallmusiccategorymanager">
+
+                                                        <label
+                                                            class="custom-control-label fs-14 text-uppercase font-weight-900"
+                                                            for="selectallmusiccategorymanager">Select
+                                                            all
+                                                            Permissions</label>
+                                                        <script>
+                                                            $(document).ready(function () {
+                                                                $("#selectallmusiccategorymanager").click(
+                                                                    function () {
+                                                                        if (this.checked) {
+                                                                            $('.selectallmusiccategorymanager')
+                                                                                .each(
+                                                                                    function () {
+                                                                                        $(".selectallmusiccategorymanager")
+                                                                                            .prop('checked',
+                                                                                                true);
+                                                                                    })
+                                                                        } else {
+                                                                            $('.selectallmusiccategorymanager')
+                                                                                .each(
+                                                                                    function () {
+                                                                                        $(".selectallmusiccategorymanager")
+                                                                                            .prop('checked',
+                                                                                                false);
+                                                                                    })
+                                                                        }
+                                                                    });
+                                                            });
+                                                        </script>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+                                                        <% if(bankMemberData && bankMemberData.permissions.includes('upload_case')===true){ %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-create_category"
+                                                            value="upload_case" checked name="permissions[]">
+                                                        <% } else { %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-create_category"
+                                                            value="upload_case" name="permissions[]">
+                                                        <% } %>
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-create_category">Upload
+                                                            Case</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+                                                        <% if(bankMemberData && bankMemberData.permissions.includes('pdf')===true){ %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-edit_contest_category"
+                                                            value="pdf" checked name="permissions[]">
+                                                        <% } else { %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-edit_contest_category"
+                                                            value="pdf" name="permissions[]">
+                                                        <% } %>
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-edit_contest_category">PDF</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+                                                        <% if(bankMemberData && bankMemberData.permissions.includes('excel')===true){ %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-view_contest_category"
+                                                            value="excel" checked name="permissions[]">
+                                                        <% } else { %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-view_contest_category"
+                                                            value="excel" name="permissions[]">
+                                                        <% } %>
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-view_contest_category">EXCEL</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+                                                        <% if(bankMemberData && bankMemberData.permissions.includes('case_images')===true){ %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-add_contest_category"
+                                                            value="case_images" checked name="permissions[]">
+                                                        <% } else { %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-add_contest_category"
+                                                            value="case_images" name="permissions[]">
+                                                        <% } %>
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-add_contest_category">Case
+                                                            Images</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+                                                        <% if(bankMemberData && bankMemberData.permissions.includes('view_case')===true){ %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-delete_contest_category"
+                                                            value="view_case" checked name="permissions[]">
+                                                        <% } else { %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-delete_contest_category"
+                                                            value="view_case" name="permissions[]">
+                                                        <% } %>
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-delete_contest_category">View
+                                                            Cases
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-switch">
+                                                        <% if(bankMemberData && bankMemberData.permissions.includes('active')===true){ %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-active_contest_category"
+                                                            value="active" checked name="permissions[]">
+                                                        <% } else { %>
+                                                        <input type="checkbox"
+                                                            class="custom-control-input selectallmusiccategorymanager"
+                                                            id="selectallmusiccategorymanager-active_contest_category"
+                                                            value="active" name="permissions[]">
+                                                        <% } %>
+                                                        <label class="custom-control-label fs-14 font-weight-normal"
+                                                            for="selectallmusiccategorymanager-active_contest_category">Active</label>
+                                                    </div>
+
+
+                                                    <div id="passwordModal" class="modal">
+                                                        <div class="modal-content">
+                                                            <span class="close">&times;</span>
+                                                            <h2 class="modal-title">Enter Password</h2>
+                                                            <div class="form-group">
+                                                                <input type="password" id="passwordInput"
+                                                                    class="form-control" placeholder="Password"
+                                                                    style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                                                            </div>
+                                                            <button id="submitPassword" class="btn btn-primary"
+                                                                style="display: block; width: 100%; text-align: center; padding: 10px;">Submit</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../partials/footer") %>
+
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        })
+
+
+        // Get the checkbox and password modal elements
+        const checkbox = document.getElementById("selectallmusiccategorymanager-active_contest_category");
+        const checkboxAll = document.getElementById("selectallmusiccategorymanager");
+        const modal = document.getElementById("passwordModal");
+        const passwordInput = document.getElementById("passwordInput");
+        const submitButton = document.getElementById("submitPassword");
+
+        // Function to show the password modal
+        function showPasswordModal() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks the checkbox
+        checkbox.addEventListener("click", function () {
+            showPasswordModal(); // Always show the password modal on checkbox click
+        });
+
+        checkboxAll.addEventListener("click", function () {
+            showPasswordModal(); // Always show the password modal on checkbox click
+        });
+
+        // When the user clicks the close button in the modal
+        document.querySelector(".close").addEventListener("click", function () {
+            modal.style.display = "none";
+
+            // Check the current state of the checkbox
+            const currentCheckboxState = checkbox.checked;
+
+            // If the current state is different from the previous state, revert it
+            if (currentCheckboxState !== previousCheckboxState) {
+                checkbox.checked = previousCheckboxState;
+            }
+
+            passwordInput.value = ""; // Clear the password input
+        });
+
+        // When the user clicks the Submit button
+        // When the user clicks the Submit button
+        submitButton.addEventListener("click", function (e) {
+            e.preventDefault()
+            const password = passwordInput.value;
+
+            // Perform AJAX request here to validate the password using jQuery
+            $.ajax({
+                url: '/admin/checkPassword',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    password: password
+                }),
+                success: function (data) {
+
+                    if (data.code !== 401) {
+                        // Password is valid, you can proceed with your action
+                        modal.style.display = "none";
+                    } else {
+                        // Password is invalid, display an error message
+                        alert(data.message);
+                        passwordInput.value = ""; // Clear the password input
+                    }
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                    alert(error.message);
+                }
+            });
+        });
+
+        // Initialize the previousCheckboxState based on the initial state of the checkbox
+        let previousCheckboxState = checkbox.checked;
+
+
+
+
+
+
+        $(document).ready(function () {
+            $('#select_all').on('click', function () {
+                if (this.checked) {
+                    $('.checkbox').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.checkbox').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+            $('.checkbox').on('click', function () {
+                if ($('.checkbox:checked').length == $('.checkbox').length) {
+                    $('#select_all').prop('checked', true);
+                } else {
+                    $('#select_all').prop('checked', false);
+                }
+            });
+        });
+
+
+        let deleteItem = 0;
+        count = 0;
+        $("#plus").click(function () {
+            $("#managerFields2").append(`<div id="insideManagerFields${count}" class="form-wrapper">
+                                                    
+
+                                                    <div id="addProductSelect${count}" class="form-group form-info"
+                                                        style="position: relative">
+                                                        <select required id="productSelect${count}" multiple
+                                                            data-placeholder="Begin typing a name to filter..."
+                                                            class="chosen-select form-control form-control-solid"
+                                                            name="product[${count}][]">
+                                                            <% for (let i=0; i <product.length; i++ ) { %>
+                                                                <option 
+                                                                    value="<%=product[i].product%>">
+                                                                    <%=product[i].product%>
+                                                                </option>
+                                                                <% } %>
+                                                        </select>
+                                                    </div>
+                                                    <div id="addBankSelect${count}" class="form-group form-info"
+                                                        style="position: relative">
+                                                        <select required id="bankSelect${count}" multiple data-placeholder="Begin typing a name to filter..."
+                                                            class="chosen-select form-control form-control-solid"
+                                                            name="bank[${count}][]">
+                                                            
+                                                            <% for (let i=0; i <bank.length; i++ ) { %>
+                                                                <option value="<%=bank[i].bank%>">
+                                                                    <%=bank[i].bank%>
+                                                                </option>
+                                                                <% } %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div id="${count}minus" class="icon icon2" onclick="deleteMinus(this.id)" >
+                                                        <div class="icon-wrap">
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </div>
+                                                    </div>`)
+            count++
+
+        })
+
+        function deleteMinus(x) {
+            let y = parseInt(x)
+
+            $(`#insideManagerFields${y}`).remove()
+            $(`#${x}`).remove()
+            count--
+
+        }
+
+
+        $("#myUrl").val(window.location.href)
+    </script>

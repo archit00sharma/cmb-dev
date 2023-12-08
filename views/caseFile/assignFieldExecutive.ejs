@@ -1,0 +1,155 @@
+<%- include("../partials/head") %>
+
+<%- include("../partials/bodyStartWithNavBar") %>
+<%- include("../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Assign Field Executive
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Assign Field Executive
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+
+            <script>
+                $(window).on("load", function () {
+
+                    var success = '';
+                    var danger = '';
+                    var error = '';
+                    var warning = '';
+
+                    if (success) {
+                        $("#toastBasic4").toast('show');
+                    }
+
+                    if (danger || error) {
+                        $("#toastBasic3").toast('show');
+                    }
+
+                    if (warning) {
+                        $("#toastBasic2").toast('show');
+                    }
+                });
+            </script>
+
+            <div class="card">
+                <div class="card-header">Assign Field Executive</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+
+                            <form method="POST" action="/case/assignFieldExecutive" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                        </div>
+                        <input name="caseId" type="text" style="display:none" value="<%=id%>">
+                        <input name="area" type="text" style="display:none" value="<%=area%>">
+                        <input name="product" type="text" style="display:none" value="<%=product%>">
+                        <input name="bank" type="text" style="display:none" value="<%=bank%>">
+                        <input name="mobileNo" type="text" style="display:none" value="<%=mobileNo%>">
+                        <input name="fileNo" type="text" style="display:none" value="<%=fileNo%>">
+                        <input name="p" type="text" style="display:none" value="<%=p%>">
+                        <div id="fieldExecutive" class="form-group col-md-6 col-12" style="position: relative">
+                            <label class="control-label text-bold" for="fieldExecutive">fieldExecutives<span
+                                    class="">*</span></label>
+                            <select id="fieldExecutiveData" required data-placeholder="Begin typing a name to filter..."
+                                class="chosen-select form-control form-control-solid" name="fieldExecutiveId">
+                                <option value="" selected disabled>Select the fieldExecutive</option>
+                                <% for (let i=0; i <fieldExecutiveData.length; i++ ) { %>
+                                <option value="<%=fieldExecutiveData[i]._id%>">
+                                    <%=fieldExecutiveData[i].fullName%>
+                                </option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-right mt-4 mb-2">
+                    <button class="btn btn-sm btn-success text-uppercase">
+                        <i class="far fa-check-circle"></i>&nbsp;Submit
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
+</div>
+</div>
+</div>
+</main>
+
+<%- include("../partials/footer") %>
+
+<script>
+    $(window).on('load', function () {
+        $('#preloader_admin').hide();
+    })
+</script>
+
+<script>
+    $('#special').on('click', function () {
+        mySelect.find('option:selected').prop('disabled', true);
+        mySelect.selectpicker('refresh');
+    });
+
+    $('#special2').on('click', function () {
+        mySelect.find('option:disabled').prop('disabled', false);
+        mySelect.selectpicker('refresh');
+    });
+
+    $('#basic2').selectpicker({
+        liveSearch: true,
+        maxOptions: 1
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($('#accordionSidenavPages a').hasClass('active')) {
+            $('#accordionSidenavPages a.active').parent().parent().prev('a').removeClass('collapsed');
+            $('#accordionSidenavPages a.active').parent().parent().addClass('show');
+           
+        } else {
+            $('#takeonebar').addClass('slamdown');
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#select_all').on('click', function () {
+            if (this.checked) {
+                $('.checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $('.checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+        $('.checkbox').on('click', function () {
+            if ($('.checkbox:checked').length == $('.checkbox').length) {
+                $('#select_all').prop('checked', true);
+            } else {
+                $('#select_all').prop('checked', false);
+            }
+        });
+    });
+</script>

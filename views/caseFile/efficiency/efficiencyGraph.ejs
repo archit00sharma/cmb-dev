@@ -1,0 +1,264 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="layoutSidenav_content">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+    </style>
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Team Performance
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Team Performance
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header">Team Efficiency</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4 " style="display:flex;">
+                            <div id="myChart" style="width:65%; max-width:600px; height:700px;">
+
+                            </div>
+
+                            <div id="caseDetails" class="form-wrapper" style="width:35%;">
+                                <% if (member=="fieldExecutive") { %>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>Role</td>
+                                        <td><%=member%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><%=name%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>From</td>
+                                        <td><%=min%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>To</td>
+                                        <td><%=max%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="submittedCases" value="submittedCases">submittedCases</button>
+                                        </td>
+                                        <td><%=submittCases?submittCases:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="declinedCases" value="declinedCases">declinedCases</button></td>
+                                        <td><%=declinedCases?declinedCases:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="notAcceptedCases"
+                                                value="notAcceptedCases">notAcceptedCases</button></td>
+                                        <td><%=notAccepted?notAccepted:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="acceptedNotSubmitted"
+                                                value="acceptedNotSubmitted">acceptedNotSubmitted</button></td>
+                                        <td><%=acceptedNotSubmitted?acceptedNotSubmitted:0%></td>
+                                    </tr>
+                                </table>
+                                <%} else { %>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>Role</td>
+                                        <td><%=member%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><%=name%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>From</td>
+                                        <td><%=min%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>To</td>
+                                        <td><%=max%></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>submitted Cases</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="feSubmitted" value="feSubmitted">feSubmitted</button>
+                                        <td><%=feSubmitted?feSubmitted:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="directToSupervisor"
+                                                value="directToSupervisor">directToSupervisor</button>
+                                        <td><%=directToSupervisor?directToSupervisor:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="notFeNorDirect" value="notFeNorDirect">notFeNorDirect</button>
+                                        <td><%=notFeNorDirect?notFeNorDirect:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i>Total submitted Cases</i></td>
+                                        <td><%=(feSubmitted?feSubmitted:0)+(directToSupervisor?directToSupervisor:0)+(notFeNorDirect?notFeNorDirect:0)%>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b>Pending Cases</b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="feAssigned" value="feAssigned">feAssigned</button>
+                                        <td><%=feAssigned?parseInt(feAssigned):0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="feNotAssigned" value="feNotAssigned">feNotAssigned</button>
+                                        <td><%=feNotAssigned?feNotAssigned:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="directToSupervisorP"
+                                                value="directToSupervisorP">directToSupervisorP</button>
+                                        <td><%=directToSupervisorP?directToSupervisorP:0%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i>Total Pending cases</i></td>
+                                        <td><%=(feAssigned?parseInt(feAssigned):0)+(feNotAssigned?parseInt(feNotAssigned):0)+(directToSupervisorP?parseInt(directToSupervisorP):0)%>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <% } %>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../../partials/footer") %>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        });
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        let member = "<%=member%>"
+        if (member == "fieldExecutive") {
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                let s = "<%=submittCases%>" ? "<%=submittCases%>" : 0
+                let d = "<%=declinedCases%>" ? "<%=declinedCases%>" : 0
+                let n = "<%=notAccepted%>" ? "<%=notAccepted%>" : 0
+                let a = "<%=acceptedNotSubmitted%>" ? "<%=acceptedNotSubmitted%>" : 0
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'caseDetail');
+                data.addColumn('number', 'caseNumbers');
+                data.addRows([
+                    ['cases submitted by fieldExecutive', parseInt(s)],
+                    ['cases declined by fieldExecutive', parseInt(d)],
+                    ['cases not accepted by fieldExecutive', parseInt(n)],
+                    ['cases accepted but not submitted by field executive', parseInt(a)],
+
+                ]);
+                var options = {
+                    title: 'Member efficiency'
+                };
+                var chart = new google.visualization.PieChart(document.getElementById(
+                    'myChart'));
+                chart.draw(data, options);
+            }
+
+        } else {
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                let fs = "<%=feSubmitted%>" ? "<%=feSubmitted%>" : 0
+                let d = "<%=directToSupervisor%>" ? "<%=directToSupervisor%>" : 0
+                let fa = "<%=feAssigned%>" ? "<%=feAssigned%>" : 0
+                let fna = "<%=feNotAssigned%>" ? "<%=feNotAssigned%>" : 0
+                let dp = "<%=directToSupervisorP%>" ? "<%=directToSupervisorP%>" : 0
+                let submittedCases = parseInt(fs) + parseInt(d)
+                let pendingCases = parseInt(fa) + parseInt(fna) + parseInt(dp)
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'caseDetail');
+                data.addColumn('number', 'caseNumbers');
+                data.addRows([
+                    ['submittedCases', submittedCases],
+                    ['pendingCases', pendingCases],
+
+                ]);
+                var options = {
+                    title: 'Member efficiency'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById(
+                    'myChart'));
+                chart.draw(data, options);
+            }
+
+        }
+    </script>
+    <script>
+        $("button").click(function () {
+            $('#preloader_admin').show();
+            let data = {
+                id: "<%=id%>",
+                member: "<%=member%>",
+                teamEfficiency: "teamEfficiency",
+                excel: "excel",
+                section: $(this).val(),
+                min: "<%=min%>",
+                max: "<%=max%>"
+            }
+
+            $.ajax({
+                url: "/case/calEfficiency",
+                type: "post",
+                data: data,
+                success: function (data) {
+                    $('#preloader_admin').hide()
+                    if (data == "SUCCESS") {
+                        var file_path = '/succEx/newFile.xlsx';
+                        var a = document.createElement('A');
+                        a.href = file_path;
+                        a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    } else if (data == "NO DATA FOUND") {
+                        alert("NO DATA FOUND")
+                    } else if ("FAILED") {
+                        alert("Some error occured while downloading excel")
+                    }
+                }
+            })
+        })
+    </script>

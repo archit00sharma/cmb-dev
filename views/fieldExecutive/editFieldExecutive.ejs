@@ -1,0 +1,305 @@
+<%- include("../partials/head") %> <%-
+include("../partials/bodyStartWithNavBar") %> <%- include("../partials/sideNav")
+%>
+<div id="layoutSidenav_content">
+  <main>
+    <%- include("../partials/alertMsg") %>
+    <div class="page-header pb-10 page-header-dark">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="page-header-content">
+              <h1 class="page-header-title fs-md-35 fs-20">
+                <div class="page-header-icon">
+                  <i class="fad fa-at text-white"></i>
+                </div>
+                <span class="text-capitalize"> Field Executive </span>
+              </h1>
+              <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                Edit Field Executive
+              </div>
+            </div>
+          </div>
+          <div class="col-auto mb-md-0 mb-3">
+            <a href="/field-executive/viewFieldExecutive"
+              class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+              data-toggle="tooltip" title="View All FieldE4xecutive"><i class="fa fa-eye"></i>&nbsp; View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt-n10">
+      <script>
+        $(window).on("load", function () {
+          var success = "";
+          var danger = "";
+          var error = "";
+          var warning = "";
+
+          if (success) {
+            $("#toastBasic4").toast("show");
+          }
+
+          if (danger || error) {
+            $("#toastBasic3").toast("show");
+          }
+
+          if (warning) {
+            $("#toastBasic2").toast("show");
+          }
+        });
+      </script>
+
+      <div class="card">
+        <div class="card-header">Add Field Executive</div>
+        <div class="card-body">
+          <div class="sbp-preview">
+            <div class="sbp-preview-content p-4">
+              <form onsubmit="return check()" method="POST" action="/field-executive/editFieldExecutive"
+                accept-charset="UTF-8" id="j-forms" class="j-forms row mx-0" enctype="multipart/form-data">
+                <div style="display: none" class="form-group col-md-6 col-12">
+                  <input name="addMember" class="form-control form-control-solid" type="text" id="addMember"
+                    value="field-executive" />
+                  <input name="pic" class="form-control form-control-solid" type="text" id="pic"
+                    value="<%=fieldExecutiveData.profilePic%>" />
+                    <input name="myUrl" class="form-control form-control-solid" type="text" id="myUrl"
+                                                        value="" />
+                </div>
+                <div style="display: none" class="form-group col-md-6 col-12">
+                  <input name="typename" class="form-control form-control-solid" type="text" id="typename"
+                    value="fieldExecutiveProfilePic" />
+                </div>
+                <div style="display: none" class="form-group col-md-6 col-12">
+                  <input name="id" class="form-control form-control-solid" type="text" id="id" value="<%=id%>" />
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <div class="row justify-content-center py-0">
+                    <h1 class="fs-14 font-weight-bold text-center mt-3 col-12">
+                      Profile Image
+                    </h1>
+                    <div class="avatar-upload col-auto position-relative">
+                      <div class="avatar-edit position-absolute right-0px z-index-1 top-2px">
+                        <input type="file" name="profilePic" id="image" value="archit" class="imageUpload d-none" />
+                        <label
+                          class="d-grid w-40px h-40px mb-0 rounded-pill bg-white text-success fs-20 shadow pointer font-weight-normal align-items-center justify-content-center"
+                          for="image">
+                          <i class="fad fa-pencil"></i>
+                        </label>
+                      </div>
+                      <div class="avatar-preview w-100px h-100px position-relative rounded-pill shadow">
+                        <div class="w-100 h-100 rounded-pill" id="image-imagePreview" name="uuu" value="archit"
+                          style="background-image: url('<%=x%>')"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="first-name">Name<span>*</span></label>
+                  <input name="name" class="form-control form-control-solid" type="text"
+                    value="<%=fieldExecutiveData.fullName%>" placeholder="Please enter name" required id="name" />
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="email">Email<span class="">*</span></label>
+                  <input name="email" class="form-control form-control-solid" type="email"
+                    value="<%=fieldExecutiveData.email%>" placeholder="Please enter email" required id="email" />
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="pancard">Pan Card<span>*</span></label>
+                  <input name="pancard" class="form-control form-control-solid" value="<%=fieldExecutiveData.panCard%>"
+                    type="text" placeholder="Please Enter Pan Card Number" required id="pancard" maxlength="10" />
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="aadhaarcard">Aadhaar Card<span>*</span></label>
+                  <input name="aadhaarcard" class="form-control form-control-solid"
+                    value="<%=fieldExecutiveData.aadhaarCard%>" type="text"
+                    placeholder="Please Enter Aadhaar Card Number" required id="aadhaarcard" minlength="12" />
+                </div>
+
+
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="mobile">Mobile<span class="">*</span></label>
+                  <input name="mobile" class="form-control form-control-solid" required
+                    value="<%=fieldExecutiveData.mobile%>" type="number" placeholder="Please enter Mobile" id="mobile"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="10"
+                    pattern="[1-9]{1}[0-9]{9}" />
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="password">Password<span class=""></span></label>
+                  <input name="password" class="form-control form-control-solid" type="password"
+                    placeholder="Please enter password" minlength="5" id="password" />
+                </div>
+                <div class="col-12 text-right mt-4 mb-2">
+                  <button id="myButton" class="btn btn-sm btn-success text-uppercase">
+                    <i class="far fa-check-circle"></i>&nbsp;Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+  <script>
+    $(window).on("load", function () {
+      $("#preloader_admin").hide();
+    });
+  </script>
+
+  <script>
+    $("#special").on("click", function () {
+      mySelect.find("option:selected").prop("disabled", true);
+      mySelect.selectpicker("refresh");
+    });
+
+    $("#special2").on("click", function () {
+      mySelect.find("option:disabled").prop("disabled", false);
+      mySelect.selectpicker("refresh");
+    });
+
+    $("#basic2").selectpicker({
+      liveSearch: true,
+      maxOptions: 1,
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      if ($("#accordionSidenavPages a").hasClass("active")) {
+        $("#accordionSidenavPages a.active")
+          .parent()
+          .parent()
+          .prev("a")
+          .removeClass("collapsed");
+        $("#accordionSidenavPages a.active").parent().parent().addClass("show");
+      
+      } else {
+        $("#takeonebar").addClass("slamdown");
+      }
+    });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#select_all").on("click", function () {
+        if (this.checked) {
+          $(".checkbox").each(function () {
+            this.checked = true;
+          });
+        } else {
+          $(".checkbox").each(function () {
+            this.checked = false;
+          });
+        }
+      });
+      $(".checkbox").on("click", function () {
+        if ($(".checkbox:checked").length == $(".checkbox").length) {
+          $("#select_all").prop("checked", true);
+        } else {
+          $("#select_all").prop("checked", false);
+        }
+      });
+    });
+  </script>
+
+  <script>
+    $("#pancard").change(function () {
+      pancardFunction();
+    });
+    $("#aadhaarcard").change(function () {
+      aadhaarcardFunction();
+    });
+    $("#mobile").change(function () {
+      mobileFunction();
+    });
+
+    function pancardFunction() {
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+
+      let mobile = $("#mobile").val();
+      if (pancard.length != 10) {
+        alert("Invalid Pancard No");
+        $("#pancard").val("");
+      }
+      if (
+        pancard.length == 10 &&
+        aadhaarcard.length == 12 &&
+        mobile.toString().length == 10
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+
+    function aadhaarcardFunction() {
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+    
+      let mobile = $("#mobile").val();
+      if (aadhaarcard.toString().length != 12) {
+        alert("Invalid Aadhaar Card No");
+        $("#aadhaarcard").val("");
+      }
+      if (
+        pancard.length == 10 &&
+        aadhaarcard.toString().length == 12 &&
+        mobile.toString().length == 10
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+
+    function mobileFunction() {
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+      let mobile = $("#mobile").val();
+      if (mobile.toString().length != 10) {
+        alert("Invalid mobile No");
+        $("#mobile").val("");
+      }
+      if (
+        pancard.length == 10 &&
+        aadhaarcard.toString().length == 12 &&
+        mobile.toString().length == 10
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $("#myButton").prop("disabled", false);
+    });
+  </script>
+
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#" + input.id + "-imagePreview").css(
+            "background-image",
+            "url(" + e.target.result + ")"
+          );
+          $("#" + input.id + "-imagePreview").hide();
+          $("#" + input.id + "-imagePreview").fadeIn(650);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $(".imageUpload").change(function () {
+      readURL(this);
+    });
+    $("#myUrl").val(window.location.href)
+  </script>
+</div>

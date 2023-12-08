@@ -1,0 +1,266 @@
+<%- include("../partials/head") %>
+<%- include("../partials/bodyStartWithNavBar/") %>
+<%- include("../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Senior Supervisor allocations </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                View Allocations
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/senior-supervisor/editSeniorSupervisor/<%=encodeURIComponent(id)%>"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
+                            data-toggle="tooltip" title="Add New Allocation"><i class="fas fa-plus"></i>&nbsp;
+                            Add Allocation</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mt-n10">
+            <div class="card mb-4">
+                <div class="card-header">Senior Spervisor allocations</div>
+                <div class="card-body">
+                    <div class="manager-name-section">
+                        <h6 style="font-size: 16px; color: #333; text-transform: uppercase; margin-bottom: 10px;">
+                            <span style="background-color: #f5f5f5; padding: 4px 8px; border-radius: 4px;">Senior Supervisor's
+                                Name:</span>
+                            <span style="margin-left: 5px; font-weight: bold;"><%= name %></span>
+                        </h6>
+                    </div>
+                    <div class="datatable table-responsive">
+                        <% if (role=="admin") { %>
+                        <a id="myBtn" class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm"
+                            data-toggle="tooltip" title="Delete Multiple cases" data-original-title="Edit">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                        <%} %>
+                        <table class="table table-bordered table-hover text-nowrap" id="contestCategoryTable"
+                            width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Area</th>
+                                    <th>Product</th>
+                                    <th>Bank</th>
+                                    <th>allocId</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot style="display:table-header-group" id="mine2">
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Area</th>
+                                    <th>Product</th>
+                                    <th>Bank</th>
+                                    <th>allocId</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <%- include("../partials/footer") %>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        $(window).on("load", function () {
+            $("#preloader_admin").hide();
+        });
+
+        let columnDefs = []
+        if ("<%=role%>" == "admin") {
+            columnDefs.push({
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }, )
+        }
+        $(document).ready(function () {
+            const data = {
+                id: "<%=id%>",
+                name: "<%=name%>",
+                role: "senior-supervisor"
+            }
+            $('#contestCategoryTable #mine2 th').each(function () {
+                var title = $(this).text();
+                if (title != "") {
+                    $(this).html('<input style=width:8em  type="text"  />');
+                }
+                if (title == "Action") {
+                    $(this).html('');
+                }
+                if (title == "Sno.") {
+                    $(this).html('');
+                }
+
+            });
+
+            $.fn.dataTable.ext.errMode = "none";
+            var table = $("#contestCategoryTable").DataTable({
+                columnDefs: columnDefs,
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+                order: [
+                    [0, 'asc']
+                ],
+                "bLengthChange": false,
+                orderCellsTop: true,
+                fixedHeader: true,
+                paging: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                initComplete: function () {
+                    this.api()
+                        .columns()
+                        .every(function () {
+                            var that = this;
+                            $('input', this.footer()).keypress(function (e) {
+                                if (e.keyCode == 13) {
+                                    e.preventDefault()
+                                    if (that.search() !== this.value) {
+                                        that.search(this.value).draw();
+                                    }
+                                }
+                            });
+                        });
+                },
+
+                language: {
+                    zeroRecords: "No records to display",
+                },
+                ajax: {
+                    url: `/senior-supervisor/viewSeniorSupervisorAllocationDatatable`,
+                    cache: false,
+                    type: "post",
+                    datatype: "json",
+                    data: data
+                },
+                columns: [{
+                        data: "count",
+                    },
+                    {
+                        data: "area",
+                    },
+                    {
+                        data: "product"
+                    },
+                    {
+                        data: "bank"
+                    },
+                    {
+                        data: "allocId"
+                    },
+                    {
+                        data: "action"
+                    },
+                ],
+
+            });
+
+            $("#contestCategoryTable_filter").css('display', 'none')
+
+
+            $('#myBtn').click(function () {
+                let x = table.rows('.selected').data().toArray()
+                if (x.length > 0) {
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-sm btn-success",
+                            cancelButton: "btn btn-sm btn-danger",
+                        },
+                        buttonsStyling: false,
+                    });
+                    swalWithBootstrapButtons
+                        .fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "success",
+                            showCancelButton: true,
+                            confirmButtonText: "Yes, delete it!",
+                            cancelButtonText: "No, cancel!",
+                            reverseButtons: true,
+                        })
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                let result = ""
+                                let checkAlloc = []
+
+                                for (let i = 0; i < x.length; i++) {
+
+                                    checkAlloc[i] = {
+                                        id: x[i].allocId,
+                                        area: x[i].area,
+                                        product: x[i].product,
+                                        bank: x[i].bank
+                                    }
+                                }
+
+                                let data = {
+                                    checkAlloc,
+                                    seniorSupervisorId: "<%=id%>",
+                                }
+                                $.ajax({
+                                    url: "/senior-supervisor/deleteMultipleSeniorSupervisorAllocation",
+                                    data: data,
+                                    type: "post",
+                                    success: function (data) {
+                                        if (data == "success") {
+                                            swalWithBootstrapButtons.fire(
+                                                "Deleted!",
+                                                "Your files has been deleted.",
+                                                "success"
+                                            );
+                                            window.location.reload();
+                                        } else {
+                                            alert(
+                                                "One or more allocations could not be deleted as they are already in use!!!"
+                                            )
+                                            window.location.reload();
+
+                                        }
+
+                                    }
+                                })
+
+
+                            } else if (
+                                result.dismiss === Swal.DismissReason.cancel
+                            ) {
+                                swalWithBootstrapButtons.fire(
+                                    "Cancelled",
+                                    "Your imaginary file is safe :)",
+                                    "error"
+                                );
+                            }
+                        });
+                }
+
+            })
+
+
+            table.column(4).visible(false);
+        });
+    </script>

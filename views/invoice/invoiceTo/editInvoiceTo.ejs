@@ -1,0 +1,109 @@
+<%- include("../../partials/head") %>
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class="text-capitalize">
+                                    Invoice-To Template
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Edit Invoice-To Template
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/invoice/invoiceToList"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+                            data-toggle="tooltip" title="View all Managers"><i class="fa fa-eye"></i>&nbsp;
+                            View Invoice-To Lists</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header"> Edit Invoice-To Template</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+                            <form method="POST" action="/invoice/submitEditInvoiceTo/<%= invoiceData._id %>" accept-charset="UTF-8" id="j-forms"
+                                class="j-forms row mx-0">
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="templateName">Template Name<span>*</span></label>
+                                    <input name="templateName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Template name" required id="templateName" value="<%= invoiceData.templateName %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="placeOfSupply">Place of Supply<span>*</span></label>
+                                    <input name="placeOfSupply" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Place of Supply" required id="placeOfSupply" value="<%= invoiceData.placeOfSupply %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="companyName">Company Name<span>*</span></label>
+                                    <input name="companyName" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Company Name" required id="companyName" value="<%= invoiceData.companyName %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="address">Address<span>*</span></label>
+                                    <input name="address" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Address" required id="address" value="<%= invoiceData.address %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="pan">PAN<span>*</span></label>
+                                    <input name="pan" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter PAN" required id="pan" value="<%= invoiceData.pan %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="gstNumber">GST Number<span>*</span></label>
+                                    <input name="gstNumber" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter GST Number" required id="gstNumber" value="<%= invoiceData.gstNumber %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="state">State<span>*</span></label>
+                                    <input name="state" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter State" required id="state" value="<%= invoiceData.state %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="stateCode">State Code<span>*</span></label>
+                                    <input name="stateCode" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter State Code" required id="stateCode" value="<%= invoiceData.stateCode %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="serviceCategory">Service Category<span>*</span></label>
+                                    <input name="serviceCategory" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Service Category" required id="serviceCategory" value="<%= invoiceData.serviceCategory %>">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="email">Email<span>*</span></label>
+                                    <input name="email" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Email" required id="email" value="<%= invoiceData.email %>">
+                                </div>
+                                <!-- ...rest of your form... -->
+                                <div class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include("../../partials/footer") %>
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        })
+    </script>
+</div>

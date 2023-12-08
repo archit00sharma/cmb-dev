@@ -1,0 +1,504 @@
+<%- include("../partials/head") %> <%-
+include("../partials/bodyStartWithNavBar") %> <%- include("../partials/sideNav")
+%>
+<div id="layoutSidenav_content">
+  <main>
+    <%- include("../partials/alertMsg") %>
+    <div class="page-header pb-10 page-header-dark">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="page-header-content">
+              <h1 class="page-header-title fs-md-35 fs-20">
+                <div class="page-header-icon">
+                  <i class="fad fa-at text-white"></i>
+                </div>
+                <span class="text-capitalize"> Field Executive </span>
+              </h1>
+              <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                Add Field Executive
+              </div>
+            </div>
+          </div>
+          <div class="col-auto mb-md-0 mb-3">
+            <a
+              href="/field-executive/viewFieldExecutive"
+              class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary float-right"
+              data-toggle="tooltip"
+              title="View All FieldExecutive"
+              ><i class="fa fa-eye"></i>&nbsp; View</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt-n10">
+      <script>
+        $(window).on("load", function () {
+          var success = "";
+          var danger = "";
+          var error = "";
+          var warning = "";
+
+          if (success) {
+            $("#toastBasic4").toast("show");
+          }
+
+          if (danger || error) {
+            $("#toastBasic3").toast("show");
+          }
+
+          if (warning) {
+            $("#toastBasic2").toast("show");
+          }
+        });
+      </script>
+
+      <div class="card">
+        <div class="card-header">Add Field Executive</div>
+        <div class="card-body">
+          <div class="sbp-preview">
+            <div class="sbp-preview-content p-4">
+              <form
+                method="POST"
+                action="/field-executive/addFieldExecutiveData"
+                accept-charset="UTF-8"
+                id="j-forms"
+                class="j-forms row mx-0"
+                enctype="multipart/form-data"
+              >
+                <div style="display: none" class="form-group col-md-6 col-12">
+                  <input
+                    name="addMember"
+                    class="form-control form-control-solid"
+                    type="text"
+                    id="addMember"
+                    value="field-executive"
+                  />
+                </div>
+                <div style="display: none" class="form-group col-md-6 col-12">
+                  <input
+                    name="typename"
+                    class="form-control form-control-solid"
+                    type="text"
+                    id="typename"
+                    value="fieldExecutiveProfilePic"
+                  />
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                  <div class="row justify-content-center py-0">
+                    <h1 class="fs-14 font-weight-bold text-center mt-3 col-12">
+                      Profile Image
+                    </h1>
+                    <div class="avatar-upload col-auto position-relative">
+                      <div
+                        class="avatar-edit position-absolute right-0px z-index-1 top-2px"
+                      >
+                        <input
+                          required
+                          type="file"
+                          name="profilePic"
+                          id="image"
+                          class="imageUpload d-none"
+                        />
+                        <label
+                          class="d-grid w-40px h-40px mb-0 rounded-pill bg-white text-success fs-20 shadow pointer font-weight-normal align-items-center justify-content-center"
+                          for="image"
+                        >
+                          <i class="fad fa-pencil"></i>
+                        </label>
+                      </div>
+                      <div
+                        class="avatar-preview w-100px h-100px position-relative rounded-pill shadow"
+                      >
+                        <div
+                          required
+                          class="w-100 h-100 rounded-pill"
+                          id="image-imagePreview"
+                          style="background-image: url('')"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="first-name"
+                    >Name<span>*</span></label
+                  >
+                  <input
+                    name="name"
+                    class="form-control form-control-solid"
+                    type="text"
+                    placeholder="Please enter name"
+                    required
+                    id="name"
+                  />
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="email"
+                    >Email<span class="">*</span></label
+                  >
+                  <input
+                    name="email"
+                    class="form-control form-control-solid"
+                    type="email"
+                    placeholder="Please enter email"
+                    required
+                    id="email"
+                  />
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="pancard"
+                    >Pan Card<span>*</span></label
+                  >
+                  <input
+                    name="pancard"
+                    class="form-control form-control-solid"
+                    type="text"
+                    maxlength="10"
+                    placeholder="Please Enter Pan Card Number"
+                    required
+                    id="pancard"
+                  />
+                </div>
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="aadhaarcard"
+                    >Aadhaar Card<span>*</span></label
+                  >
+                  <input
+                    name="aadhaarcard"
+                    class="form-control form-control-solid"
+                    type="number"
+                    placeholder="Please Enter Aadhaar Card Number"
+                    required
+                    id="aadhaarcard"
+                    maxlength="12"
+                  />
+                </div>
+                <!-- <% if (role=="admin" ) { %>
+                                                    <div id="fieldExecutiveFields" class="form-icon-wrap">
+                                                        <div id="inFieldExecutiveFields" class="form-wrapper">
+                                                            <div id="addarea" class="form-group form-info"
+                                                                style="position: relative">
+                                                                <label class="control-label text-bold"
+                                                                    for="area">Area<span></span></label>
+                                                                <select id="area0" 
+                                                                    class=" chosen-select form-control form-control-solid"
+                                                                    name="area[]">
+                                                                    <option value="" selected disabled>Select the Area
+                                                                    </option>
+                                                                    <% for (let i=0; i <area.length; i++ ) { %>
+                                                                        <option id="<%=area[i].area%>"
+                                                                            value="<%=area[i].area%>">
+                                                                            <%=area[i].area%>
+                                                                        </option>
+                                                                        <% } %>
+                                                                </select>
+                                                            </div>
+
+                                                            <div id="addProduct" class="form-group form-info"
+                                                                style="position: relative">
+                                                                <label class="control-label text-bold"
+                                                                    for="product[]">Product<span></span></label>
+
+                                                                <select id="product0" 
+                                                                    data-placeholder="Begin typing a name to filter..."
+                                                                    class="chosen-select form-control form-control-solid"
+                                                                    name="product[]">
+                                                                    <option value="" selected disabled>Select the
+                                                                        product
+                                                                    </option>
+                                                                    <% for (let i=0; i <product.length; i++ ) { %>
+                                                                        <option id="<%=product[i]._id%>"
+                                                                            value="<%=product[i].product%>">
+                                                                            <%=product[i].product%>
+                                                                        </option>
+                                                                        <% } %>
+                                                                </select>
+
+                                                            </div>
+
+                                                            <div id="addBank" class="form-group form-info"
+                                                                style="position: relative">
+                                                                <label class="control-label text-bold"
+                                                                    for="bank">Bank<span></span></label>
+                                                                <select id="bank0" 
+                                                                    data-placeholder="Begin typing a name to filter..."
+                                                                    class="chosen-select form-control form-control-solid"
+                                                                    name="bank[]">
+                                                                    <option value="" selected disabled>Select the bank
+                                                                    </option>
+                                                                    <% for (let i=0; i <bank.length; i++ ) { %>
+                                                                        <option value="<%=bank[i].bank%>">
+                                                                            <%=bank[i].bank%>
+                                                                        </option>
+                                                                        <% } %>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div id="plus" class="icon">
+                                                            <div class="icon-wrap">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <%} %> -->
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="mobile"
+                    >Mobile<span class="">*</span></label
+                  >
+                  <input
+                    name="mobile"
+                    class="form-control form-control-solid"
+                    type="number"
+                    placeholder="Please enter Mobile"
+                    required
+                    id="mobile"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    maxlength="10"
+                    pattern="[1-9]{1}[0-9]{9}"
+                  />
+                </div>
+
+                <div class="form-group col-md-6 col-12">
+                  <label class="control-label text-bold" for="password"
+                    >Password<span class="">*</span></label
+                  >
+                  <input
+                    name="password"
+                    class="form-control form-control-solid"
+                    type="password"
+                    placeholder="Please enter password"
+                    minlength="5"
+                    required
+                    id="password"
+                  />
+                </div>
+
+                <div class="col-12 text-right mt-4 mb-2">
+                  <button
+                    id="myButton"
+                    disabled
+                    class="btn btn-sm btn-success text-uppercase"
+                  >
+                    <i class="far fa-check-circle"></i>&nbsp;Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include("../partials/footer") %>
+
+  <script>
+    $(window).on("load", function () {
+      $("#preloader_admin").hide();
+    });
+  </script>
+
+<script>
+    $("#pancard").change(function () {
+      pancardFunction();
+    });
+    $("#aadhaarcard").change(function () {
+      aadhaarcardFunction();
+    });
+    $("#mobile").change(function () {
+      mobileFunction();
+    });
+    $("#image").change(function () {
+      imageFunction();
+    });
+    function pancardFunction() {
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+      let mobile = $("#mobile").val();
+      if (pancard.toString().length != 10) {
+        alert("Invalid Pancard No");
+        $("#pancard").val("");
+      }
+      if (
+        pancard.toString().length == 10 &&
+        parseInt(aadhaarcard).toString().length == 12 &&
+        parseInt(mobile).toString().length == 10 &&
+        image.length != 0
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+
+    function aadhaarcardFunction() {
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+    
+      let mobile = $("#mobile").val();
+      if (parseInt(aadhaarcard).toString().length != 12) {
+        alert("Invalid Aadhaar Card No");
+        $("#aadhaarcard").val("");
+      }
+      if (
+        pancard.toString().length == 10 &&
+        parseInt(aadhaarcard).toString().length == 12 &&
+        parseInt(mobile).toString().length == 10 &&
+        image.length != 0
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+
+    function mobileFunction() {
+      let image = $("#image").val();
+     
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+      let mobile = $("#mobile").val();
+      if (parseInt(mobile).toString().length != 10) {
+        alert("Invalid mobile No");
+        $("#mobile").val("");
+      }
+      if (
+        pancard.toString().length == 10 &&
+        parseInt(aadhaarcard).toString().length == 12 &&
+        parseInt(mobile).toString().length == 10 &&
+        image.length != 0
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+    function imageFunction() {
+      let image = $("#image").val();
+    
+      let pancard = $("#pancard").val();
+      let aadhaarcard = $("#aadhaarcard").val();
+      let mobile = $("#mobile").val();
+      if (image.length <= 0) {
+        alert("Insert profile Image");
+        $("#mobile").val("");
+      }
+      if (
+        pancard.toString().length == 10 &&
+        parseInt(aadhaarcard).toString().length == 12 &&
+        parseInt(mobile).toString().length == 10 &&
+        image.length != 0
+      ) {
+        $("#myButton").prop("disabled", false);
+      } else {
+        $("#myButton").prop("disabled", true);
+      }
+    }
+  </script>
+
+  <!-- <script>
+                        let count = 1;
+                        $("#plus").click(function () {
+                            $("#fieldExecutiveFields").append(`<div id="inFieldExecutiveFields${count}" class="form-wrapper">
+                                <div id="addarea${count}" class="form-group form-info"
+                                    style="position: relative">
+                                    <select required id="area${count}"
+                                        class=" chosen-select form-control form-control-solid"
+                                        name="area[]">
+                                        <option value="" selected disabled>Select the Area</option>
+                                        <% for (let i=0; i <area.length; i++ ) { %>
+                                            <option value="<%=area[i].area%>">
+                                                <%=area[i].area%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                </div>
+
+                                <div id="addProduct${count}" class="form-group form-info"
+                                    style="position: relative">
+                                    
+
+                                    <select required  id="product${count}"
+                                        data-placeholder="Begin typing a name to filter..."
+                                        class="chosen-select form-control form-control-solid"
+                                        name="product[]">
+                                        <option value="" selected disabled>Select the product
+                                        </option>
+                                        <% for (let i=0; i <product.length; i++ ) { %>
+                                            <option id="<%=product[i]._id%>"
+                                                value="<%=product[i].product%>">
+                                                <%=product[i].product%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                </div>
+                                <div id="addBank${count}" class="form-group form-info"
+                                    style="position: relative">
+                                    <select required id="bank${count}" data-placeholder="Begin typing a name to filter..."
+                                        class="chosen-select form-control form-control-solid"
+                                        name="bank[]">
+                                        <option value="" selected disabled>Select the bank
+                                        </option>
+                                        <% for (let i=0; i <bank.length; i++ ) { %>
+                                            <option value="<%=bank[i].bank%>">
+                                                <%=bank[i].bank%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="${count}minus" class="icon icon2" onclick="deleteMinus(this.id)" >
+                                                        <div class="icon-wrap">
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </div>
+                                                </div>`)
+
+                            count++
+                        })
+                        function deleteMinus(x) {
+                            let y = parseInt(x)
+                            console.log("x", parseInt(x))
+                            $(`#inFieldExecutiveFields${y}`).remove()
+                            $(`#${x}`).remove()
+                            count--
+
+                        }
+
+                    </script> -->
+
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#" + input.id + "-imagePreview").css(
+            "background-image",
+            "url(" + e.target.result + ")"
+          );
+          $("#" + input.id + "-imagePreview").hide();
+          $("#" + input.id + "-imagePreview").fadeIn(650);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $(".imageUpload").change(function () {
+      readURL(this);
+    });
+  </script>
+
+  <script>
+    $("#myButton").click(function () {
+      let image = $("#image").val();
+      if (image.length <= 0) {
+        alert("Insert profile Image");
+      }
+    });
+  </script>
+</div>

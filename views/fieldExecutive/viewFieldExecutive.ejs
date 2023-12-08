@@ -1,0 +1,250 @@
+<%- include("../partials/head") %>
+<%- include("../partials/bodyStartWithNavBar/") %>
+<%- include("../partials/sideNav") %>
+
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon">
+                                    <i class="fad fa-at text-white"></i>
+                                </div>
+                                <span class="text-capitalize"> Field Executive </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                View all Field Executive Created
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto mb-md-0 mb-3">
+                        <a href="/field-executive/addFieldExecutive"
+                            class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
+                            data-toggle="tooltip" title="Add New FieldExecutive"><i class="fas fa-plus"></i>&nbsp;
+                            Add</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+
+            <div id="myModal" class="modal">
+                <div class="modal-content  modal-sm">
+                    <span class="close">&times;</span>
+                    <div class="card">
+                        <div class="card-header">Field Executive Case Figures</div>
+                        <div class="card-body">
+                            <div class="sbp-preview">
+                                <div class="sbp-preview-content p-4">
+                                    <div class="form-group col-md-6 col-12">
+                                        <label class="control-label text-bold" for="currentCases">Current
+                                            Cases<span></span></label>
+                                        <input name="currentCases" class="form-control form-control-solid" type="text"
+                                            placeholder="Current Cases" id="currentCases" />
+                                    </div>
+
+                                    <div class="form-group col-md-6 col-12">
+                                        <label class="control-label text-bold" for="completedCases">Completed
+                                            Cases<span></span></label>
+                                        <input name="completedCases" class="form-control form-control-solid" type="text"
+                                            placeholder="Completed Cases" id="completedCases" />
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">Field Executive</div>
+                <div class="card-body">
+                    <div class="datatable table-responsive">
+                        <table class="table table-bordered table-hover text-nowrap" id="contestCategoryTable"
+                            width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Field Executive Name</th>
+                                    <th>Field Executive Email</th>
+                                    <th>Case Figures</th>
+                                    <th>Pan Card</th>
+                                    <th>mobile</th>
+                                    <th>Aadhaar Card</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th>Sno.</th>
+                                    <th>Field Executive Name</th>
+                                    <th>Field Executive Email</th>
+                                    <th>Case Figures</th>
+                                    <th>Pan Card</th>
+                                    <th>mobile</th>
+                                    <th>Aadhaar Card</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <!-- <span class="float-right"></span> -->
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#contestCategoryTable tfoot th').each(function () {
+                        var title = $(this).text();
+                        $(this).html('<input type="text"  placeholder="Search ' + title +
+                            '" />');
+                    });
+                    $.fn.dataTable.ext.errMode = "none";
+                    $("#contestCategoryTable").DataTable({
+                        initComplete: function () {
+                            // Apply the search
+                            this.api()
+                                .columns()
+                                .every(function () {
+                                    var that = this;
+
+                                    $('input', this.footer()).on('keyup change clear',
+                                        function () {
+                                            if (that.search() !== this.value) {
+                                                that.search(this.value).draw();
+                                            }
+                                        });
+                                });
+                        },
+                        searching: true,
+                        language: {
+                            zeroRecords: "No records to display",
+                        },
+                        ajax: {
+                            url: `/field-executive/viewFieldExecutiveDatatable`,
+                            type: "post",
+                        },
+                        columns: [{
+                                data: "count",
+                            },
+                            {
+                                data: "name",
+                            },
+                            {
+                                data: "email",
+                            },
+                            {
+                                data: "cases",
+                            },
+
+                            {
+                                data: "pancard",
+                            },
+                            {
+                                data: "mobile",
+                            },
+                            {
+                                data: "aadhaarcard",
+                            },
+                            {
+                                data: "action",
+                            },
+                        ],
+                    });
+                });
+            </script>
+        </div>
+    </main>
+
+    <%- include("../partials/footer") %>
+
+    <script>
+        $(window).on("load", function () {
+            $("#preloader_admin").hide();
+        });
+    </script>
+
+    <script>
+        if (`<%=role%>` == "admin") {
+            function delete_sweet_alert(url, msg) {
+                // sweet alert
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: "btn btn-sm btn-success ml-2",
+                        cancelButton: "btn btn-sm btn-danger",
+                    },
+                    buttonsStyling: false,
+                });
+                swalWithBootstrapButtons
+                    .fire({
+                        title: msg,
+                        text: "You won't be able to revert this!",
+                        icon: "success",
+                        showCancelButton: true,
+                        confirmButtonText: "Yes",
+                        cancelButtonText: "No",
+                        reverseButtons: true,
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                            swalWithBootstrapButtons.fire("", "Successfully Done", "success");
+                            window.location.href = url;
+                        } else if (
+                            /* Read more about handling dismissals below */
+                            result.dismiss === Swal.DismissReason.cancel
+                        ) {
+                            swalWithBootstrapButtons.fire(
+                                "Cancelled",
+                                "Cancelled successfully :)",
+                                "error"
+                            );
+                            return false;
+                        }
+                    });
+            }
+        }
+    </script>
+
+
+    <script>
+        var modal = document.getElementById("myModal");
+
+        function myFunction1(id) {
+            let data = {
+                id: id
+            }
+            let completedCases
+            let currentCases
+            $.ajax({
+                url: `/field-executive/caseCount`,
+                type: "post",
+                data: data,
+                success: function (data) {
+
+                    $("#currentCases").val(data[0].currentCases[0] ? data[0].currentCases[0].count : 0)
+                    $("#completedCases").val(data[0].completedCases[0] ? data[0].completedCases[0].count :
+                        0)
+                    modal.style.display = "block"
+
+                }
+            })
+        }
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>

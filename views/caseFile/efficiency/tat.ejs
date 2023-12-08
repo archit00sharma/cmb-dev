@@ -1,0 +1,251 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<div id="layoutSidenav_content">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 3px;
+        }
+    </style>
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Team Performance
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Team Performance
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+            <div class="card">
+                <div class="card-header">Team Efficiency</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4 " style="display:flex;">
+                            <div id="myChart" style="width:65%; max-width:600px; height:700px;">
+
+                            </div>
+                            <div id="caseDetails" class="form-wrapper" style="width:35%;">
+                                <% if (member== "fieldExecutive") { %>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>Role</td>
+                                        <td><%=member%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><%=name%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>From</td>
+                                        <td><%=min%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>To</td>
+                                        <td><%=max%></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td> <button id="0_to_3_hrs" value="0_to_3_hrs">0 to 3 hrs</button> </td>
+                                        <td><%=one%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="3_to_4_hrs" value="3_to_4_hrs">3 to 4 hrs</button></td>
+                                        <td><%=two%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="4_to_6_hrs" value="4_to_6_hrs">4 to 6 hrs</button></td>
+                                        <td><%=three%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="6_to_8_hrs" value="6_to_8_hrs">6 to 8 hrs</button></td>
+                                        <td><%=four%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="8_to_12_hrs" value="8_to_12_hrs">8 to 12 hrs</button></td>
+                                        <td><%=five%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="12_to_18_hrs" value="12_to_18_hrs">12 to 18 hrs</button></td>
+                                        <td><%=six%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="more_than_18_hrs" value="more_than_18_hrs">more than 18
+                                                hrs</button></td>
+                                        <td><%=seven%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="not_submitted" value="not_submitted">not submitted</button></td>
+                                        <td><%=notSubmitted%></td>
+                                    </tr>
+                                </table>
+                                <%} else { %>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>Role</td>
+                                        <td><%=member%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name</td>
+                                        <td><%=name%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>From</td>
+                                        <td><%=min%></td>
+                                    </tr>
+                                    <tr>
+                                        <td>To</td>
+                                        <td><%=max%></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <button id="0_to_15_mins" value="0_to_15_mins">0 to 15 mins</button> </td>
+                                        <td><%=one%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="15_to_30_mins" value="15_to_30_mins">15 to 30 mins</button></td>
+                                        <td><%=two%></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><button id="30_to_45_mins" value="30_to_45_mins">30 to 45 mins</button></td>
+                                        <td><%=three%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="45_to_60_mins" value="45_to_60_mins">45 to 60 mins</button></td>
+                                        <td><%=four%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="60_to_75_mins" value="60_to_75_mins">60 to 75 mins</button></td>
+                                        <td><%=five%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="75_to_90_mins" value="75_to_90_mins">75 to 90 mins</button></td>
+                                        <td><%=six%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="90_and_above" value="90_and_above">90 and above</button></td>
+                                        <td><%=seven%></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button id="not_submitted" value="not_submitted">not submitted</button></td>
+                                        <td><%=notSubmitted%></td>
+                                    </tr>
+                                </table>
+                                <% } %>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../../partials/footer") %>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        });
+        google.charts.load('current', {
+            'packages': ['corechart']
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'caseTime');
+            data.addColumn('number', 'timeNumber');
+            if ("<%=member%>" == "fieldExecutive") {
+                data.addRows([
+                    ['0 to 3 hrs', parseInt("<%=one%>")],
+                    ['3 to 4 hrs', parseInt("<%=two%>")],
+                    ['4 to 6 hrs', parseInt("<%=three%>")],
+                    ['6 to 8 hrs', parseInt("<%=four%>")],
+                    ['8 to 12 hrs', parseInt("<%=five%>")],
+                    ['12 to 18 hrs', parseInt("<%=six%>")],
+                    ['more than 18 hrs', parseInt("<%=seven%>")],
+                    ['Not submitted', parseInt("<%=notSubmitted%>")],
+
+                ]);
+            } else {
+                data.addRows([
+                    ['0 to 15 mins', parseInt("<%=one%>")],
+                    ['15 to 30 mins', parseInt("<%=two%>")],
+                    ['30 to 45 mins', parseInt("<%=three%>")],
+                    ['45 to 60 mins', parseInt("<%=four%>")],
+                    ['60 to 75 mins', parseInt("<%=five%>")],
+                    ['75 to 90 mins', parseInt("<%=six%>")],
+                    ['90 & above', parseInt("<%=seven%>")],
+                    ['Not submitted', parseInt("<%=notSubmitted%>")],
+
+                ]);
+            }
+
+            var options = {
+                title: 'T.A.T'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById(
+                'myChart'));
+            chart.draw(data, options);
+        }
+    </script>
+    <script>
+        $("button").click(function () {
+            $('#preloader_admin').show();
+            let data = {
+                id: "<%=id%>",
+                member: "<%=member%>",
+                tat: "tat",
+                excel: "excel",
+                section: $(this).val(),
+                min: "<%=min%>",
+                max: "<%=max%>"
+            }
+
+            $.ajax({
+                url: "/case/calEfficiency",
+                type: "post",
+                data: data,
+                success: function (data) {
+                    $('#preloader_admin').hide()
+                    if (data == "SUCCESS") {
+                        var file_path = '/succEx/newFile.xlsx';
+                        var a = document.createElement('A');
+                        a.href = file_path;
+                        a.download = file_path.substr(file_path.lastIndexOf('/') + 1);
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    } else if (data == "NO DATA FOUND") {
+                        alert("NO DATA FOUND")
+                    } else if ("FAILED") {
+                        alert("Some error occured while downloading excel")
+                    }
+                }
+            })
+        })
+    </script>

@@ -1,0 +1,119 @@
+<%- include("../../partials/head") %>
+
+<%- include("../../partials/bodyStartWithNavBar") %>
+<%- include("../../partials/sideNav") %>
+
+<div id="layoutSidenav_content">
+    <main>
+        <%- include("../../partials/alertMsg") %>
+        <div class="page-header pb-10 page-header-dark">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <div class="page-header-content">
+                            <h1 class="page-header-title fs-md-35 fs-20">
+                                <div class="page-header-icon"><i class="fad fa-at text-white"></i></div>
+                                <span class=" text-capitalize">
+                                    Field Executive Case History
+                                </span>
+                            </h1>
+                            <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
+                                Field Executive Case History
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid mt-n10">
+
+            <div class="card">
+                <div class="card-header">Field Executive Case History</div>
+                <div class="card-body">
+                    <div class="sbp-preview">
+                        <div class="sbp-preview-content p-4">
+                            <form method="POST" action="/admin/viewFeCaseHistory" accept-charset="UTF-8"
+                                id="feCaseHistory" class="j-forms row mx-0">
+                                <div id="selectMember" class="form-icon-wrap">
+                                    <div id="selectMembers" class="form-wrapper">
+                                        <div class="form-group form-info" style="position: relative">
+                                            <table border="0" cellspacing="5" cellpadding="5">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>FROM:</td>
+                                                        <td><input type="date" required id="min" name="min"></td>
+                                                    </tr>
+                                                    <tr id="maxDate">
+                                                        <td>TO:</td>
+                                                        <td><input type="date" required id="max" name="max"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <input type="hidden" id="fullName" name="fullName">
+                                        <div id="selectMember" class="form-group form-info" style="position: relative">
+                                            <label class="control-label text-bold" for="member">choose field
+                                                executive<span></span></label>
+                                            <select id="member" required
+                                                class="chosen-select form-control form-control-solid" name="member">
+                                                <option value="" selected disabled>Select the field executive</option>
+                                                <% for (let i = 0; i < fieldExecutive.length; i++) { %>
+                                                <option value="<%= fieldExecutive[i]._id %>"
+                                                    data-fullname="<%= fieldExecutive[i].fullName %>">
+                                                    <%= fieldExecutive[i].fullName %>
+                                                </option>
+                                                <% } %>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="submitButton" class="col-12 text-right mt-4 mb-2">
+                                    <button class="btn btn-sm btn-success text-uppercase">
+                                        <i class="far fa-check-circle"></i>&nbsp;submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include("../../partials/footer") %>
+
+    <script>
+        $(window).on('load', function () {
+            $('#preloader_admin').hide();
+        });
+
+        $("#feCaseHistory").submit(function (e) {
+            e.preventDefault();
+
+            // Get and validate date difference
+            let date1 = moment($("#min").val()).format('YYYY/MM/DD');
+            let date2 = moment($("#max").val()).format('YYYY/MM/DD');
+
+            
+            const dateDiff = moment(date2).diff(moment(date1), 'days');
+            
+            if (dateDiff >= 0 && dateDiff <= 62) {
+              
+                // Date difference is valid, proceed with form submission
+                this.submit(); 
+            } else {
+                alert("Difference in date range must be between 0 and 2 months only!!");
+            }
+        });
+
+
+        const memberSelect = document.getElementById("member");
+        const selectedName = document.getElementById("fullName");
+
+        memberSelect.addEventListener("change", function () {
+            const selectedOption = memberSelect.options[memberSelect.selectedIndex];
+            selectedName.value = selectedOption.getAttribute("data-fullname");
+        });
+    </script>

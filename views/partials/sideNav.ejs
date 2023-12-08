@@ -1,0 +1,206 @@
+<div id="layoutSidenav_nav">
+    <nav class="sidenav shadow-right sidenav-light">
+        <div class="sidenav-menu">
+            <div class="nav accordion" id="accordionSidenav">
+                <div class="sidenav-menu-heading"></div>
+                <a class="nav-link" href="/dashboard">
+                    <div class="nav-link-icon"><i class="fad fa-home-heart"></i></div> Dashboard
+                </a>
+                <div class="sidenav-menu-heading">Modules</div>
+                <% if (role !="manager" &&role !="senior-supervisor" &&role !="supervisor" &&role !="field-executive" )
+                    { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-manager" aria-expanded="false" aria-controls="collapse-manager">
+                    <div class="nav-link-icon"><i class="fad fa-user"></i></div>
+                    Manager
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapse-manager" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/manager/addManager">Add Manager</a>
+                        <a class="nav-link" href="/manager/viewManager">View Manager</a>
+                    </nav>
+                </div>
+                <%} %>
+                <% if (role !="senior-supervisor" &&role !="supervisor" &&role !="field-executive" ) { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-senior-supervisor-manager" aria-expanded="false"
+                    aria-controls="collapse-senior-supervisor-manager">
+                    <div class="nav-link-icon"><i class="fad fa-user"></i></div>
+                    senior-supervisor
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapse-senior-supervisor-manager" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/senior-supervisor/addSeniorSupervisor">Add
+                            senior-supervisor</a>
+                        <a class="nav-link" href="/senior-supervisor/viewSeniorSupervisor">View
+                            senior-supervisor</a>
+                    </nav>
+                </div>
+                <%} %>
+                <% if (role !="supervisor" &&role !="field-executive" ) { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-supervisor-manager" aria-expanded="false"
+                    aria-controls="collapse-supervisor-manager">
+                    <div class="nav-link-icon"><i class="fad fa-user"></i></div>
+                    supervisor
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapse-supervisor-manager" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/supervisor/addSupervisor">Add supervisor</a>
+                        <a class="nav-link" href="/supervisor/viewSupervisor">View
+                            supervisor</a>
+                    </nav>
+                </div>
+                <%} %>
+                <% if (role !="field-executive" ) { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-field-Executive" aria-expanded="false"
+                    aria-controls="collapse-field-Executive">
+                    <div class="nav-link-icon"><i class="fad fa-user"></i></div>
+                    Field-Executive
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse-field-Executive" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/field-executive/addFieldExecutive">Add
+                            field-Executive</a>
+                        <a class="nav-link" href="/field-executive/viewFieldExecutive">View
+                            field-Executive</a>
+                    </nav>
+                </div>
+                <%} %>
+                <% if (role=="admin" ) { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-bank-member" aria-expanded="false" aria-controls="collapse-bank-member">
+                    <div class="nav-link-icon"><i class="fad fa-user"></i>
+                    </div>
+                    Bank Member
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse-bank-member" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/bankMember/addBankMember">Add Bank Member</a>
+                        <a class="nav-link" href="/bankMember/viewBankMember">View Bank Member</a>
+                    </nav>
+                </div>
+
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-product" aria-expanded="false" aria-controls="collapse-product">
+                    <div class="nav-link-icon"><i class="fa fa-spinner" aria-hidden="true"></i>
+                    </div>
+                    Products
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse-product" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/admin/addProduct">Add
+                            Product</a>
+                        <a class="nav-link" href="/admin/viewProduct">View
+                            Product</a>
+                    </nav>
+                </div>
+                <%} %>
+                <% if (role=="admin" ) { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-bank" aria-expanded="false" aria-controls="collapse-bank">
+                    <div class="nav-link-icon"><i class="fa fa-bank"></i>
+                    </div>
+                    Banks
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse-bank" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/admin/addBank">Add
+                            Bank</a>
+                        <a class="nav-link" href="/admin/viewBank">View
+                            Bank</a>
+                    </nav>
+                </div>
+                <%} %>
+                <% if (role=="admin" ) { %>
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-area" aria-expanded="false" aria-controls="collapse-area">
+                    <div class="nav-link-icon"><i class="fa fa-area-chart" aria-hidden="true"></i></div>
+                    Areas
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse-area" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/admin/addArea">Add
+                            Area</a>
+                        <a class="nav-link" href="/admin/viewArea">View
+                            Area</a>
+                    </nav>
+                </div>
+                <%} %>
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-caseUpload" aria-expanded="false" aria-controls="collapse-caseUpload">
+                    <div class="nav-link-icon"><i class="fa fa-upload" aria-hidden="true"></i>
+                    </div>
+                    Cases
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+                <div class="collapse" id="collapse-caseUpload" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <% if (role=="admin" ||role=="manager" )
+                                                                                    { %>
+                        <a class="nav-link" href="/case/uploadCase">Upload
+                            Case</a>
+                        <%} %>
+
+                        <a class="nav-link" href="/case/viewCase">View
+                            Uploaded Case</a>
+                        <a class="nav-link" href="/case/viewDuplicateCase">View
+                            duplicate Cases</a>
+
+
+                    </nav>
+                </div>
+                <% if (role=="admin" ){ %>
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse"
+                    data-target="#collapse-invoice" aria-expanded="false" aria-controls="collapse-invoice">
+                    <div class="nav-link-icon"><i class="fa-solid fa-file-invoice"></i>
+                    </div>
+                    Invoices
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i>
+                    </div>
+                </a>
+
+                <div class="collapse" id="collapse-invoice" data-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                        <a class="nav-link" href="/invoice/invoiceFromList">Invoices From Templates</a>
+                        <a class="nav-link" href="/invoice/invoiceToList">Invoices To Templates</a>
+                        <a class="nav-link" href="/invoice/bankDetailsList">Bank Details Templates</a>
+                        <a class="nav-link" href="/invoice/rateList">Rate</a>
+                    </nav>
+                </div>
+
+                <a class="nav-link" href="/case/databaseBackup">
+                    <div class="nav-link-icon"><i class="fa-solid fa-database"></i></div> Database Backup
+                </a>
+                <%} %>
+
+            </div>
+        </div>
+        <div class="sidenav-footer">
+            <div class="sidenav-footer-content w-100">
+                <div class="sidenav-footer-subtitle">Logged in as:</div>
+                <div class="sidenav-footer-title">
+                    <%=role%>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
