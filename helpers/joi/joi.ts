@@ -153,8 +153,8 @@ const getDeleteBankDetails: JoiMiddlewareSchema = {
 const postAddRate: JoiMiddlewareSchema = {
     body: Joi.object().keys({
         bank: Joi.string().required(),
-        area: Joi.string().required(),
-        product: Joi.string().required(),
+        area: Joi.array().required(),
+        product: Joi.array().required(),
         from: Joi.string().required(),
         to: Joi.string().required(),
         point: Joi.string().required(),
@@ -164,7 +164,15 @@ const postAddRate: JoiMiddlewareSchema = {
 };
 
 const postEditRate: JoiMiddlewareSchema = {
-    ...postAddRate,
+    body: Joi.object().keys({
+        bank: Joi.string().required(),
+        area: Joi.string().required(),
+        product: Joi.string().required(),
+        from: Joi.string().required(),
+        to: Joi.string().required(),
+        point: Joi.string().required(),
+        rate: Joi.string().required(),
+    }),
     params: postSubmitEditInvoiceFrom.params,
 };
 

@@ -195,7 +195,8 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="area">Area:</label>
-                                    <select id="area" name="area[]" class="form-control selectpicker" data-live-search="true" data-container="body" multiple required>
+                                    <select id="area" name="area[]" class="form-control selectpicker"
+                                        data-live-search="true" data-container="body" multiple required>
                                         <% areaList.forEach((template, index) => { %>
                                         <option id="format_<%= index + 1 %>" value="<%= template.area %>">
                                             <%= template.area %>
@@ -205,8 +206,8 @@
                                 </div>
                                 <div class="col">
                                     <label for="product">Product:</label>
-                                    <select id="product" name="product[]" class="form-control selectpicker" data-live-search="true" data-container="body" multiple
-                                        required>
+                                    <select id="product" name="product[]" class="form-control selectpicker"
+                                        data-live-search="true" data-container="body" multiple required>
                                         <% productList.forEach((template, index) => { %>
                                         <option id="format_<%= index + 1 %>" value="<%= template.product %>">
                                             <%= template.product %>
@@ -216,7 +217,8 @@
                                 </div>
                                 <div class="col">
                                     <label for="bank">Bank:</label>
-                                    <select id="bank" name="bank" class="form-control selectpicker" data-live-search="true" data-container="body" required>
+                                    <select id="bank" name="bank" class="form-control selectpicker"
+                                        data-live-search="true" data-container="body" required>
                                         <option value="" selected disabled>Select the Bank</option>
                                         <% bankList.forEach((template, index) => { %>
                                         <option id="format_<%= index + 1 %>" value="<%= template.bank %>">
@@ -439,6 +441,9 @@
                         url: "/invoice/addRate",
                         data: data,
                         success: function (response) {
+                            if (response?.err) {
+                                alert(response.err)
+                            }
                             window.location.reload();
                         },
                     });

@@ -41,11 +41,11 @@ class invoiceController {
 
     public invoiceFromList = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, '/dashboard');
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, '/dashboard');
+            if (!validationPassed) {
+                return;
             }
-           const { role, email } = req.user
+            const { role, email } = req.user
             res.locals.message = req.flash()
             res.render("invoice/invoiceFrom/invoiceFrom", { role, email });
         } catch (error) {
@@ -55,11 +55,11 @@ class invoiceController {
 
     public invoiceFromDataTable = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, '/dashboard', true);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, '/dashboard', true);
+            if (!validationPassed) {
+                return;
             }
-           let searchArray = await invoiceFromSearch(req.body.columns);
+            let searchArray = await invoiceFromSearch(req.body.columns);
             let data: any = [];
             const [invoiceFromData] = await this.invoiceService.getAllInvoiceFrom(req, searchArray)
 
@@ -106,11 +106,11 @@ class invoiceController {
 
     public addInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, '/invoice/invoiceFromList');
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, '/invoice/invoiceFromList');
+            if (!validationPassed) {
+                return;
             }
-           const { role, email } = req.user
+            const { role, email } = req.user
             res.locals.message = req.flash()
             res.render("invoice/invoiceFrom/addInvoiceFrom", { role, email });
         } catch (error) {
@@ -120,12 +120,9 @@ class invoiceController {
 
     public submitAddInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, '/invoice/addInvoiceFrom');
-           if (!validationPassed) {
-                return; 
-            }
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, '/invoice/addInvoiceFrom');
+            if (!validationPassed) {
+                return;
             }
             const { code, message } = await this.invoiceService.addInvoiceFrom(req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
@@ -151,11 +148,11 @@ class invoiceController {
     public submitEditInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
-           const validationPassed = await validator(req, res, `/invoice/editInvoiceFrom/${id}`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/editInvoiceFrom/${id}`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.updateInvoiceFrom(id, req.body);
+            const { code, message } = await this.invoiceService.updateInvoiceFrom(id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editInvoiceFrom/${id}`);
         } catch (error) {
@@ -166,11 +163,11 @@ class invoiceController {
     public deleteInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
-           const validationPassed = await validator(req, res, `/invoice/invoiceFromList`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/invoiceFromList`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.deleteInvoiceFrom(id);
+            const { code, message } = await this.invoiceService.deleteInvoiceFrom(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/invoiceFromList");
         } catch (error) {
@@ -251,13 +248,13 @@ class invoiceController {
 
     public submitAddInvoiceTo = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, `/invoice/invoiceFromList`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/invoiceToList`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.addInvoiceTo(req.body);
+            const { code, message } = await this.invoiceService.addInvoiceTo(req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "added successfully");
-            res.redirect(`/invoice/addInvoiceTo`);
+            res.redirect(`/invoice/invoiceToList`);
         } catch (error) {
             next(error)
         }
@@ -278,11 +275,11 @@ class invoiceController {
     public submitEditInvoiceTo = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-           const validationPassed = await validator(req, res, `/invoice/editInvoiceTo/${id}`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/editInvoiceTo/${id}`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.updateInvoiceTo(req.params.id, req.body);
+            const { code, message } = await this.invoiceService.updateInvoiceTo(req.params.id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editInvoiceTo/${id}`);
         } catch (error) {
@@ -293,11 +290,11 @@ class invoiceController {
     public deleteInvoiceTo = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
-           const validationPassed = await validator(req, res, `/invoice/invoiceToList`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/invoiceToList`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.deleteInvoiceTo(id);
+            const { code, message } = await this.invoiceService.deleteInvoiceTo(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/invoiceToList");
         } catch (error) {
@@ -378,11 +375,11 @@ class invoiceController {
 
     public submitAddBankDetails = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, `/invoice/addBankDetails`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/addBankDetails`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.addBankDetails(req.body);
+            const { code, message } = await this.invoiceService.addBankDetails(req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "added successfully");
             res.redirect(`/invoice/bankDetailsList`);
         } catch (error) {
@@ -405,11 +402,11 @@ class invoiceController {
     public submitEditBankDetails = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-           const validationPassed = await validator(req, res, `/invoice/editBankDetails/${id}`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/editBankDetails/${id}`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.updateBankDetails(req.params.id, req.body);
+            const { code, message } = await this.invoiceService.updateBankDetails(req.params.id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editBankDetails/${id}`);
         } catch (error) {
@@ -420,11 +417,11 @@ class invoiceController {
     public deleteBankDetails = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
-           const validationPassed = await validator(req, res, `/invoice/bankDetailsList`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/bankDetailsList`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.deleteBankDetails(id);
+            const { code, message } = await this.invoiceService.deleteBankDetails(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/bankDetailsList");
         } catch (error) {
@@ -506,11 +503,11 @@ class invoiceController {
 
     public addRate = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, `/invoice/rateList`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/rateList`, true);
+            if (!validationPassed) {
+                return;
             }
-           const data = []
+            const data = []
             const { area, product, bank, rate, from, to, point } = req.body;
 
             for (let i = 0; i < product.length; i++) {
@@ -539,11 +536,11 @@ class invoiceController {
     public editRate = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-           const validationPassed = await validator(req, res, `/invoice/editBankDetails/${id}`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/editBankDetails/${id}`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.updateRate(id, req.body);;
+            const { code, message } = await this.invoiceService.updateRate(id, req.body);;
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.send("success");
         } catch (error) {
@@ -554,11 +551,11 @@ class invoiceController {
     public deleteRate = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
-           const validationPassed = await validator(req, res, `/invoice/rateList`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/rateList`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.deleteRate(id);
+            const { code, message } = await this.invoiceService.deleteRate(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/rateList");
         } catch (error) {
@@ -652,11 +649,11 @@ class invoiceController {
 
     public addInvoiceSubmit = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, `/invoice/addInvoice`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/addInvoice`);
+            if (!validationPassed) {
+                return;
             }
-           const { product, area, bank, invoiceFormat, invoiceExcelFormat, invoiceToTemplate, invoiceFromTemplate, bankDetailsTemplate, min, max, conveyance } = req.body;
+            const { product, area, bank, invoiceFormat, invoiceExcelFormat, invoiceToTemplate, invoiceFromTemplate, bankDetailsTemplate, min, max, conveyance } = req.body;
             const data: any = {
                 name: `${bank}_${Date.now()}`,
                 uniqueId: uuidv1(),
@@ -756,11 +753,11 @@ class invoiceController {
     public deleteInvoiceExcelDataStatus = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id, uniqueId } = req.params;
-           const validationPassed = await validator(req, res, `/invoice/invoiceExcelDataStatus`);
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, `/invoice/invoiceExcelDataStatus`);
+            if (!validationPassed) {
+                return;
             }
-           const { code, message } = await this.invoiceService.deleteInvoiceExcelDataStatus(id, uniqueId);
+            const { code, message } = await this.invoiceService.deleteInvoiceExcelDataStatus(id, uniqueId);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/invoiceExcelDataStatus");
         } catch (error) {
@@ -1256,11 +1253,11 @@ class invoiceController {
     // ***************************** create invoice *******************************************
     public createInvoice = async (req: any, res: Response, next: NextFunction) => {
         try {
-           const validationPassed = await validator(req, res, '/invoice/invoiceExcelDataStatus');
-           if (!validationPassed) {
-                return; 
+            const validationPassed = await validator(req, res, '/invoice/invoiceExcelDataStatus');
+            if (!validationPassed) {
+                return;
             }
-           const { id } = req.params;
+            const { id } = req.params;
             createInvoice(id);
             res.redirect("/invoice/invoiceList");
         } catch (error) {

@@ -36,7 +36,7 @@
                 <div class="card-body">
                     <div class="sbp-preview">
                         <div class="sbp-preview-content p-4">
-                            <form method="POST" action="/invoice/submitAddInvoiceTo" accept-charset="UTF-8" id="j-forms"
+                            <form method="POST" action="/invoice/submitAddInvoiceTo" accept-charset="UTF-8" id="invoiceToForm"
                                 class="j-forms row mx-0">
                                 <div class="form-group col-md-6 col-12">
                                     <label class='control-label text-bold' for="templateName">Template Name<span>*</span></label>
@@ -59,7 +59,7 @@
                                         placeholder="Please enter Address" required id="address">
                                 </div>
                                 <div class="form-group col-md-6 col-12">
-                                    <label class'control-label text-bold' for="pan">PAN<span>*</span></label>
+                                    <label class='control-label text-bold' for="pan">PAN<span>*</span></label>
                                     <input name="pan" class="form-control form-control-solid" type="text"
                                         placeholder="Please enter PAN" required id="pan">
                                 </div>
@@ -84,6 +84,11 @@
                                         placeholder="Please enter Service Category" required id="serviceCategory">
                                 </div>
                                 <div class="form-group col-md-6 col-12">
+                                    <label class='control-label text-bold' for="sacNumber">Sac Number<span>*</span></label>
+                                    <input name="sacNumber" class="form-control form-control-solid" type="text"
+                                        placeholder="Please enter Sac Number" required id="sacNumber">
+                                </div>
+                                <div class="form-group col-md-6 col-12">
                                     <label class='control-label text-bold' for="email">Email<span>*</span></label>
                                     <input name="email" class="form-control form-control-solid" type="text"
                                         placeholder="Please enter Email" required id="email">
@@ -104,6 +109,45 @@
     <script>
         $(window).on('load', function () {
             $('#preloader_admin').hide();
-        })
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to handle form field changes
+            function handleFormFieldChange() {
+                // Get the form element
+                var form = document.getElementById('invoiceToForm');
+
+                // Attach a change event listener to form fields
+                form.addEventListener('change', function (event) {
+                    // Get the changed input element
+                    var changedInput = event.target;
+
+                    // Store the value in the session using sessionStorage
+                    sessionStorage.setItem(changedInput.name, changedInput.value);
+                });
+            }
+
+            // Function to fill form fields from session storage
+            function fillFormFieldsFromSession() {
+                // Get the form element
+                var form = document.getElementById('invoiceToForm');
+
+                // Loop through each form field
+                form.querySelectorAll('input, select, textarea').forEach(function (element) {
+                    // Get the stored value from session storage
+                    var storedValue = sessionStorage.getItem(element.name);
+
+                    // If a value is stored, set it as the field's value
+                    if (storedValue !== null) {
+                        element.value = storedValue;
+                    }
+                });
+            }
+
+            // Call the functions to handle form field changes and fill form fields
+            handleFormFieldChange();
+            fillFormFieldsFromSession();
+        });
+    
     </script>
 </div>
