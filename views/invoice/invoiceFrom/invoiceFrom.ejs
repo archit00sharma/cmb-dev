@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="col-auto mb-md-0 mb-3">
-                        <a href="/invoice/addInvoiceFrom"
+                        <a id="clearSessionLink" href="/invoice/addInvoiceFrom"
                             class="btn btn-sm btn-light font-weight-bold text-uppercase text-primary text-uppercase"
                             data-toggle="tooltip" title="Add New Allocation"><i class="fas fa-plus"></i>&nbsp;
                             Add Invoice From Template</a>
@@ -133,5 +133,9 @@
                 ],
             });
             $("#contestCategoryTable_filter").css('display', 'none')
+        });
+        document.getElementById('clearSessionLink').addEventListener('click', function () {
+            // Clear session storage
+            sessionStorage.clear();
         });
     </script>
