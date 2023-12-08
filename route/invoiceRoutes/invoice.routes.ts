@@ -86,3 +86,4 @@ class invoiceRoute implements Route {
 }
 
 export default invoiceRoute;
+
