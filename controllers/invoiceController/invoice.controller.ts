@@ -384,7 +384,7 @@ class invoiceController {
             }
            const { code, message } = await this.invoiceService.addBankDetails(req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "added successfully");
-            res.redirect(`/invoice/addBankDetails`);
+            res.redirect(`/invoice/bankDetailsList`);
         } catch (error) {
             next(error)
         }
