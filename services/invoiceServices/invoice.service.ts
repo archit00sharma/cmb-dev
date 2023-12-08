@@ -23,9 +23,9 @@ class invoiceService {
         }
     };
 
-    public async addInvoiceFrom(req: any) {
+    public async addInvoiceFrom(data) {
         try {
-            return await invoiceFromModel.create(req.body);
+            return await invoiceFromModel.create(data);
         } catch (error) {
             error.code = 401;
             return error
