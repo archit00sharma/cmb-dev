@@ -184,8 +184,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editBranch">Location:</label>
-                                            <input type="text" class="form-control" id="editBranch"
-                                                name="editBranch" required>
+                                            <input type="text" class="form-control" id="editBranch" name="editBranch"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -391,8 +391,10 @@
                 },
                 columnDefs: [{
                     render: function (data, type, row, meta) {
-                        if (type === 'display' && data && data.length > 20 && meta.col !== ( meta.settings.aoColumns.length - 1)) {
-                            return '<span title="' + data + '">' + data.substr(0, 20) +'...</span>';
+                        if (type === 'display' && data && data.length > 20 && meta.col !== (
+                                meta.settings.aoColumns.length - 1)) {
+                            return '<span title="' + data + '">' + data.substr(0, 20) +
+                                '...</span>';
                         } else {
                             return data;
                         }
@@ -494,7 +496,7 @@
             const status = $("#editStatus").val();
             const point = $("#editPoint").val();
             const bank = $("#bank").val();
-            const invoiceExcelFormat= "<%=invoiceExcelFormat%>"
+            const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
 
             if (!rate || !km || rate < 0 || km < 0) {
                 alert("Please fill in all required fields and ensure that rate and km are positive.");
@@ -504,12 +506,11 @@
                     invoiceExcelFormat,
                     product,
                     bank,
-                    rate: rate,
-                    km: km,
+                    km,
                     branch,
                     area,
-                    status: status,
-                    point: point,
+                    status,
+                    point,
                 };
 
                 $.ajax({
@@ -517,7 +518,11 @@
                     url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
                     data: data,
                     success: function (response) {
-                        window.location.reload();
+                        if (response && response.err) {
+                            window.alert(response.err)
+                        } else {
+                            window.location.reload();
+                        }
                     },
                 });
             }

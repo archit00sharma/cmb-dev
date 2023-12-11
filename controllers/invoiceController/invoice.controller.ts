@@ -151,6 +151,12 @@ class invoiceController {
         }
     };
 
+
+
+
+
+
+
     // ********************* INVOICE TO CODE **********************************
 
     public invoiceToList = async (req: any, res: Response, next: NextFunction) => {
@@ -266,6 +272,12 @@ class invoiceController {
         }
     };
 
+
+
+
+
+
+
     // ************************ Bank Details Code ***********************************************
 
     public bankDetailsList = async (req: any, res: Response, next: NextFunction) => {
@@ -380,6 +392,11 @@ class invoiceController {
             next(error)
         }
     };
+
+
+
+
+
 
     // ******************************* RATE CRUD ******************************************
 
@@ -503,6 +520,9 @@ class invoiceController {
         }
     };
 
+
+
+
     // **************************** invoice crud *********************************
 
     // ********************** invoices table ***********************
@@ -619,6 +639,10 @@ class invoiceController {
     };
 
 
+
+
+
+
     // *********** invoice excel data status ****************************
 
     public invoiceExcelDataStatus = async (req: any, res: Response, next: NextFunction) => {
@@ -696,6 +720,10 @@ class invoiceController {
             next(error)
         }
     };
+
+
+
+
 
     // *********** invoice excel data ****************************
 
@@ -1064,6 +1092,11 @@ class invoiceController {
         }
     };
 
+
+
+
+
+
     // **************************************** invoice data excel status ***************************
     public createInvoiceDataExcel = async (req: any, res: Response, next: NextFunction) => {
         try {
@@ -1169,6 +1202,9 @@ class invoiceController {
             next(error)
         }
     };
+
+
+    
 
     // ***************************** create invoice *******************************************
     public createInvoice = async (req: any, res: Response, next: NextFunction) => {

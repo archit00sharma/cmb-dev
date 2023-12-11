@@ -69,7 +69,7 @@ class invoiceRoute implements Route {
         // ************************ invoice excel data table *********************
         this.router.get(`${this.path}/invoiceExcelData/:id/:invoiceExcelFormat/:conveyance?`, validate(schemas.getInvoiceExcelData, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.invoiceExcelData);
         this.router.post(`${this.path}/invoiceExcelDataDataTable`, validate(schemas.postInvoiceExcelDataDataTable, null, true), auth, this.invoiceController.invoiceExcelDataDataTable);
-        this.router.post(`${this.path}/editInvoiceExcelData/:id`, validate(schemas.postEditInvoiceExcelData, (req) => `/invoice/invoiceExcelData/${req.params.id}/${req.body.invoiceExcelFormat}${req.body.conveyance ? '/' + req.body.conveyance : ''}`), auth, this.invoiceController.editInvoiceExcelData);
+        this.router.post(`${this.path}/editInvoiceExcelData/:id`, validate(schemas.postEditInvoiceExcelData,null,true), auth, this.invoiceController.editInvoiceExcelData);
         this.router.get(`${this.path}/deleteInvoiceExcelData/:id/:uniqueId/:invoiceExcelFormat/:conveyance?`, validate(schemas.getDeleteInvoiceExcelData, (req) => `/invoice/invoiceExcelData/${req.params.uniqueId}/${req.params.invoiceExcelFormat}${req.params.conveyance ? '/' + req.body.conveyance : ''}`), auth, this.invoiceController.deleteInvoiceExcelData);
 
 

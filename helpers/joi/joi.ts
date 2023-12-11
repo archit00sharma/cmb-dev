@@ -16,9 +16,9 @@ const validate = (schema: JoiMiddlewareSchema, path?, ajax = false) => (req: any
             const { error } = validationSchema?.validate(data) || {};
             return error;
         };
-
         const parts = ['headers', 'body', 'query', 'params', 'cookies'];
         const [errors]: ValidationError[] = parts.filter((part) => schema[part as keyof JoiMiddlewareSchema]).map((part) => validatePart(req[part], schema[part as keyof JoiMiddlewareSchema])).filter((error) => error);
+        
         if (errors) return ajax ? res.send({ err: errors.message }) : (req.flash('error', errors.message), res.redirect(path(req)));
         next();
     } catch (error) {
@@ -356,7 +356,6 @@ const postEditInvoiceExcelData: JoiMiddlewareSchema = {
     }),
     body: Joi.object().keys({
         invoiceExcelFormat: Joi.string().required(),
-        id: Joi.string().required(),
         product: Joi.string().required(),
         area: Joi.string().required(),
         bank: Joi.string().required(),
