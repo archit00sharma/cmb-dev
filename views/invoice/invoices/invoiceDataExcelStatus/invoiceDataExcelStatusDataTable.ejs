@@ -117,6 +117,13 @@
                 ajax: {
                     url: `/invoice/invoiceDataExcelStatusDataTable`,
                     type: "post",
+                    "dataSrc": function (json) {
+                        if (json && json.err) {
+                            window.alert(json.err)
+                        } else {
+                            return json.data
+                        }
+                    }
                 },
                 columns: [{
                         data: "count",

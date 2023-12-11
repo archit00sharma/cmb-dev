@@ -355,7 +355,14 @@
                 ajax: {
                     url: `/invoice/invoiceExcelDataDataTable`,
                     type: "post",
-                    data: data
+                    data: data,
+                    "dataSrc": function (json) {
+                        if (json && json.err) {
+                            window.alert(json.err)
+                        } else {
+                            return json.data
+                        }
+                    }
                 },
                 columnDefs: [{
                     render: function (data, type, row, meta) {
