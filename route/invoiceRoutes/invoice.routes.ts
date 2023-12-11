@@ -81,7 +81,7 @@ class invoiceRoute implements Route {
 
         // ************************** create invoice ****************************************************
         this.router.get(`${this.path}/createInvoice/:id`, validate(schemas.getCreateInvoice, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.createInvoice);
-        this.router.get(`${this.path}/deleteInvoice/:id`, auth, this.invoiceController.deleteInvoice);
+        this.router.get(`${this.path}/deleteInvoice/:id`,validate(schemas.getDeleteInvoice, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.deleteInvoice);
     }
 }
 

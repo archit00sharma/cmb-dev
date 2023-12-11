@@ -26,18 +26,24 @@ const validate = (schema: JoiMiddlewareSchema, path?, ajax = false) => (req: any
     }
 };
 
+
+
+// ************* common parameter ******************************
+const cookies = Joi.object().keys({
+    jwtToken: Joi.string().required(),
+}).unknown(true)
+
+
+
+
 // ***************************** INVOICE FROM *************************************************
 
 const getInvoiceFromList: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true)
+    cookies
 };
 
 const postInvoiceFromDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -49,9 +55,7 @@ const postInvoiceFromDataTable: JoiMiddlewareSchema = {
 };
 
 const getAddInvoiceFrom: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
 };
 
 const postSubmitAddInvoiceFrom: JoiMiddlewareSchema = {
@@ -76,15 +80,11 @@ const postSubmitAddInvoiceFrom: JoiMiddlewareSchema = {
         accountNo: Joi.string().required(),
         hsnSac: Joi.string().required(),
     }),
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true)
+    cookies
 };
 
 const getEditInvoiceFrom: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies
 };
 
 const postSubmitEditInvoiceFrom: JoiMiddlewareSchema = {
@@ -96,21 +96,17 @@ const postSubmitEditInvoiceFrom: JoiMiddlewareSchema = {
 
 const getDeleteInvoiceFrom: JoiMiddlewareSchema = {
     params: postSubmitEditInvoiceFrom.params,
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies
 };
 
 // ******************************************* INVOICE TO *******************************************
 
 const getInvoiceToList: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies
 };
 
 const postInvoiceToDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -122,9 +118,7 @@ const postInvoiceToDataTable: JoiMiddlewareSchema = {
 };
 
 const getAddInvoiceTo: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies
 };
 
 const postSubmitAddInvoiceTo: JoiMiddlewareSchema = {
@@ -141,13 +135,11 @@ const postSubmitAddInvoiceTo: JoiMiddlewareSchema = {
         serviceCategory: Joi.string().required(),
         email: Joi.string().email().required(),
     }),
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies
 };
 
 const getEditInvoiceTo: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies
 };
 
 const postSubmitEditInvoiceTo: JoiMiddlewareSchema = {
@@ -162,15 +154,11 @@ const getDeleteInvoiceTo: JoiMiddlewareSchema = {
 
 // ************************************************ BANK DETAILS********************************************
 const getBankDetailsList: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true)
+    cookies
 };
 
 const postBankDetailsDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -182,9 +170,7 @@ const postBankDetailsDataTable: JoiMiddlewareSchema = {
 };
 
 const getAddBankDetails: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies
 };
 
 const postSubmitAddBankDetails: JoiMiddlewareSchema = {
@@ -197,13 +183,11 @@ const postSubmitAddBankDetails: JoiMiddlewareSchema = {
         ifscCode: Joi.string().required(),
         accountHolderName: Joi.string().required(),
     }),
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies,
 };
 
 const getEditBankDetails: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies
 };
 
 const postSubmitEditBankDetails: JoiMiddlewareSchema = {
@@ -217,13 +201,11 @@ const getDeleteBankDetails: JoiMiddlewareSchema = {
 
 // ********************************RATE ****************************************************************
 const getRateList: JoiMiddlewareSchema = {
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies
 };
 
 const postRateListDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -244,7 +226,7 @@ const postAddRate: JoiMiddlewareSchema = {
         point: Joi.string().required(),
         rate: Joi.string().required(),
     }),
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies
 };
 
 const postEditRate: JoiMiddlewareSchema = {
@@ -261,15 +243,11 @@ const getDeleteRate: JoiMiddlewareSchema = {
 // *************************************** INVOICE **************************************
 
 const getInvoiceList: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true)
+    cookies
 };
 
 const postInvoiceListDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -281,9 +259,7 @@ const postInvoiceListDataTable: JoiMiddlewareSchema = {
 };
 
 const getAddInvoice: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
 };
 
 const getCreateInvoice: JoiMiddlewareSchema = {
@@ -308,22 +284,25 @@ const postAddInvoiceSubmit: JoiMiddlewareSchema = {
             otherwise: Joi.optional().allow(null),
         })
     }),
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies,
+};
+
+const getDeleteInvoice: JoiMiddlewareSchema = {
+    cookies,
+    params: Joi.object().keys({
+        id: Joi.string().required(),
+    })
 };
 
 
 // ************************************ invoice excel data status ******************************************
 
 const getInvoiceExcelDataStatus: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true)
+    cookies,
 };
 
 const postInvoiceExcelDataStatusDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -339,14 +318,12 @@ const getDeleteInvoiceExcelDataStatus: JoiMiddlewareSchema = {
         id: Joi.string().required(),
         uniqueId: Joi.string().required(),
     }),
-    cookies: postSubmitAddInvoiceFrom.cookies,
+    cookies
 };
 
 // ************************************** invoice excel data **********************************************
 const getInvoiceExcelData: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     params: Joi.object().keys({
         id: Joi.string().required(),
         invoiceExcelFormat: Joi.string().required(),
@@ -359,9 +336,7 @@ const getInvoiceExcelData: JoiMiddlewareSchema = {
 };
 
 const postInvoiceExcelDataDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -375,9 +350,7 @@ const postInvoiceExcelDataDataTable: JoiMiddlewareSchema = {
 };
 
 const postEditInvoiceExcelData: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     params: Joi.object().keys({
         id: Joi.string().required(),
     }),
@@ -446,9 +419,7 @@ const postEditInvoiceExcelData: JoiMiddlewareSchema = {
 };
 
 const getDeleteInvoiceExcelData: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     params: Joi.object().keys({
         id: Joi.string().required(),
         invoiceExcelFormat: Joi.string().required(),
@@ -464,9 +435,7 @@ const getDeleteInvoiceExcelData: JoiMiddlewareSchema = {
 // ************************************* invoice data excel- excel **************************************
 
 const getCreateInvoiceDataExcel: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     params: Joi.object().keys({
         uniqueId: Joi.string().required(),
         invoiceExcelFormat: Joi.string().required(),
@@ -474,15 +443,11 @@ const getCreateInvoiceDataExcel: JoiMiddlewareSchema = {
 };
 
 const getInvoiceDataExcelStatus: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
 };
 
 const postInvoiceDataExcelStatusDataTable: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     body: Joi.object().keys({
         columns: Joi.array().required(),
         order: Joi.array().required(),
@@ -494,9 +459,7 @@ const postInvoiceDataExcelStatusDataTable: JoiMiddlewareSchema = {
 };
 
 const getDeleteInvoiceExcelFile: JoiMiddlewareSchema = {
-    cookies: Joi.object().keys({
-        jwtToken: Joi.string().required(),
-    }).unknown(true),
+    cookies,
     params: Joi.object().keys({
         id: Joi.string().required(),
     }),
@@ -536,6 +499,7 @@ const schemas: any = {
     postInvoiceListDataTable,
     getAddInvoice,
     getCreateInvoice,
+    getDeleteInvoice,
     getInvoiceExcelDataStatus,
     postInvoiceExcelDataStatusDataTable,
     getDeleteInvoiceExcelDataStatus,
