@@ -217,7 +217,23 @@ const getDeleteBankDetails: JoiMiddlewareSchema = {
 };
 
 // ********************************RATE ****************************************************************
+const getRateList: JoiMiddlewareSchema = {
+    cookies: postSubmitAddInvoiceFrom.cookies,
+};
 
+const postRateListDataTable: JoiMiddlewareSchema = {
+    cookies: Joi.object().keys({
+        jwtToken: Joi.string().required(),
+    }).unknown(true),
+    body: Joi.object().keys({
+        columns: Joi.array().required(),
+        order: Joi.array().required(),
+        length: Joi.string().required(),
+        start: Joi.string().required(),
+        search: Joi.object().required(),
+        draw: Joi.string().required(),
+    })
+};
 
 const postAddRate: JoiMiddlewareSchema = {
     body: Joi.object().keys({
@@ -234,12 +250,6 @@ const postAddRate: JoiMiddlewareSchema = {
 
 const postEditRate: JoiMiddlewareSchema = {
     body: Joi.object().keys({
-        bank: Joi.string().required(),
-        area: Joi.string().required(),
-        product: Joi.string().required(),
-        from: Joi.string().required(),
-        to: Joi.string().required(),
-        point: Joi.string().required(),
         rate: Joi.string().required(),
     }),
     params: postSubmitEditInvoiceFrom.params,
@@ -476,6 +486,8 @@ const schemas: any = {
     getEditBankDetails,
     postSubmitEditBankDetails,
     getDeleteBankDetails,
+    getRateList,
+    postRateListDataTable,
     postAddRate,
     postEditRate,
     getDeleteRate,

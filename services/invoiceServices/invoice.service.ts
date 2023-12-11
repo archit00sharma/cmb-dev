@@ -460,7 +460,7 @@ class invoiceService {
 
     public async updateRate(id, data) {
         try {
-            return await rateModel.findByIdAndUpdate(id, data);
+            return await rateModel.findByIdAndUpdate(id, { $set: data });
         } catch (error) {
             error.code = 401;
             return error
