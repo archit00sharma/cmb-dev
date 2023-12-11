@@ -136,7 +136,7 @@ const postSubmitAddInvoiceTo: JoiMiddlewareSchema = {
         address: Joi.string().required(),
         pan: Joi.string().required(),
         gstNumber: Joi.string().required(),
-        sacNumber: Joi.string().required(),
+        sac: Joi.string().required(),
         state: Joi.string().required(),
         stateCode: Joi.string().required(),
         serviceCategory: Joi.string().required(),

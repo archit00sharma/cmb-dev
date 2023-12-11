@@ -145,7 +145,7 @@ class invoiceService {
 
     public async updateInvoiceTo(id, data) {
         try {
-            return await invoiceToModel.updateOne({ _id: id }, { $set: { data } });
+            return await invoiceToModel.updateOne({ _id: id }, { $set: data });
         } catch (error) {
             error.code = 401;
             return error

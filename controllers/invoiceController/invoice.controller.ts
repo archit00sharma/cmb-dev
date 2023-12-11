@@ -246,8 +246,10 @@ class invoiceController {
 
     public submitEditInvoiceTo = async (req: any, res: Response, next: NextFunction) => {
         try {
+            console.log("rrrrrrrrrrrrrrrrrrrrrrrr",req.body)
             const { id } = req.params;
-            const { code, message } = await this.invoiceService.updateInvoiceTo(req.params.id, req.body);
+            console.log("iiiiiiiiiiiiiiiiiiiiiiiiii",id)
+            const { code, message } = await this.invoiceService.updateInvoiceTo(id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editInvoiceTo/${id}`);
         } catch (error) {

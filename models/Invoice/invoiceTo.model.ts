@@ -28,7 +28,7 @@ const invoiceToSchema: Schema = new Schema(
             type: String,
             require: true
         },
-        sacNumber: {
+        sac: {
             type: String,
             require: true
         },
