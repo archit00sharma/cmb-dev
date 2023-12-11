@@ -12,7 +12,6 @@ interface JoiMiddlewareSchema {
 
 const validate = (schema: JoiMiddlewareSchema, path?, ajax = false) => (req: any, res: Response, next: NextFunction) => {
     try {
-        console.log("req..................................................",req.body)
         const validatePart = (data: any, validationSchema: ObjectSchema | undefined) => {
             const { error } = validationSchema?.validate(data) || {};
             return error;
@@ -462,6 +461,47 @@ const getDeleteInvoiceExcelData: JoiMiddlewareSchema = {
     }),
 };
 
+// ************************************* invoice data excel- excel **************************************
+
+const getCreateInvoiceDataExcel: JoiMiddlewareSchema = {
+    cookies: Joi.object().keys({
+        jwtToken: Joi.string().required(),
+    }).unknown(true),
+    params: Joi.object().keys({
+        uniqueId: Joi.string().required(),
+        invoiceExcelFormat: Joi.string().required(),
+    }),
+};
+
+const getInvoiceDataExcelStatus: JoiMiddlewareSchema = {
+    cookies: Joi.object().keys({
+        jwtToken: Joi.string().required(),
+    }).unknown(true),
+};
+
+const postInvoiceDataExcelStatusDataTable: JoiMiddlewareSchema = {
+    cookies: Joi.object().keys({
+        jwtToken: Joi.string().required(),
+    }).unknown(true),
+    body: Joi.object().keys({
+        columns: Joi.array().required(),
+        order: Joi.array().required(),
+        length: Joi.string().required(),
+        start: Joi.string().required(),
+        search: Joi.object().required(),
+        draw: Joi.string().required(),
+    })
+};
+
+const getDeleteInvoiceExcelFile: JoiMiddlewareSchema = {
+    cookies: Joi.object().keys({
+        jwtToken: Joi.string().required(),
+    }).unknown(true),
+    params: Joi.object().keys({
+        id: Joi.string().required(),
+    }),
+};
+
 
 
 const schemas: any = {
@@ -499,10 +539,14 @@ const schemas: any = {
     getInvoiceExcelDataStatus,
     postInvoiceExcelDataStatusDataTable,
     getDeleteInvoiceExcelDataStatus,
+    getCreateInvoiceDataExcel,
+    getInvoiceDataExcelStatus,
     getInvoiceExcelData,
     postInvoiceExcelDataDataTable,
     postEditInvoiceExcelData,
-    getDeleteInvoiceExcelData
+    getDeleteInvoiceExcelData,
+    postInvoiceDataExcelStatusDataTable,
+    getDeleteInvoiceExcelFile
 };
 
 export { validate, schemas };

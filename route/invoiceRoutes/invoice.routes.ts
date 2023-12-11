@@ -74,10 +74,10 @@ class invoiceRoute implements Route {
 
 
         // ************************ invoice excel data excel table *********************
-        this.router.get(`${this.path}/createInvoiceDataExcel/:invoiceExcelFormat/:uniqueId`, validate(schemas.getCreateInvoiceDataExcel, (req) => `/invoice/invoiceExcelData/${req.params.id}/${req.body.invoiceExcelFormat}${req.body.conveyance ? '/' + req.body.conveyance : ''}`), auth, this.invoiceController.createInvoiceDataExcel);
-        this.router.get(`${this.path}/invoiceDataExcelStatus`, validate(schemas.postEditInvoiceExcelData, (req) => `/invoice/invoiceExcelData/${req.params.id}/${req.body.invoiceExcelFormat}${req.body.conveyance ? '/' + req.body.conveyance : ''}`), auth, this.invoiceController.invoiceDataExcelStatus);
-        this.router.post(`${this.path}/invoiceDataExcelStatusDataTable`, validate(schemas.postEditInvoiceExcelData, (req) => `/invoice/invoiceExcelData/${req.params.id}/${req.body.invoiceExcelFormat}${req.body.conveyance ? '/' + req.body.conveyance : ''}`), auth, this.invoiceController.invoiceDataExcelStatusDataTable);
-        this.router.get(`${this.path}/deleteInvoiceExcelFile/:id`, validate(schemas.postEditInvoiceExcelData, (req) => `/invoice/invoiceExcelData/${req.params.id}/${req.body.invoiceExcelFormat}${req.body.conveyance ? '/' + req.body.conveyance : ''}`), auth, this.invoiceController.deleteInvoiceExcelFile);
+        this.router.get(`${this.path}/createInvoiceDataExcel/:invoiceExcelFormat/:uniqueId`, validate(schemas.getCreateInvoiceDataExcel, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.createInvoiceDataExcel);
+        this.router.get(`${this.path}/invoiceDataExcelStatus`, validate(schemas.getInvoiceDataExcelStatus, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.invoiceDataExcelStatus);
+        this.router.post(`${this.path}/invoiceDataExcelStatusDataTable`, validate(schemas.postInvoiceDataExcelStatusDataTable, null, true), auth, this.invoiceController.invoiceDataExcelStatusDataTable);
+        this.router.get(`${this.path}/deleteInvoiceExcelFile/:id`, validate(schemas.getDeleteInvoiceExcelFile, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.deleteInvoiceExcelFile);
 
         // ************************** create invoice ****************************************************
         this.router.get(`${this.path}/createInvoice/:id`, validate(schemas.getCreateInvoice, (req) => `/invoice/invoiceExcelDataStatus`), auth, this.invoiceController.createInvoice);

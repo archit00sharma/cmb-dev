@@ -14,7 +14,6 @@ const invoiceExcel = async (data) => {
             case "common_format":
             case "bandhan_format":
                 for (let i = 0; i < cases.length; i++) {
-                    // delete cases[i]._id;
                     const caseDistance = parseInt(cases[i].distance)
                     const point = cases[i].point;
                     const matchedRate = findMatchingRate(caseDistance, point, rates);
@@ -27,18 +26,11 @@ const invoiceExcel = async (data) => {
                     }
                 };
                 invoiceExcelData = await invoiceServices.createInvoiceExcelData(cases);
-                if (invoiceExcelData.code === 401) {
-                    const update = {
-                        status: 'failed',
-                        error: invoiceExcelData.message
-                    }
-                    await invoiceServices.updateInvoiceExcelDataStatus({ uniqueId: data.uniqueId }, update)
-                } else {
-                    const update = {
-                        status: 'success',
-                    }
-                    await invoiceServices.updateInvoiceExcelDataStatus({ uniqueId: data.uniqueId }, update)
-                }
+                const update = {
+                    status: invoiceExcelData.code === 401 ? 'failed' : 'success',
+                    error: invoiceExcelData.code === 401 ? invoiceExcelData.message : undefined
+                };
+                await invoiceServices.updateInvoiceExcelDataStatus({ uniqueId: data.uniqueId }, update);
                 break;
             case "csl_format":
                 for (let i = 0; i < cases.length; i++) {
@@ -494,13 +486,19 @@ const invoiceExcel = async (data) => {
 };
 
 function findMatchingRate(distance, point, rates) {
-    for (let i = 0; i < rates.length; i++) {
-        const rate = rates[i];
-        if (distance >= rate.from && distance <= rate.to && point === rate.point) {
-            return rate;
+    try {
+        for (let i = 0; i < rates.length; i++) {
+            const rate = rates[i];
+            if (distance >= rate.from && distance <= rate.to && point === rate.point) {
+                return rate;
+            }
         }
+        return null;
+
+    } catch (error) {
+        throw error
     }
-    return null;
+
 }
 
 export default invoiceExcel;
