@@ -482,24 +482,17 @@
 
         $("#saveChanges").on("click", function () {
             const id = $("#editId").val();
-            const rate = $("#editRate").val();
             const km = $("#editKm").val();
-            const date = $("#editDate").val();
-            const barcode = $("#editBarcode").val();
-            const applicantName = $("#editApplicantName").val();
-            const addressType = $("#editAddressType").val();
             const product = $("#editProduct").val();
-            const address = $("#editAddress").val();
             const branch = $("#editBranch").val();
             const area = $("#editArea").val();
-            const mobile = $("#editMobile").val();
             const status = $("#editStatus").val();
             const point = $("#editPoint").val();
             const bank = $("#bank").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
 
-            if (!rate || !km || rate < 0 || km < 0) {
-                alert("Please fill in all required fields and ensure that rate and km are positive.");
+            if (!km || km < 0) {
+                alert("Please fill in all required fields and ensure that km is positive.");
 
             } else {
                 const data = {

@@ -467,11 +467,10 @@
                     invoiceExcelFormat,
                     product,
                     bank,
-                    rate: rate,
-                    km: km,
+                    km,
                     area,
-                    status: status,
-                    point: point,
+                    status,
+                    point,
                 };
 
                 $.ajax({
@@ -479,7 +478,11 @@
                     url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
                     data: data,
                     success: function (response) {
-                        window.location.reload();
+                        if (response && response.err) {
+                            window.alert(response.err)
+                        } else {
+                            window.location.reload();
+                        }
                     },
                 });
             }

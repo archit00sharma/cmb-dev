@@ -97,7 +97,7 @@
                                 <span class="text-capitalize"> Invoice </span>
                             </h1>
                             <div class="page-header-subtitle fs-md-19 fs-14 text-capitalize">
-                             Excel Data
+                                Excel Data
                             </div>
                         </div>
                     </div>
@@ -558,7 +558,6 @@
         $("#saveChanges").on("click", function () {
             let km
             const rate = $("#editRate").val();
-
             const product = $("#editProduct").val();
             const area = $("#editArea").val();
             const status = $("#editStatus").val();
@@ -598,37 +597,40 @@
                 distance: $("#editRvKm").val()
             }
 
-            if (!rate || rate < 0) {
-                alert("Please fill in all required fields and ensure that rate and km are positive.");
+
+            const data = {
+                km,
+                product,
+                bank,
+                rate,
+                area,
+                status,
+                branch,
+                point,
+                invoiceExcelFormat
+            };
+
+            if (addressType === 'PV') {
+                data.pv = pv;
             } else {
-                const data = {
-                    km,
-                    product,
-                    bank,
-                    rate,
-                    area,
-                    status,
-                    branch,
-                    point,
-                    invoiceExcelFormat
-                };
-                if (addressType === 'PV') {
-                    data.pv = pv
-                } else {
-                    data.rv = rv;
-                    data.bv = bv;
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
-                    data: data,
-                    success: function (response) {
-                        window.location.reload();
-                    },
-                });
-
+                data.rv = rv;
+                data.bv = bv;
             }
+
+            $.ajax({
+                type: "POST",
+                url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
+                data: data,
+                success: function (response) {
+                    if (response && response.err) {
+                        window.alert(response.err)
+                    } else {
+                        window.location.reload();
+                    }
+                },
+            });
+
+
 
         });
     </script>

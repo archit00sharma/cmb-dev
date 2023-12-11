@@ -191,11 +191,11 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editArea">Area:</label>
-                                            <input type="text" class="form-control" id="editArea"
-                                                name="editArea" required readonly>
+                                            <input type="text" class="form-control" id="editArea" name="editArea"
+                                                required readonly>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
 
                                 <div class="row">
@@ -223,7 +223,7 @@
                                 </div>
 
                                 <div class="row">
-                                    
+
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editBusinessBranch">Business Branch:</label>
@@ -234,7 +234,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="km">Km:</label>
-                                            <input type="number" class="form-control" id="editKm" name="editKm" required>
+                                            <input type="number" class="form-control" id="editKm" name="editKm"
+                                                required>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -426,8 +427,10 @@
                 },
                 columnDefs: [{
                     render: function (data, type, row, meta) {
-                        if (type === 'display' && data && data.length > 20 && meta.col !== ( meta.settings.aoColumns.length - 1)) {
-                            return '<span title="' + data + '">' + data.substr(0, 20) +'...</span>';
+                        if (type === 'display' && data && data.length > 20 && meta.col !== (
+                                meta.settings.aoColumns.length - 1)) {
+                            return '<span title="' + data + '">' + data.substr(0, 20) +
+                                '...</span>';
                         } else {
                             return data;
                         }
@@ -551,22 +554,21 @@
             const km = $("#editKm").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
 
-            if (!rate || !km || rate < 0 || km < 0) {
-                alert("Please fill in all required fields and ensure that rate and km are positive.");
+            if (!km || km < 0) {
+                alert("Please fill in all required fields and ensure that km is positive.");
 
             } else {
                 const data = {
                     area,
-                    businessHrs,
                     product,
                     bank,
-                    agencyName,
-                    branchId,
-                    businessBranch,
-                    rate,
                     km,
                     status,
                     point,
+                    businessHrs,
+                    agencyName,
+                    branchId,
+                    businessBranch,
                     invoiceExcelFormat
                 };
 
@@ -575,7 +577,11 @@
                     url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
                     data: data,
                     success: function (response) {
-                        window.location.reload();
+                        if (response && response.err) {
+                            window.alert(response.err)
+                        } else {
+                            window.location.reload();
+                        }
                     },
                 });
             }
