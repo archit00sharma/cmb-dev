@@ -200,7 +200,7 @@
 
                                         <div id="area" class="form-group form-info" style="position: relative">
                                             <label class="control-label text-bold" for="area">Choose Area(s)</label>
-                                            <select id="selectInvoiceFromTemplate" data-live-search="true" data-container="body"  required multiple class="chosen-select form-control form-control-solid selectpicker" name="area[]">
+                                            <select id="selectInvoiceFromTemplate" data-live-search="true" data-container="body"  required  class="chosen-select form-control form-control-solid selectpicker" name="area">
                                                 
                                                 <% areaList.forEach((template, index) => { %>
                                                     <option id="format_<%= index + 1 %>" value="<%= template.area %>">
