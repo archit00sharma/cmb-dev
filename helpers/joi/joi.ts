@@ -295,7 +295,7 @@ const postAddInvoiceSubmit: JoiMiddlewareSchema = {
     body: Joi.object().keys({
         bank: Joi.string().required(),
         area: Joi.string().required(),
-        product: Joi.string().required(),
+        product: Joi.array().required(),
         from: Joi.string().required(),
         to: Joi.string().required(),
         point: Joi.string().required(),
