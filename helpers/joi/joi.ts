@@ -12,6 +12,7 @@ interface JoiMiddlewareSchema {
 
 const validate = (schema: JoiMiddlewareSchema, path?, ajax = false) => (req: any, res: Response, next: NextFunction) => {
     try {
+        console.log("req..................................................",req.body)
         const validatePart = (data: any, validationSchema: ObjectSchema | undefined) => {
             const { error } = validationSchema?.validate(data) || {};
             return error;
@@ -19,7 +20,6 @@ const validate = (schema: JoiMiddlewareSchema, path?, ajax = false) => (req: any
 
         const parts = ['headers', 'body', 'query', 'params', 'cookies'];
         const [errors]: ValidationError[] = parts.filter((part) => schema[part as keyof JoiMiddlewareSchema]).map((part) => validatePart(req[part], schema[part as keyof JoiMiddlewareSchema])).filter((error) => error);
-        console.log("errors>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", errors)
         if (errors) return ajax ? res.send({ err: errors.message }) : (req.flash('error', errors.message), res.redirect(path(req)));
         next();
     } catch (error) {
@@ -296,10 +296,6 @@ const postAddInvoiceSubmit: JoiMiddlewareSchema = {
         bank: Joi.string().required(),
         area: Joi.string().required(),
         product: Joi.array().required(),
-        from: Joi.string().required(),
-        to: Joi.string().required(),
-        point: Joi.string().required(),
-        rate: Joi.string().required(),
         invoiceFormat: Joi.string().required(),
         invoiceExcelFormat: Joi.string().required(),
         invoiceToTemplate: Joi.string().required(),
@@ -307,7 +303,11 @@ const postAddInvoiceSubmit: JoiMiddlewareSchema = {
         bankDetailsTemplate: Joi.string().required(),
         min: Joi.string().required(),
         max: Joi.string().required(),
-        conveyance: Joi.string().required(),
+        conveyance: Joi.when('invoiceExcelFormat', {
+            is: ['csl_format'],
+            then: Joi.string().required(),
+            otherwise: Joi.optional().allow(null),
+        })
     }),
     cookies: postSubmitAddInvoiceFrom.cookies,
 };
