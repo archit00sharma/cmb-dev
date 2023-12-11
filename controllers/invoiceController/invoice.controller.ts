@@ -992,7 +992,7 @@ class invoiceController {
 
     public editInvoiceExcelData = async (req: any, res: Response, next: NextFunction) => {
         try {
-            const { bank, product, km, area, branch, hub, status, point, invoiceExcelFormat, agencyName, branchId, businessBranch, businessHrs, conveyance, pv, rv, bv } = req.body;
+            const { bank, product, km, area, branch, oglOrWithin, status, point, invoiceExcelFormat, agencyName, branchId, businessBranch, businessHrs, conveyance, pv, rv, bv } = req.body;
             const { id } = req.params;
             let data
             switch (invoiceExcelFormat) {
@@ -1015,6 +1015,7 @@ class invoiceController {
                         branchId,
                         businessBranch,
                         distance: km,
+                        oglOrWithin,
                         area: area.toUpperCase()
                     };
                     if (km >= 0 && km <= 25 && businessHrs <= 4) {
@@ -1204,7 +1205,7 @@ class invoiceController {
     };
 
 
-    
+
 
     // ***************************** create invoice *******************************************
     public createInvoice = async (req: any, res: Response, next: NextFunction) => {

@@ -377,6 +377,11 @@ const postEditInvoiceExcelData: JoiMiddlewareSchema = {
             then: Joi.string().required(),
             otherwise: Joi.forbidden(), // This field is forbidden for other values
         }),
+        oglOrWithin: Joi.string().when('invoiceExcelFormat', {
+            is: 'bandhan_format',
+            then: Joi.string().required(),
+            otherwise: Joi.forbidden(), // This field is forbidden for other values
+        }),
         agencyName: Joi.string().when('invoiceExcelFormat', {
             is: 'bandhan_format',
             then: Joi.string().required(),

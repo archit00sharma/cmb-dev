@@ -157,9 +157,15 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="editCaseStatus">Status:</label>
-                                            <input type="text" class="form-control" id="editCaseStatus"
-                                                name="editCaseStatus">
+                                            <label for="editStatus">Status:</label>
+                                            <select id="editStatus" required
+                                                class="chosen-select form-control form-control-solid" name="editStatus">
+                                                <option value="" selected disabled>Select the Status
+                                                </option>
+                                                <option value="POSITIVE">POSITIVE</option>
+                                                <option value="NEGATIVE">NEGATIVE</option>
+                                                <option value="REFER_TO_CREDIT">REFER_TO_CREDIT</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -266,7 +272,7 @@
                                         <div class="form-group">
                                             <label for="editOglOrWithin">Ogl Or Within:</label>
                                             <input type="text" class="form-control" id="editOglOrWithin"
-                                                name="editOglOrWithin" required readonly>
+                                                name="editOglOrWithin" required >
                                         </div>
                                     </div>
                                     <div class="col">
@@ -514,7 +520,7 @@
                 $("#editApplicantName").val(rowData.applicantName);
                 $("#editAddress").val(rowData.address);
                 $("#editAddressType").val(rowData.addressType);
-                $("#editCaseStatus").val(rowData.caseStatus);
+                $("#editStatus").val(rowData.caseStatus);
                 $("#editCaseUploaded").val(rowData.caseUploaded);
                 $("#editCaseSubmitted").val(rowData.caseSubmitted);
                 $("#editAgencyName").val(rowData.agencyName);
@@ -540,7 +546,7 @@
         });
 
         $("#saveChanges").on("click", function () {
-            const status = $("#editCaseStatus").val();
+            const status = $("#editStatus").val();
             const agencyName = $("#editAgencyName").val();
             const branchId = $("#editBranchId").val();
             const businessBranch = $("#editBusinessBranch").val();
@@ -548,11 +554,11 @@
             const point = $("#editPoint").val();
             const product = $("#editProduct").val();
             const businessHrs = $("#editBusinessHrs").val();
-
             const area = $("#editArea").val();
             const bank = $("#bank").val();
             const km = $("#editKm").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
+            const oglOrWithin=  "<%=editOglOrWithin%>"
 
             if (!km || km < 0) {
                 alert("Please fill in all required fields and ensure that km is positive.");
@@ -569,7 +575,8 @@
                     agencyName,
                     branchId,
                     businessBranch,
-                    invoiceExcelFormat
+                    invoiceExcelFormat,
+                    oglOrWithin
                 };
 
                 $.ajax({

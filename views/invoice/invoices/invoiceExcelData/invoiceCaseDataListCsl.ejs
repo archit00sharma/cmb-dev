@@ -143,10 +143,10 @@
 
                                 </div>
 
-                               
+
                                 <input type="text" class="form-control" id="id" name="id" hidden required>
                                 <input type="text" class="form-control" id="bank" name="bank" hidden required>
-                                
+
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
@@ -159,8 +159,7 @@
                                         <div class="form-group">
                                             <label for="editArea">Location:</label>
                                             <select id="editArea" required
-                                                class="chosen-select form-control form-control-solid"
-                                                name="editArea">
+                                                class="chosen-select form-control form-control-solid" name="editArea">
                                                 <option value="" selected disabled>Select the Location</option>
                                                 <% areaList.forEach((template, index) => { %>
                                                 <option id="format_<%= index + 1 %>" value="<%= template.area %>">
@@ -366,8 +365,10 @@
                 },
                 columnDefs: [{
                     render: function (data, type, row, meta) {
-                        if (type === 'display' && data && data.length > 20 && meta.col !== ( meta.settings.aoColumns.length - 1)) {
-                            return '<span title="' + data + '">' + data.substr(0, 20) +'...</span>';
+                        if (type === 'display' && data && data.length > 20 && meta.col !== (
+                                meta.settings.aoColumns.length - 1)) {
+                            return '<span title="' + data + '">' + data.substr(0, 20) +
+                                '...</span>';
                         } else {
                             return data;
                         }
@@ -458,7 +459,7 @@
             const bank = $("#bank").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
             const conveyance = "<%=conveyance%>"
-            if (!rate || !km || rate < 0 || km < 0) {
+            if (!km || km < 0) {
                 alert("Please fill in all required fields and ensure that rate and km are positive.");
 
             } else {
