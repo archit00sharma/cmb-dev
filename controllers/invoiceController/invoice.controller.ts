@@ -171,12 +171,6 @@ class invoiceController {
         }
     };
 
-
-
-
-
-
-
     // ********************* INVOICE TO CODE **********************************
 
     public invoiceToList = async (req: any, res: Response, next: NextFunction) => {
@@ -311,11 +305,6 @@ class invoiceController {
     };
 
 
-
-
-
-
-
     // ************************ Bank Details Code ***********************************************
 
     public bankDetailsList = async (req: any, res: Response, next: NextFunction) => {
@@ -448,10 +437,6 @@ class invoiceController {
             next(error)
         }
     };
-
-
-
-
 
 
     // ******************************* RATE CRUD ******************************************
@@ -875,7 +860,7 @@ class invoiceController {
                                 km: invoiceExcelData.data[i].distance,
                                 rate: invoiceExcelData.data[i].rate,
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id}" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${invoiceExcelData.data[i].uniqueId}" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}" data-original-title="Delete">
@@ -903,7 +888,7 @@ class invoiceController {
                                 product: invoiceExcelData.data[i].product,
                                 rate: invoiceExcelData.data[i].rate,
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}"  data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${invoiceExcelData.data[i].uniqueId} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}"  data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}/${invoiceExcelData.data[i].conveyance?.distance}" data-original-title="Delete">
@@ -985,7 +970,7 @@ class invoiceController {
                                     })(),
                                 oglOrWithin: invoiceExcelData.data[i].oglOrWithin || "Na",
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${invoiceExcelData.data[i].uniqueId}" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-original-title="Delete">
                                                 <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}" data-original-title="Delete">
@@ -1025,7 +1010,7 @@ class invoiceController {
                                 remark: invoiceExcelData.data[i].remarks,
                                 cpvBy: invoiceExcelData.data[i].cpvBy || "Na",
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-addressType="${invoiceExcelData.data[i].addressType}" data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${invoiceExcelData.data[i].uniqueId}" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-addressType="${invoiceExcelData.data[i].addressType}" data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                              </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteBankDetails/${invoiceExcelData.data[i]._id}" data-original-title="Delete">
@@ -1291,8 +1276,6 @@ class invoiceController {
             next(error)
         }
     };
-
-
 
 
     // ***************************** create invoice *******************************************

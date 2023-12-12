@@ -524,7 +524,8 @@
                 const button = $(this);
                 const id = button.data("id");
                 const bank = button.data("bank");
-                const uniqueId = button.data("uniqueId");
+                const uniqueId = button.data("uniqueid");
+
                 const addressType = button.data("addressType")
 
                 const rowData = table.row($(this).parents("tr")).data();
@@ -608,7 +609,6 @@
                 km,
                 product,
                 bank,
-                rate,
                 area,
                 status,
                 branch,
@@ -622,7 +622,6 @@
                 data.rv = rv;
                 data.bv = bv;
             }
-
             $.ajax({
                 type: "POST",
                 url: `/invoice/editInvoiceExcelData/${$("#id").val()}`,
