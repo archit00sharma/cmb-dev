@@ -194,7 +194,6 @@
                                         <div id="product" class="form-group form-info" style="position: relative">
                                             <label class="control-label text-bold" for="product">Choose Product(s)</label>
                                             <select id="selectProduct" data-live-search="true" data-container="body"  required multiple class="chosen-select form-control form-control-solid selectpicker" name="product[]">
-                                               
                                                 <% productList.forEach((template, index) => { %>
                                                     <option id="format_<%= index + 1 %>" value="<%= template.product %>">
                                                         <%= template.product %>
