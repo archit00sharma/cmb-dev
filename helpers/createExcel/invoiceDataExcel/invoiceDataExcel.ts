@@ -89,7 +89,7 @@ let createInvoiceDataExcel = async (invoiceExcelFormat, uniqueId) => {
             case "bandhan_format":
 
                 var workbook = new Excel.Workbook();
-                await workbook.xlsx.readFile(`${fileUrl}invoiceDataExcel/bandhan_format`).then(async function () {
+                await workbook.xlsx.readFile(`${fileUrl}invoiceDataExcel/bandhan_format.xlsx`).then(async function () {
                     var worksheet = workbook.getWorksheet(1)
 
                     for (let i = 0; i < data.length; i++) {
