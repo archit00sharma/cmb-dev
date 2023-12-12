@@ -37,7 +37,7 @@ let createInvoiceDataExcel = async (invoiceExcelFormat, uniqueId) => {
                         row.getCell(8).value = data[i]?.address || "";
                         row.getCell(9).value = data[i]?.branch || "";
                         row.getCell(10).value = data[i]?.area || "";
-                        row.getCell(11).value = data[i]?.mobile || "";
+                        row.getCell(11).value = data[i]?.mobileNo || "";
                         row.getCell(12).value = data[i]?.caseStatus || "";
                         row.getCell(13).value = data[i]?.point || "";
                         row.getCell(14).value = data[i]?.distance || "";
