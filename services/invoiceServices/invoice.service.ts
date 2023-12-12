@@ -14,9 +14,9 @@ class invoiceService {
 
     // ********************************* INVOICE FROM CODE **************************
 
-    public async getInvoiceFrom(id) {
+    public async getInvoiceFrom(cond) {
         try {
-            return await invoiceFromModel.findById(id)
+            return await invoiceFromModel.findOne(cond)
         } catch (error) {
             error.code = 401;
             return error
@@ -478,71 +478,6 @@ class invoiceService {
 
     // *************************** Invoice Crud Code *********************************
 
-    // ************ invoice table **************************
-
-    public async getAllInvoiceList(req: any = {}, searchArray = []) {
-        try {
-            const pipeline = []
-            const array1 = [];
-            const array2 = [];
-            const array3 = [];
-
-            array3.push({
-                $count: "sum",
-            });
-
-            if (searchArray.length > 0) {
-                array1.push({
-                    $match: {
-                        $and: searchArray,
-                    },
-                });
-                array2.push({
-                    $match: {
-                        $and: searchArray,
-                    },
-                });
-            }
-
-            array1.push({
-                $count: "sum",
-            });
-            array2.push(
-                {
-                    $skip: parseInt(req.body.start),
-                },
-                {
-                    $limit: parseInt(req.body.length),
-                }
-            );
-            pipeline.push(
-                {
-                    $facet: {
-                        sum1: array3,
-                        sum2: array1,
-                        data: array2,
-                    },
-                },
-                {
-                    $unwind: {
-                        path: "$sum1",
-                    },
-                },
-                {
-                    $unwind: {
-                        path: "$sum2",
-                    },
-                }
-            );
-
-            return await invoiceModel.aggregate(pipeline);
-
-        } catch (error) {
-            error.code = 401;
-            return error
-        }
-    };
-
 
     // ********************* invoice excel data status *******************
 
@@ -639,6 +574,15 @@ class invoiceService {
         } catch (error) {
             await session.abortTransaction();
             session.endSession();
+            error.code = 401;
+            return error
+        }
+    };
+
+    public async getInvoiceExcelDataStatus(cond) {
+        try {
+            return await invoiceExcelDataStatusModel.findOne(cond);
+        } catch (error) {
             error.code = 401;
             return error
         }
@@ -911,6 +855,69 @@ class invoiceService {
     };
 
     // ************************************* invoice ********************************************************
+    public async getAllInvoiceList(req: any = {}, searchArray = []) {
+        try {
+            const pipeline = []
+            const array1 = [];
+            const array2 = [];
+            const array3 = [];
+
+            array3.push({
+                $count: "sum",
+            });
+
+            if (searchArray.length > 0) {
+                array1.push({
+                    $match: {
+                        $and: searchArray,
+                    },
+                });
+                array2.push({
+                    $match: {
+                        $and: searchArray,
+                    },
+                });
+            }
+
+            array1.push({
+                $count: "sum",
+            });
+            array2.push(
+                {
+                    $skip: parseInt(req.body.start),
+                },
+                {
+                    $limit: parseInt(req.body.length),
+                }
+            );
+            pipeline.push(
+                {
+                    $facet: {
+                        sum1: array3,
+                        sum2: array1,
+                        data: array2,
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$sum1",
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$sum2",
+                    },
+                }
+            );
+
+            return await invoiceModel.aggregate(pipeline);
+
+        } catch (error) {
+            error.code = 401;
+            return error
+        }
+    };
+
     public async createInvoice(data) {
         try {
             return await invoiceModel.create(data);

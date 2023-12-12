@@ -122,6 +122,8 @@
                                 <input type="text" class="form-control" id="bank" name="bank" hidden required>
                                 <input type="text" class="form-control" id="addressType" name="addressType" hidden
                                     required>
+                                <input type="text" class="form-control" id="uniqueId" name="uniqueId" hidden required>
+
 
                                 <div class="row">
                                     <div class="col">
@@ -522,6 +524,7 @@
                 const button = $(this);
                 const id = button.data("id");
                 const bank = button.data("bank");
+                const uniqueId = button.data("uniqueId");
                 const addressType = button.data("addressType")
 
                 const rowData = table.row($(this).parents("tr")).data();
@@ -549,6 +552,7 @@
 
                 $("#id").val(id);
                 $("#bank").val(bank);
+                $("#uniqueId").val(uniqueId);
                 $("#addressType").val(addressType);
 
                 $("#editRateModal").modal("show");
@@ -564,6 +568,7 @@
             const branch = $("#editBranch").val();
             const point = $("#editPoint").val();
             const bank = $("#bank").val();
+            const uniqueId = $("#uniqueId").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>";
             const addressType = $("#addressType").val();
 
@@ -599,6 +604,7 @@
 
 
             const data = {
+                uniqueId,
                 km,
                 product,
                 bank,

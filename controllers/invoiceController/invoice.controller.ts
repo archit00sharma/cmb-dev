@@ -120,9 +120,9 @@ class invoiceController {
     public editInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { role, email } = req.user
-            const { id } = req.params
+            const { id } = req.params;
             res.locals.message = req.flash()
-            const invoiceData = await this.invoiceService.getInvoiceFrom(id)
+            const invoiceData = await this.invoiceService.getInvoiceFrom({ _id: id });
             res.render("invoice/invoiceFrom/editInvoiceForm.ejs", { role, email, invoiceData });
         } catch (error) {
             next(error)
@@ -132,6 +132,16 @@ class invoiceController {
     public submitEditInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect(`/invoice/editInvoiceFrom/${id}`);;
+            }
+
             const { code, message } = await this.invoiceService.updateInvoiceFrom(id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editInvoiceFrom/${id}`);
@@ -142,7 +152,17 @@ class invoiceController {
 
     public deleteInvoiceFrom = async (req: any, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params
+            const { id } = req.params;
+
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect("/invoice/invoiceFromList");
+            }
             const { code, message } = await this.invoiceService.deleteInvoiceFrom(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/invoiceFromList");
@@ -253,6 +273,15 @@ class invoiceController {
     public submitEditInvoiceTo = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect(`/invoice/editInvoiceTo/${id}`);
+            }
             const { code, message } = await this.invoiceService.updateInvoiceTo(id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editInvoiceTo/${id}`);
@@ -264,6 +293,15 @@ class invoiceController {
     public deleteInvoiceTo = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect("/invoice/invoiceToList");
+            }
             const { code, message } = await this.invoiceService.deleteInvoiceTo(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/invoiceToList");
@@ -374,6 +412,15 @@ class invoiceController {
     public submitEditBankDetails = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect(`/invoice/editBankDetails/${id}`);
+            }
             const { code, message } = await this.invoiceService.updateBankDetails(req.params.id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.redirect(`/invoice/editBankDetails/${id}`);
@@ -385,6 +432,15 @@ class invoiceController {
     public deleteBankDetails = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect("/invoice/bankDetailsList");
+            }
             const { code, message } = await this.invoiceService.deleteBankDetails(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/bankDetailsList");
@@ -501,6 +557,15 @@ class invoiceController {
     public editRate = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.send("success");
+            }
             const { code, message } = await this.invoiceService.updateRate(id, req.body);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "updated successfully");
             res.send("success");
@@ -511,7 +576,16 @@ class invoiceController {
 
     public deleteRate = async (req: any, res: Response, next: NextFunction) => {
         try {
-            const { id } = req.params
+            const { id } = req.params;
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceExcelDataStatus({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect("/invoice/rateList");
+            }
             const { code, message } = await this.invoiceService.deleteRate(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/rateList");
@@ -519,7 +593,6 @@ class invoiceController {
             next(error)
         }
     };
-
 
 
 
@@ -639,10 +712,6 @@ class invoiceController {
     };
 
 
-
-
-
-
     // *********** invoice excel data status ****************************
 
     public invoiceExcelDataStatus = async (req: any, res: Response, next: NextFunction) => {
@@ -713,6 +782,15 @@ class invoiceController {
     public deleteInvoiceExcelDataStatus = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id, uniqueId } = req.params;
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceDataExcel({ status: 'processing' }),
+                this.invoiceService.getInvoice({ status: 'processing' })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.redirect("/invoice/invoiceExcelDataStatus");
+            }
             const { code, message } = await this.invoiceService.deleteInvoiceExcelDataStatus(id, uniqueId);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect("/invoice/invoiceExcelDataStatus");
@@ -720,10 +798,6 @@ class invoiceController {
             next(error)
         }
     };
-
-
-
-
 
     // *********** invoice excel data ****************************
 
@@ -801,7 +875,7 @@ class invoiceController {
                                 km: invoiceExcelData.data[i].distance,
                                 rate: invoiceExcelData.data[i].rate,
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id}" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}" data-original-title="Delete">
@@ -829,7 +903,7 @@ class invoiceController {
                                 product: invoiceExcelData.data[i].product,
                                 rate: invoiceExcelData.data[i].rate,
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}"  data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}"  data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}/${invoiceExcelData.data[i].conveyance?.distance}" data-original-title="Delete">
@@ -911,7 +985,7 @@ class invoiceController {
                                     })(),
                                 oglOrWithin: invoiceExcelData.data[i].oglOrWithin || "Na",
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-original-title="Delete">
                                                 <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}" data-original-title="Delete">
@@ -951,7 +1025,7 @@ class invoiceController {
                                 remark: invoiceExcelData.data[i].remarks,
                                 cpvBy: invoiceExcelData.data[i].cpvBy || "Na",
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-addressType="${invoiceExcelData.data[i].addressType}" data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${req.body.id} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}" data-km="${invoiceExcelData.data[i].distance}" data-addressType="${invoiceExcelData.data[i].addressType}" data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                              </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteBankDetails/${invoiceExcelData.data[i]._id}" data-original-title="Delete">
@@ -992,7 +1066,19 @@ class invoiceController {
 
     public editInvoiceExcelData = async (req: any, res: Response, next: NextFunction) => {
         try {
-            const { bank, product, km, area, branch, oglOrWithin, status, point, invoiceExcelFormat, agencyName, branchId, businessBranch, businessHrs, conveyance, pv, rv, bv } = req.body;
+            const { uniqueId, bank, product, km, area, branch, oglOrWithin, status, point, invoiceExcelFormat, agencyName, branchId, businessBranch, businessHrs, conveyance, pv, rv, bv } = req.body;
+
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceDataExcel({ status: 'processing', uniqueId }),
+                this.invoiceService.getInvoice({ status: 'processing', uniqueId })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return res.send("success");
+            }
+
+
             const { id } = req.params;
             let data
             switch (invoiceExcelFormat) {
@@ -1079,12 +1165,18 @@ class invoiceController {
 
     public deleteInvoiceExcelData = async (req: any, res: Response, next: NextFunction) => {
         try {
-            const excel = await this.invoiceService.getInvoiceDataExcel({ status: 'processing' })
-            if (excel) {
-                req.flash("error", 'some files are processing , kindly wait');
-                return res.redirect(`/invoice/invoiceExcelData`);
-            }
             const { id, uniqueId, invoiceExcelFormat, conveyance } = req.params
+            const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
+                this.invoiceService.getInvoiceDataExcel({ status: 'processing', uniqueId }),
+                this.invoiceService.getInvoice({ status: 'processing', uniqueId })
+            ]);
+
+            if (allowDeleteInvoiceData || allowDeleteInvoice) {
+                req.flash('error', 'Kindly wait, other files are processing');
+                return  res.redirect(`/invoice/invoiceExcelData/${uniqueId}/${invoiceExcelFormat}${conveyance ? '/' + conveyance : ''}`);
+            }
+
+           
             const { code, message } = await this.invoiceService.deleteInvoiceExcelData(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect(`/invoice/invoiceExcelData/${uniqueId}/${invoiceExcelFormat}${conveyance ? '/' + conveyance : ''}`);
@@ -1092,10 +1184,6 @@ class invoiceController {
             next(error)
         }
     };
-
-
-
-
 
 
     // **************************************** invoice data excel status ***************************

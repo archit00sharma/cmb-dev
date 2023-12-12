@@ -118,6 +118,7 @@
                         </div>
                         <div class="modal-body">
                             <form id="editRateForm">
+                                <input type="text" class="form-control" id="uniqueId" name="uniqueId" hidden required>
                                 <div class="row">
                                     <!-- First Field -->
                                     <div class="col">
@@ -456,6 +457,7 @@
                 const button = $(this);
                 const id = button.data("id");
                 const bank = button.data("bank");
+                const uniqueId = button.data("uniqueId");
                 const rowData = table.row($(this).parents("tr")).data();
 
                 $("#editDate").val(rowData.date);
@@ -474,6 +476,7 @@
                 $("#editRate").val(rowData.rate);
                 $("#id").val(id)
                 $("#bank").val(bank)
+                $("#uniqueId").val(uniqueId);
 
                 $("#editRateModal").modal("show");
             });
@@ -489,6 +492,7 @@
             const status = $("#editStatus").val();
             const point = $("#editPoint").val();
             const bank = $("#bank").val();
+            const uniqueId = $("uniqueId").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
 
             if (!km || km < 0) {
@@ -496,6 +500,7 @@
 
             } else {
                 const data = {
+                    uniqueId,
                     invoiceExcelFormat,
                     product,
                     bank,

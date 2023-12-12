@@ -122,6 +122,7 @@
                             <form id="editRateForm">
                                 <input type="text" class="form-control" id="id" name="id" hidden required>
                                 <input type="text" class="form-control" id="bank" name="bank" hidden required>
+                                <input type="text" class="form-control" id="uniqueId" name="uniqueId" hidden required>
 
                                 <div class="row">
                                     <div class="col">
@@ -272,7 +273,7 @@
                                         <div class="form-group">
                                             <label for="editOglOrWithin">Ogl Or Within:</label>
                                             <input type="text" class="form-control" id="editOglOrWithin"
-                                                name="editOglOrWithin" required >
+                                                name="editOglOrWithin" required>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -513,6 +514,7 @@
                 const button = $(this);
                 const id = button.data("id");
                 const bank = button.data("bank");
+                const uniqueId = button.data("uniqueId");
 
                 const rowData = table.row($(this).parents("tr")).data();
 
@@ -538,6 +540,7 @@
 
                 $("#id").val(id);
                 $("#bank").val(bank);
+                $("#uniqueId").val(uniqueId);
 
                 $("#editRateModal").modal("show");
             });
@@ -555,16 +558,18 @@
             const product = $("#editProduct").val();
             const businessHrs = $("#editBusinessHrs").val();
             const area = $("#editArea").val();
+            const uniqueId = $("uniqueId").val();
             const bank = $("#bank").val();
             const km = $("#editKm").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
-            const oglOrWithin=  $("#editOglOrWithin").val();
+            const oglOrWithin = $("#editOglOrWithin").val();
 
             if (!km || km < 0) {
                 alert("Please fill in all required fields and ensure that km is positive.");
 
             } else {
                 const data = {
+                    uniqueId,
                     area,
                     product,
                     bank,
