@@ -888,7 +888,7 @@ class invoiceController {
                                 product: invoiceExcelData.data[i].product,
                                 rate: invoiceExcelData.data[i].rate,
                                 action: `<div> 
-                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${invoiceExcelData.data[i].uniqueId} data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}"  data-original-title="Delete">
+                                            <button class="btn w-35px h-35px mr-1 btn-warning text-uppercase btn-sm" data-toggle="tooltip" title="Edit" data-uniqueId="${invoiceExcelData.data[i].uniqueId}" data-id="${invoiceExcelData.data[i]._id}" data-bank="${invoiceExcelData.data[i].bank}"  data-original-title="Delete">
                                             <i class="fas fa-pencil"></i>
                                             </button> 
                                             <a class="btn w-35px h-35px mr-1 btn-danger text-uppercase btn-sm" data-toggle="tooltip" title="Delete" href="/invoice/deleteInvoiceExcelData/${invoiceExcelData.data[i]._id}/${req.body.id}/${invoiceExcelFormat}/${invoiceExcelData.data[i].conveyance?.distance}" data-original-title="Delete">
