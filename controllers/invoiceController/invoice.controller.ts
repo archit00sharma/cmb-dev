@@ -1308,7 +1308,7 @@ class invoiceController {
             if (addFile.code === 401) {
                 req.flash('error', addFile.message);
                 return res.redirect("/invoice/invoiceList");
-            }
+            };
 
             createInvoice(addFile._id, invoiceCred, fileUrl, newFileUrl);
             req.flash('success', 'created successfully')

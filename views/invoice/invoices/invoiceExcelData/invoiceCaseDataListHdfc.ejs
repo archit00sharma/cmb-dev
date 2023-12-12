@@ -189,16 +189,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editArea">Place:</label>
-                                            <select id="editArea" required
-                                                class="chosen-select form-control form-control-solid" name="editArea">
-                                                <option value="" selected disabled>Select the Place
-                                                </option>
-                                                <% areaList.forEach((template, index)=> { %>
-                                                <option id="format_<%= index + 1 %>" value="<%= template.area %>">
-                                                    <%= template.area %>
-                                                </option>
-                                                <% }); %>
-                                            </select>
+                                            <input type="text" class="form-control" id="editArea" name="editArea"
+                                                required readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -561,7 +553,7 @@
             $("#contestCategoryTable_filter").css('display', 'none')
         });
         $("#saveChanges").on("click", function () {
-            
+
             let km
             const rate = $("#editRate").val();
             const product = $("#editProduct").val();

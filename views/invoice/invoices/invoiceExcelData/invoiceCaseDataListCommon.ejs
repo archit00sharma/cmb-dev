@@ -194,15 +194,10 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editArea">Hub:</label>
-                                            <select id="editArea" required
-                                                class="chosen-select form-control form-control-solid" name="editArea">
-                                                <option value="" selected disabled>Select the Hub</option>
-                                                <% areaList.forEach((template, index) => { %>
-                                                <option id="format_<%= index + 1 %>" value="<%= template.area %>">
-                                                    <%= template.area %>
-                                                </option>
-                                                <% }); %>
-                                            </select>
+                                            <label for="editArea">Area:</label>
+                                            <input type="text" class="form-control" id="editArea" name="editArea"
+                                                required readonly>
+
                                         </div>
                                     </div>
                                 </div>

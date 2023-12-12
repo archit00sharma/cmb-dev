@@ -8,13 +8,14 @@ import moment from "moment";
 import converter from 'number-to-words'
 import invoiceService from "@/services/invoiceServices/invoice.service";
 
-let createInvoice = async (id, invoiceCred,fileUrl,newFileUrl) => {
+let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
     const invoiceServices = new invoiceService();
     let addFile
     try {
-       
-        const rateCond = { product: { $in: invoiceCred.data.product }, bank: invoiceCred.data.bank, area: { $in: invoiceCred.data.area }, }
+
+        const rateCond = { product: { $in: invoiceCred.data.product }, bank: invoiceCred.data.bank, area: invoiceCred.data.area, }
         const rates = await invoiceServices.getAllRate(rateCond);
+
 
         const rangeValues = {}
         rates.map((item) => {
@@ -136,9 +137,9 @@ let createInvoice = async (id, invoiceCred,fileUrl,newFileUrl) => {
                 });
                 fs.access(newFileUrl, fs.constants.F_OK, async (err) => {
                     if (err) {
-                        await invoiceServices.updateInvoiceStatus({ _id: id}, { $set: { error: err.message, status: "failed" } })
+                        await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
                     } else {
-                        await invoiceServices.updateInvoiceStatus({ _id: id}, { $set: { status: "success" } })
+                        await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { status: "success" } })
                     }
                 });
                 break;
@@ -292,7 +293,7 @@ let createInvoice = async (id, invoiceCred,fileUrl,newFileUrl) => {
                 break;
         }
     } catch (err) {
-        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",err)
+        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", err)
         return await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
     }
 }

@@ -161,15 +161,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editArea">Location:</label>
-                                            <select id="editArea" required
-                                                class="chosen-select form-control form-control-solid" name="editArea">
-                                                <option value="" selected disabled>Select the Location</option>
-                                                <% areaList.forEach((template, index) => { %>
-                                                <option id="format_<%= index + 1 %>" value="<%= template.area %>">
-                                                    <%= template.area %>
-                                                </option>
-                                                <% }); %>
-                                            </select>
+                                            <input type="text" class="form-control" id="editArea" name="editArea"
+                                                required readonly>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -464,7 +457,7 @@
             const point = $("#editPoint").val();
             const bank = $("#bank").val();
             const uniqueId = $("#uniqueId").val();
-    
+
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
             const conveyance = "<%=conveyance%>"
             if (!km || km < 0) {
