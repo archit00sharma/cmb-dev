@@ -49,7 +49,7 @@
                     <div class="sbp-preview">
                         <div class="sbp-preview-content p-4">
 
-                            <form method="POST" action="/invoice/addInvoiceSubmit" accept-charset="UTF-8" id="j-forms"
+                            <form onsubmit="return validateDateRange()" method="POST" action="/invoice/addInvoiceSubmit" accept-charset="UTF-8" id="j-forms"
                                 class="j-forms row mx-0">
 
                                 <div id="selectMember" class="form-icon-wrap">
@@ -205,8 +205,8 @@
 
                                         <div id="area" class="form-group form-info" style="position: relative">
                                             <label class="control-label text-bold" for="area">Choose Area(s)</label>
-                                            <select id="selectInvoiceFromTemplate" data-live-search="true" data-container="body"  required  class="chosen-select form-control form-control-solid selectpicker" name="area">
-                                                
+                                            <select id="selectInvoiceFromTemplate" data-live-search="true" data-container="body"  required  class="chosen-select form-control form-control-solid " name="area">
+                                                <option value="" selected disabled>Select the area</option>
                                                 <% areaList.forEach((template, index) => { %>
                                                     <option id="format_<%= index + 1 %>" value="<%= template.area %>">
                                                         <%= template.area %>
@@ -277,4 +277,21 @@
         });
     });
        
+
+    function validateDateRange() {
+        // Get the selected FROM and TO dates
+        var fromDate = new Date(document.getElementById('min').value);
+        var toDate = new Date(document.getElementById('max').value);
+
+        // Check if FROM and TO dates are from the same month
+        if (
+            fromDate.getMonth() !== toDate.getMonth() ||
+            fromDate.getFullYear() !== toDate.getFullYear()
+        ) {
+            alert('FROM and TO dates must be from the same month.');
+            return false;
+        }
+
+        return true;
+    }
     </script>
