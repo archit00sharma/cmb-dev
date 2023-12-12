@@ -18,17 +18,26 @@ let hdfcFormatSearch = async (columns) => {
             }
         },)
     }
+    // if (columns[3].search.value.length > 0) {
+    //     search.push({
+    //         'address': {
+    //             '$regex': '.*' + columns[3].search.value + '.*',
+    //             '$options': 'i'
+    //         }
+    //     },)
+    // }
     if (columns[3].search.value.length > 0) {
         search.push({
-            'address': {
+            'fiToBeConducted': {
                 '$regex': '.*' + columns[3].search.value + '.*',
                 '$options': 'i'
             }
         },)
     }
+
     if (columns[4].search.value.length > 0) {
         search.push({
-            'fiToBeConducted': {
+            'product': {
                 '$regex': '.*' + columns[4].search.value + '.*',
                 '$options': 'i'
             }
@@ -37,48 +46,64 @@ let hdfcFormatSearch = async (columns) => {
 
     if (columns[5].search.value.length > 0) {
         search.push({
-            'product': {
+            'rv.address': {
                 '$regex': '.*' + columns[5].search.value + '.*',
                 '$options': 'i'
             }
         },)
     }
 
+    if (columns[6].search.value.length > 0) {
+        search.push({
+            'bv.address': {
+                '$regex': '.*' + columns[6].search.value + '.*',
+                '$options': 'i'
+            }
+        },)
+    }
+    if (columns[7].search.value.length > 0) {
+        search.push({
+            'pv.address': {
+                '$regex': '.*' + columns[7].search.value + '.*',
+                '$options': 'i'
+            }
+        },)
+    }
+
+
+
+    if (columns[8].search.value.length > 0) {
+        search.push({
+            'date': {
+                '$regex': '.*' + columns[8].search.value + '.*',
+                '$options': 'i'
+            }
+        },)
+    }
 
 
     if (columns[9].search.value.length > 0) {
         search.push({
-            'date': {
+            'area': {
                 '$regex': '.*' + columns[9].search.value + '.*',
                 '$options': 'i'
             }
         },)
     }
 
-
-
     if (columns[10].search.value.length > 0) {
-        search.push({
-            'area': {
-                '$regex': '.*' + columns[10].search.value + '.*',
-                '$options': 'i'
-            }
-        },)
-    }
-
-    if (columns[11].search.value.length > 0) {
         const orConditions = [];
 
         orConditions.push({
             'pv.distance': {
-                '$regex': '.*' + columns[11].search.value + '.*',
+                '$regex': '.*' + columns[10].search.value + '.*',
                 '$options': 'i'
             }
         });
 
         orConditions.push({
             'rv.distance': {
-                '$regex': '.*' + columns[11].search.value + '.*',
+                '$regex': '.*' + columns[10].search.value + '.*',
                 '$options': 'i'
             }
         })
@@ -91,7 +116,7 @@ let hdfcFormatSearch = async (columns) => {
 
 
 
-    if (columns[12].search.value.length > 0) {
+    if (columns[11].search.value.length > 0) {
         search.push({
             'branch': {
                 '$regex': '.*' + columns[11].search.value + '.*',
@@ -100,17 +125,17 @@ let hdfcFormatSearch = async (columns) => {
         },)
     }
 
-    if (columns[13].search.value.length > 0) {
+    if (columns[12].search.value.length > 0) {
         search.push({
             'caseStatus': {
-                '$regex': '.*' + columns[13].search.value + '.*',
+                '$regex': '.*' + columns[12].search.value + '.*',
                 '$options': 'i'
             }
         },)
     }
 
-    if (columns[14].search.value.length > 0) {
-        const searchValue = parseInt(columns[14].search.value)
+    if (columns[13].search.value.length > 0) {
+        const searchValue = parseInt(columns[13].search.value)
         if (!isNaN(searchValue)) {
             search.push({
                 'point': {
@@ -121,18 +146,18 @@ let hdfcFormatSearch = async (columns) => {
 
     }
 
-    if (columns[15].search.value.length > 0) {
+    if (columns[14].search.value.length > 0) {
         search.push({
             'bv.distance': {
-                '$regex': '.*' + columns[15].search.value + '.*',
+                '$regex': '.*' + columns[14].search.value + '.*',
                 '$options': 'i'
             }
         },)
     }
 
 
-    if (columns[16].search.value.length > 0) {
-        const searchValue = parseInt(columns[16].search.value);
+    if (columns[15].search.value.length > 0) {
+        const searchValue = parseInt(columns[15].search.value);
         if (!isNaN(searchValue)) {
             search.push({
                 'rate': {
@@ -144,10 +169,10 @@ let hdfcFormatSearch = async (columns) => {
 
 
 
-    if (columns[20].search.value.length > 0) {
+    if (columns[19].search.value.length > 0) {
         search.push({
             'cpvBy': {
-                '$regex': '.*' + columns[12].search.value + '.*',
+                '$regex': '.*' + columns[19].search.value + '.*',
                 '$options': 'i'
             }
         },)
