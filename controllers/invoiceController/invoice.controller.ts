@@ -1158,10 +1158,10 @@ class invoiceController {
 
             if (allowDeleteInvoiceData || allowDeleteInvoice) {
                 req.flash('error', 'Kindly wait, other files are processing');
-                return  res.redirect(`/invoice/invoiceExcelData/${uniqueId}/${invoiceExcelFormat}${conveyance ? '/' + conveyance : ''}`);
+                return res.redirect(`/invoice/invoiceExcelData/${uniqueId}/${invoiceExcelFormat}${conveyance ? '/' + conveyance : ''}`);
             }
 
-           
+
             const { code, message } = await this.invoiceService.deleteInvoiceExcelData(id);
             req.flash(code === 401 ? "error" : "success", code === 401 ? message : "deleted successfully");
             res.redirect(`/invoice/invoiceExcelData/${uniqueId}/${invoiceExcelFormat}${conveyance ? '/' + conveyance : ''}`);
@@ -1282,7 +1282,47 @@ class invoiceController {
     public createInvoice = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-            createInvoice(id);
+            let invoiceCred: any
+            let fileUrl
+            let fileName
+            let newFileUrl
+            let dataObj
+            try {
+
+                [invoiceCred] = await this.invoiceService.getInvoiceDataExcelAggregate(req.params.id);
+
+                fileUrl = path.join(__dirname, "../../public/invoices/");
+                fileName = `${invoiceCred.data.invoiceFormat}_${Date.now()}.xlsx`;
+                newFileUrl = `${fileUrl}invoice_files/${fileName}`;
+                const databaseFileUrl = `/invoices/invoice_files/${fileName}`;
+                dataObj = {
+                    name: fileName,
+                    bank: invoiceCred.data.bank,
+                    invoiceToId: invoiceCred.data.invoiceTo[0]._id,
+                    invoiceFromId: invoiceCred.data.invoiceFrom[0]._id,
+                    bankDetailsId: invoiceCred.data.bankDetails[0]._id,
+                    fileUrl: databaseFileUrl,
+                    uniqueId: invoiceCred.uniqueId,
+                    invoiceFormat: invoiceCred.data.invoiceFormat,
+                    invoiceExcelFormat: invoiceCred.data.invoiceExcelFormat,
+                    dateTo: invoiceCred.data.dateTo,
+                    dateFrom: invoiceCred.data.dateFrom,
+                    status: 'processing',
+                };
+            } catch (error) {
+                req.flash('error', error.message);
+                return res.redirect("/invoice/invoiceList");
+            }
+
+
+            const addFile = await this.invoiceService.createInvoice(dataObj);
+            if (addFile.code === 401) {
+                req.flash('error', addFile.message);
+                return res.redirect("/invoice/invoiceList");
+            }
+
+            createInvoice(addFile._id, invoiceCred, fileUrl, newFileUrl);
+            req.flash('success', 'created successfully')
             res.redirect("/invoice/invoiceList");
         } catch (error) {
             next(error)

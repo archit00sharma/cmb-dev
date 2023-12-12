@@ -8,12 +8,11 @@ import moment from "moment";
 import converter from 'number-to-words'
 import invoiceService from "@/services/invoiceServices/invoice.service";
 
-let createInvoice = async (id) => {
+let createInvoice = async (id, invoiceCred,fileUrl,newFileUrl) => {
     const invoiceServices = new invoiceService();
     let addFile
     try {
-
-        const [invoiceCred] = await invoiceServices.getInvoiceDataExcelAggregate(id);
+       
         const rateCond = { product: { $in: invoiceCred.data.product }, bank: invoiceCred.data.bank, area: { $in: invoiceCred.data.area }, }
         const rates = await invoiceServices.getAllRate(rateCond);
 
@@ -28,29 +27,7 @@ let createInvoice = async (id) => {
             }
 
             rangeValues[key].push(value);
-        })
-
-
-        let fileUrl = path.join(__dirname, "../../../public/invoices/");
-        const fileName = `${invoiceCred.data.invoiceFormat}_${Date.now()}.xlsx`;
-        const newFileUrl = `${fileUrl}invoice_files/${fileName}`;
-        const databaseFileUrl = `/invoices/invoice_files/${fileName}`;
-        const dataObj = {
-            name: fileName,
-            bank: invoiceCred.data.bank,
-            invoiceToId: invoiceCred.data.invoiceTo[0]._id,
-            invoiceFromId: invoiceCred.data.invoiceFrom[0]._id,
-            bankDetailsId: invoiceCred.data.bankDetails[0]._id,
-            fileUrl: databaseFileUrl,
-            uniqueId: invoiceCred.uniqueId,
-            invoiceFormat: invoiceCred.data.invoiceFormat,
-            invoiceExcelFormat: invoiceCred.data.invoiceExcelFormat,
-            dateTo: invoiceCred.data.dateTo,
-            dateFrom: invoiceCred.data.dateFrom,
-            status: 'processing',
-        };
-
-        addFile = await invoiceServices.createInvoice(dataObj);
+        });
 
         const cond = { uniqueId: invoiceCred.uniqueId };
         const data = await invoiceServices.allInvoiceExcelData(cond, { distance: 1, rate: 1, point: 1, product: 1 });
@@ -159,9 +136,9 @@ let createInvoice = async (id) => {
                 });
                 fs.access(newFileUrl, fs.constants.F_OK, async (err) => {
                     if (err) {
-                        await invoiceServices.updateInvoiceStatus({ _id: addFile._id }, { $set: { error: err.message, status: "failed" } })
+                        await invoiceServices.updateInvoiceStatus({ _id: id}, { $set: { error: err.message, status: "failed" } })
                     } else {
-                        await invoiceServices.updateInvoiceStatus({ _id: addFile._id }, { $set: { status: "success" } })
+                        await invoiceServices.updateInvoiceStatus({ _id: id}, { $set: { status: "success" } })
                     }
                 });
                 break;
@@ -315,8 +292,8 @@ let createInvoice = async (id) => {
                 break;
         }
     } catch (err) {
-        await invoiceServices.updateInvoiceStatus({ _id: addFile._id }, { $set: { error: err.message, status: "failed" } })
-        return Messages.Failed.SOMETHING_WENT_WRONG
+        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",err)
+        return await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
     }
 }
 export default createInvoice
