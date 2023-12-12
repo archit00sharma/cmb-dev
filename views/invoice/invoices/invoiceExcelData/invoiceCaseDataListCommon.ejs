@@ -118,6 +118,8 @@
                         </div>
                         <div class="modal-body">
                             <form id="editRateForm">
+                                <input type="text" class="form-control" id="id" name="id" hidden required>
+                                <input type="text" class="form-control" id="bank" name="bank" hidden required>
                                 <input type="text" class="form-control" id="uniqueId" name="uniqueId" hidden required>
                                 <div class="row">
                                     <!-- First Field -->
@@ -492,7 +494,7 @@
             const status = $("#editStatus").val();
             const point = $("#editPoint").val();
             const bank = $("#bank").val();
-            const uniqueId = $("uniqueId").val();
+            const uniqueId = $("#uniqueId").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>"
 
             if (!km || km < 0) {
