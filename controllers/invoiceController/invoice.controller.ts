@@ -1,5 +1,6 @@
 
 
+
 import { NextFunction, Response } from "express";
 import { v1 as uuidv1 } from 'uuid';
 import moment from 'moment';
@@ -1282,38 +1283,26 @@ class invoiceController {
     public createInvoice = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
-            let invoiceCred: any
-            let fileUrl
-            let fileName
-            let newFileUrl
-            let dataObj
-            try {
+            const [invoiceCred] = await this.invoiceService.getInvoiceDataExcelAggregate(id);
+            let fileUrl = path.join(__dirname, "../../public/invoices/");
 
-                [invoiceCred] = await this.invoiceService.getInvoiceDataExcelAggregate(req.params.id);
-
-                fileUrl = path.join(__dirname, "../../public/invoices/");
-                fileName = `${invoiceCred.data.invoiceFormat}_${Date.now()}.xlsx`;
-                newFileUrl = `${fileUrl}invoice_files/${fileName}`;
-                const databaseFileUrl = `/invoices/invoice_files/${fileName}`;
-                dataObj = {
-                    name: fileName,
-                    bank: invoiceCred.data.bank,
-                    invoiceToId: invoiceCred.data.invoiceTo[0]._id,
-                    invoiceFromId: invoiceCred.data.invoiceFrom[0]._id,
-                    bankDetailsId: invoiceCred.data.bankDetails[0]._id,
-                    fileUrl: databaseFileUrl,
-                    uniqueId: invoiceCred.uniqueId,
-                    invoiceFormat: invoiceCred.data.invoiceFormat,
-                    invoiceExcelFormat: invoiceCred.data.invoiceExcelFormat,
-                    dateTo: invoiceCred.data.dateTo,
-                    dateFrom: invoiceCred.data.dateFrom,
-                    status: 'processing',
-                };
-            } catch (error) {
-                req.flash('error', error.message);
-                return res.redirect("/invoice/invoiceList");
-            }
-
+            const fileName = `${invoiceCred.data.invoiceFormat}_${Date.now()}.xlsx`;
+            const newFileUrl = `${fileUrl}invoice_files/${fileName}`;
+            const databaseFileUrl = `/invoices/invoice_files/${fileName}`;
+            const dataObj = {
+                name: fileName,
+                bank: invoiceCred.data.bank,
+                invoiceToId: invoiceCred.data.invoiceTo[0]._id,
+                invoiceFromId: invoiceCred.data.invoiceFrom[0]._id,
+                bankDetailsId: invoiceCred.data.bankDetails[0]._id,
+                fileUrl: databaseFileUrl,
+                uniqueId: invoiceCred.uniqueId,
+                invoiceFormat: invoiceCred.data.invoiceFormat,
+                invoiceExcelFormat: invoiceCred.data.invoiceExcelFormat,
+                dateTo: invoiceCred.data.dateTo,
+                dateFrom: invoiceCred.data.dateFrom,
+                status: 'processing',
+            };
 
             const addFile = await this.invoiceService.createInvoice(dataObj);
             if (addFile.code === 401) {
@@ -1325,7 +1314,8 @@ class invoiceController {
             req.flash('success', 'created successfully')
             res.redirect("/invoice/invoiceList");
         } catch (error) {
-            next(error)
+            req.flash('error', error.message)
+            res.redirect("/invoice/invoiceList");
         }
     };
 
