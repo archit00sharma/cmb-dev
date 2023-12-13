@@ -21,9 +21,14 @@ const invoiceSchema: Schema = new Schema(
             required: true
         },
         invoiceNo: {
-            type: Number,
-            unique: true
-            // required: true
+            type: String,
+            required: function () {
+                return this.status === 'success';
+            },
+            index: {
+                unique: true,
+                partialFilterExpression: { status: 'success', invoiceNo: { $exists: true } }
+            }
         },
         invoiceExcelFormat: {
             type: String,

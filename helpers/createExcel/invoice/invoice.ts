@@ -12,12 +12,10 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
     try {
         const rateCond = { product: { $in: invoiceCred.data.product }, bank: invoiceCred.data.bank, area: invoiceCred.data.area, }
         const rates = await invoiceServices.getAllRate(rateCond);
-
-        const rangeValues = {}
+        const rangeValues = {};
 
         rates.map((item) => {
             const { product, from, to, point } = item;
-
             if (!rangeValues[product]) {
                 rangeValues[product] = [];
             }
@@ -140,14 +138,23 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     row.commit();
                     await workbook.xlsx.writeFile(newFileUrl);
                 });
+
                 fs.access(newFileUrl, fs.constants.F_OK, async (err) => {
                     if (err) {
-                        await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
+                        try {
+                            await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
+                        } catch (error) {
+                            return await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: error.message, status: "failed" } })
+                        }
                     } else {
-                        const cond = { status: 'success' }
-                        const count = await invoiceServices.countInvoices(cond);
-                        console.log("count>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.", count)
-                        await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { status: "success", invoiceNo: count + 1 } })
+                        try {
+                            const cond = { status: 'success' }
+                            const count = await invoiceServices.countInvoices(cond);
+                            const { code, message } = await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { status: "success", invoiceNo: count + 1 } })
+                            if (code === 401) throw new Error(message)
+                        } catch (error) {
+                            return await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: error.message, status: "failed" } })
+                        }
                     }
                 });
                 break;
@@ -292,6 +299,7 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     if (err) {
                         await invoiceServices.updateInvoiceStatus({ _id: addFile._id }, { $set: { error: err.message, status: "failed" } })
                     } else {
+
                         await invoiceServices.updateInvoiceStatus({ _id: addFile._id }, { $set: { status: "success" } })
                     }
                 });
@@ -300,8 +308,10 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
             default:
                 break;
         }
+
     } catch (err) {
         return await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
     }
 }
 export default createInvoice
+
