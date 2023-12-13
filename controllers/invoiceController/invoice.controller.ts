@@ -589,7 +589,7 @@ class invoiceController {
     public invoiceList = async (req: any, res: Response, next: NextFunction) => {
         try {
             const { role, email } = req.user
-            res.locals.message = req.flash()
+            res.locals.message = req.flash();
             res.render("invoice/invoices/invoiceList", { role, email });
         } catch (error) {
             next(error)
@@ -1284,6 +1284,7 @@ class invoiceController {
         try {
             const { id } = req.params;
             const [invoiceCred] = await this.invoiceService.getInvoiceDataExcelAggregate(id);
+
             let fileUrl = path.join(__dirname, "../../public/invoices/");
 
             const fileName = `${invoiceCred.data.invoiceFormat}_${Date.now()}.xlsx`;
@@ -1308,11 +1309,11 @@ class invoiceController {
             if (addFile.code === 401) {
                 req.flash('error', addFile.message);
                 return res.redirect("/invoice/invoiceList");
-            };
-
-            createInvoice(addFile._id, invoiceCred, fileUrl, newFileUrl);
-            req.flash('success', 'created successfully')
-            res.redirect("/invoice/invoiceList");
+            } else {
+                createInvoice(addFile._id, invoiceCred, fileUrl, newFileUrl);
+                req.flash('success', 'created successfully')
+                res.redirect("/invoice/invoiceList");
+            }
         } catch (error) {
             req.flash('error', error.message)
             res.redirect("/invoice/invoiceList");

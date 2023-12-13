@@ -6,43 +6,43 @@ const invoiceSchema: Schema = new Schema(
     {
         name: {
             type: String,
-            require: true
+            required: true
         },
         dateTo: {
             type: String,
-            require: true
+            required: true
         },
         dateFrom: {
             type: String,
-            require: true
+            required: true
         },
         invoiceFormat: {
             type: String,
-            require: true
+            required: true
         },
         invoiceNo: {
             type: String,
-            require: true
+            // required: true
         },
         invoiceExcelFormat: {
             type: String,
-            require: true
+            required: true
         },
         bank: {
             type: String,
-            require: true
+            required: true
         },
         invoiceToId: {
             type: mongoose.Types.ObjectId,
-            require: true
+            required: true
         },
         invoiceFromId: {
             type: mongoose.Types.ObjectId,
-            require: true
+            required: true
         },
         bankDetailsId: {
             type: mongoose.Types.ObjectId,
-            require: true
+            required: true
         },
         fileUrl: {
             type: String,
@@ -55,6 +55,7 @@ const invoiceSchema: Schema = new Schema(
         },
         status: {
             type: String,
+            required: true,
             enum: ['processing', 'failed', 'success']
         },
         error: {

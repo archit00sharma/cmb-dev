@@ -7,7 +7,7 @@ const dataSchema = new Schema({
         required: true,
     },
     area: {
-        type: Array,
+        type: String,
         required: true,
     },
     bank: {

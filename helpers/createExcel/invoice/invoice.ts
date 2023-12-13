@@ -1,6 +1,4 @@
 
-
-import Messages from "messages";
 import path from "path";
 import Excel from "exceljs";
 import fs from 'fs';
@@ -12,51 +10,56 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
     const invoiceServices = new invoiceService();
     let addFile
     try {
-
         const rateCond = { product: { $in: invoiceCred.data.product }, bank: invoiceCred.data.bank, area: invoiceCred.data.area, }
         const rates = await invoiceServices.getAllRate(rateCond);
 
-
         const rangeValues = {}
+
         rates.map((item) => {
             const { product, from, to, point } = item;
-            const key = `${product}`;
-            const value = `${from}-${to}-${point}`;
 
-            if (!rangeValues[key]) {
-                rangeValues[key] = [];
+            if (!rangeValues[product]) {
+                rangeValues[product] = [];
             }
-
-            rangeValues[key].push(value);
+            const key = `${from}-${to}-${point}`
+            rangeValues[product].push({ from, to, point, product, key });
         });
 
         const cond = { uniqueId: invoiceCred.uniqueId };
         const data = await invoiceServices.allInvoiceExcelData(cond, { distance: 1, rate: 1, point: 1, product: 1 });
 
+        data.forEach(item => {
+            const { product, distance, point } = item;
+            const matchingRange = rangeValues?.[product]?.find(range => distance >= range.from && distance <= range.to && point === range.point) || null;
+            if (!matchingRange) {
+                throw new Error(`Rate not found for combination: product:${product}, distance:${distance}, point:${point}`);
+            }
+        });
 
         const productWiseData = {};
         let finalData: any = {
             totalCount: 0,
             totalAmount: 0
         }
-        invoiceCred.data.product.map((product) => {
-            productWiseData[product] = {}
-            rangeValues[product].forEach(range => {
+        invoiceCred.data.product.map((dataProduct) => {
+            productWiseData[dataProduct] = {}
+            const ranges = rangeValues[dataProduct];
 
-                const [minDistance, maxDistance, point] = range.split('-').map(Number);
+            if (!ranges) {
+                throw new Error(`Range values not found for product: ${dataProduct}`);
+            }
+            ranges.forEach(range => {
 
+                const { from, to, product, point, key } = range;
                 const targetPoint = [point];
-
                 const matchingData = data.filter(item => {
-                    const isInRange = item.product === product && (item.distance >= minDistance && item.distance <= maxDistance) && targetPoint.includes(item.point);
-
+                    const isInRange = item.product === dataProduct && dataProduct === product && (item.distance >= from && item.distance <= to) && targetPoint.includes(item.point);
                     return isInRange;
                 });
-
                 const count = matchingData.length;
-                productWiseData[product][range] = {};
-                productWiseData[product][range]['count'] = count;
-                productWiseData[product][range]['rate'] = matchingData?.[0]?.rate || 0;
+                productWiseData[dataProduct][key] = {};
+                productWiseData[dataProduct][key]['count'] = count;
+                productWiseData[dataProduct][key]['rate'] = matchingData?.[0]?.rate || 0;
                 finalData['totalAmount'] += count * (matchingData?.[0]?.rate || 0);
                 finalData['totalCount'] += count;
             });
@@ -103,13 +106,15 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     let newRowNumber = 19;
                     for (let i = 0; i < invoiceCred.data.product.length; i++) {
                         for (let j = 0; j < rangeValues[invoiceCred.data.product[i]].length; j++) {
+                            const currentProduct = invoiceCred.data.product[i];
+                            const currentRate = rangeValues[currentProduct][j]['key'];
                             var row = worksheet.getRow(newRowNumber);
-                            row.getCell(1).value = (i * rangeValues[invoiceCred.data.product[i]].length) + j + 1;
-                            row.getCell(2).value = `No.of CPV fired for ${invoiceCred.data.product[i]} -> ${rangeValues[invoiceCred.data.product[i]][j]}  `;
-                            row.getCell(6).value = productWiseData[invoiceCred.data.product[i]][rangeValues[invoiceCred.data.product[i]][j]]['count']
-                            row.getCell(8).value = productWiseData[invoiceCred.data.product[i]][rangeValues[invoiceCred.data.product[i]][j]]['rate']
-                            row.getCell(9).value = productWiseData[invoiceCred.data.product[i]][rangeValues[invoiceCred.data.product[i]][j]]['rate']
-                            row.getCell(10).value = productWiseData[invoiceCred.data.product[i]][rangeValues[invoiceCred.data.product[i]][j]]['rate'] * productWiseData[invoiceCred.data.product[i]][rangeValues[invoiceCred.data.product[i]][j]]['count'];
+                            row.getCell(1).value = (i * rangeValues[currentProduct].length) + j + 1;
+                            row.getCell(2).value = `No.of CPV fired for ${currentProduct} -> ${currentRate}  `;
+                            row.getCell(6).value = productWiseData[currentProduct][currentRate]['count']
+                            row.getCell(8).value = productWiseData[currentProduct][currentRate]['rate']
+                            row.getCell(9).value = productWiseData[currentProduct][currentRate]['rate']
+                            row.getCell(10).value = productWiseData[currentProduct][currentRate]['rate'] * productWiseData[currentProduct][currentRate]['count'];
                             newRowNumber++
                         }
                     }
@@ -293,7 +298,6 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                 break;
         }
     } catch (err) {
-        console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", err)
         return await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
     }
 }
