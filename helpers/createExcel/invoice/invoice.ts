@@ -140,18 +140,20 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     });
                     worksheet.duplicateRow(19, numberOfRowsToAdd, true);
                     let newRowNumber = 19;
+                    let sNo = 1
                     for (let i = 0; i < invoiceCred.data.product.length; i++) {
                         for (let j = 0; j < rangeValues[invoiceCred.data.product[i]].length; j++) {
                             const currentProduct = invoiceCred.data.product[i];
                             const currentRate = rangeValues[currentProduct][j]['key'];
                             var row = worksheet.getRow(newRowNumber);
-                            row.getCell(1).value = (i * rangeValues[currentProduct].length) + j + 1;
+                            row.getCell(1).value = sNo;
                             row.getCell(2).value = `No.of CPV fired for ${currentProduct} -> ${currentRate}  `;
                             row.getCell(6).value = productWiseData[currentProduct][currentRate]['count']
                             row.getCell(8).value = productWiseData[currentProduct][currentRate]['rate']
                             row.getCell(9).value = productWiseData[currentProduct][currentRate]['rate']
                             row.getCell(10).value = productWiseData[currentProduct][currentRate]['rate'] * productWiseData[currentProduct][currentRate]['count'];
                             newRowNumber++
+                            sNo++
                         }
                     }
                     if (invoiceCred.data.conveyance) {
