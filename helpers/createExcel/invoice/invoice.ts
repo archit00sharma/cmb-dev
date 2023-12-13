@@ -127,7 +127,8 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     var row = worksheet.getRow(13);
                     row.getCell(3).value = invoiceCred.data?.invoiceTo?.[0]?.gstNumber || ''
                     var row = worksheet.getRow(14);
-                    row.getCell(3).value = invoiceCred.data?.invoiceFrom?.[0]?.sacNumber || ''
+                    row.getCell(3).value = invoiceCred.data?.invoiceFrom?.[0]?.hsnSac || ''
+                    row.getCell(9).value = invoiceCred.data?.invoiceFrom?.[0]?.branch || ''
                     var row = worksheet.getRow(15);
                     row.getCell(3).value = invoiceCred.data?.invoiceFrom?.[0]?.stateCode || '';
                     var row = worksheet.getRow(16);
@@ -176,6 +177,8 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     row.getCell(2).value = `This bill for the month of ${moment().utc().format('MMMM YYYY')} & has not been billed before.`;
                     var row = worksheet.getRow(currentRow + 8);
                     row.getCell(5).value = invoiceCred.data.invoiceFrom[0].accountNo;
+                    var row = worksheet.getRow(currentRow + 9);
+                    row.getCell(1).value = `For ${invoiceCred.data?.invoiceFrom?.[0]?.companyName}`;
 
 
                     row.commit();
