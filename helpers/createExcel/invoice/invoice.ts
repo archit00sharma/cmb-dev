@@ -144,7 +144,10 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     if (err) {
                         await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { error: err.message, status: "failed" } })
                     } else {
-                        await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { status: "success" } })
+                        const cond = { status: 'success' }
+                        const count = await invoiceServices.countInvoices(cond);
+                        console.log("count>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.", count)
+                        await invoiceServices.updateInvoiceStatus({ _id: id }, { $set: { status: "success", invoiceNo: count + 1 } })
                     }
                 });
                 break;

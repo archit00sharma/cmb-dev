@@ -21,7 +21,8 @@ const invoiceSchema: Schema = new Schema(
             required: true
         },
         invoiceNo: {
-            type: String,
+            type: Number,
+            unique: true
             // required: true
         },
         invoiceExcelFormat: {

@@ -1308,7 +1308,7 @@ class invoiceController {
             const addFile = await this.invoiceService.createInvoice(dataObj);
             if (addFile.code === 401) {
                 req.flash('error', addFile.message);
-                return res.redirect("/invoice/invoiceList");
+                return res.redirect("/invoice/invoiceExcelDataStatus");
             } else {
                 createInvoice(addFile._id, invoiceCred, fileUrl, newFileUrl);
                 req.flash('success', 'created successfully')

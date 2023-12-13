@@ -954,5 +954,15 @@ class invoiceService {
         }
     };
 
+    public async countInvoices(cond) {
+        try {
+            return await invoiceModel.countDocuments(cond);
+        } catch (error) {
+            error.code = 401;
+            return error
+        }
+    };
+
+
 }
 export default invoiceService;
