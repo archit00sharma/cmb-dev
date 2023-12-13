@@ -114,7 +114,7 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     row.getCell(3).value = invoiceCred.data?.invoiceFrom?.[0]?.pan || '';
                     row.getCell(8).value = invoiceCred.data?.invoiceFrom?.[0]?.gstNumber || '';
                     var row = worksheet.getRow(5);
-                    row.getCell(2).value = count || '';
+                    row.getCell(2).value = count + 1 || '';
                     row.getCell(8).value = moment(invoiceCred.data.dateFrom).utc().format('MMMM YYYY') || '';
                     var row = worksheet.getRow(6);
                     row.getCell(2).value = moment().utc().format('DD/MM/YYYY') || '';
@@ -131,7 +131,7 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     var row = worksheet.getRow(15);
                     row.getCell(3).value = invoiceCred.data?.invoiceFrom?.[0]?.stateCode || '';
                     var row = worksheet.getRow(16);
-                    row.getCell(2).value = invoiceCred.data?.invoiceFrom?.[0]?.period || '';
+                    row.getCell(8).value = `${moment(invoiceCred.data.dateFrom).utc().format('DD-MM-YYYY')} to ${moment(invoiceCred.data.dateTo).utc().format('DD-MM-YYYY')}` || '';
 
                     let numberOfRowsToAdd = 0
                     invoiceCred.data.product.map((product) => {
@@ -155,7 +155,7 @@ let createInvoice = async (id, invoiceCred, fileUrl, newFileUrl) => {
                     }
                     if (invoiceCred.data.conveyance) {
                         var row = worksheet.getRow(newRowNumber);
-                        row.getCell(2).value = `conveyance chearges for km -> ${convExcel.km}`
+                        row.getCell(2).value = `conveyance charges for km -> ${convExcel.km}`
                         row.getCell(8).value = invoiceCred.data.conveyance
                         row.getCell(10).value = convExcel.amount
                     }
