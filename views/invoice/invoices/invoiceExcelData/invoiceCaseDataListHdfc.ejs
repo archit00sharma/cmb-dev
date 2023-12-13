@@ -281,7 +281,7 @@
                                         <div class="form-group">
                                             <label for="editCpvBy">Cpv By:</label>
                                             <input type="text" class="form-control" id="editCpvBy" name="editRate"
-                                                required readonly>
+                                                required >
                                         </div>
                                     </div>
                                 </div>
@@ -565,6 +565,7 @@
             const uniqueId = $("#uniqueId").val();
             const invoiceExcelFormat = "<%=invoiceExcelFormat%>";
             const addressType = $("#addressType").val();
+            const cpvBy = $("#editCpvBy").val();
 
             if (addressType === 'PV') {
                 km = $("#editRvKm").val();
@@ -598,6 +599,7 @@
 
 
             const data = {
+                cpvBy,
                 uniqueId,
                 km,
                 product,

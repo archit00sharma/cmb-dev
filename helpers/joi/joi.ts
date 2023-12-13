@@ -363,6 +363,11 @@ const postEditInvoiceExcelData: JoiMiddlewareSchema = {
         point: Joi.string().required(),
         km: Joi.string().required(),
         status: Joi.string().required(),
+        cpvBy:Joi.string().when('invoiceExcelFormat', {
+            is: 'hdfc_format',
+            then: Joi.string().required(),
+            otherwise: Joi.forbidden(), // This field is forbidden for other values
+        }),
         conveyance: Joi.string().when('invoiceExcelFormat', {
             is: 'csl_format',
             then: Joi.string().required(),
