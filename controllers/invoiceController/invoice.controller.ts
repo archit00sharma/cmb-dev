@@ -1052,7 +1052,7 @@ class invoiceController {
 
     public editInvoiceExcelData = async (req: any, res: Response, next: NextFunction) => {
         try {
-            const { uniqueId, bank, product, km, area, branch, oglOrWithin, status, point, invoiceExcelFormat, agencyName, branchId, businessBranch, businessHrs, conveyance, pv, rv, bv } = req.body;
+            const { uniqueId, bank, product, km, area, branch, oglOrWithin, status, point, invoiceExcelFormat, agencyName, branchId, businessBranch, businessHrs, conveyance, cpvBy, pv, rv, bv } = req.body;
 
             const [allowDeleteInvoiceData, allowDeleteInvoice] = await Promise.all([
                 this.invoiceService.getInvoiceDataExcel({ status: 'processing', uniqueId }),
@@ -1124,6 +1124,7 @@ class invoiceController {
                         area: area.toUpperCase(),
                         caseStatus: status.toUpperCase(),
                         point,
+                        cpvBy
                     };
                     pv?.address && (data.pv = pv);
                     bv?.address && (data.bv = bv);
