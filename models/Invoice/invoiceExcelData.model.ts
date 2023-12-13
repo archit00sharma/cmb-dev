@@ -651,6 +651,9 @@ const invoiceExcelDataSchema: Schema = new Schema(
         },
         oglOrWithin: {
             type: String,
+        },
+        cpvBy: {
+            type: String,
         }
     }
 );
