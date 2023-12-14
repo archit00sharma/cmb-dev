@@ -199,8 +199,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editRvKm">(Rv/Pv)Km:</label>
-                                            <input type="number" class="form-control" id="editRvKm" name="editRvKm" readonly
-                                                required>
+                                            <input type="number" class="form-control" id="editRvKm" name="editRvKm"
+                                                readonly required>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -236,8 +236,8 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editBvKm">(Bv)Km:</label>
-                                            <input type="number" class="form-control" id="editBvKm" name="editBvKm" readonly
-                                                required>
+                                            <input type="number" class="form-control" id="editBvKm" name="editBvKm"
+                                                readonly required>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -527,12 +527,17 @@
                 $("#editFiToBeConducted").val(rowData.fiToBeConducted);
                 $("#editProduct").val(rowData.product);
                 $("#editRv").val(rowData.rv);
-                if (rowData.rv.trim() !== "") {
+                if (rowData.rv) {
                     $("#editRvKm").removeAttr("readonly");
                 }
                 $("#editBv").val(rowData.bv);
-                if (rowData.bv.trim() !== "") {
+
+                if (rowData.bv) {
                     $("#editBvKm").removeAttr("readonly");
+                }
+                $("#editPv").val(rowData.pv);
+                if (rowData.pv) {
+                    $("#editRvKm").removeAttr("readonly");
                 }
                 $("#editPv").val(rowData.pv);
                 $("#editDate").val(rowData.date);
@@ -619,10 +624,10 @@
             if (addressType === 'PV') {
                 data.pv = pv;
             } else {
-                if (bv.addressType && bv.distance && bv.remark) {
+                if (bv.address?.trim() != '' && bv.distance?.trim() != '' && bv.remark?.trim() != '') {
                     data.bv = bv;
                 }
-                if (rv.addressType && rv.distance && rv.remark) {
+                if (rv.address?.trim() != '' && rv.distance?.trim() != '' && rv.remark?.trim() != '') {
                     data.rv = rv;
                 }
             }
