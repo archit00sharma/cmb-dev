@@ -281,7 +281,7 @@
                                         <div class="form-group">
                                             <label for="editCpvBy">Cpv By:</label>
                                             <input type="text" class="form-control" id="editCpvBy" name="editRate"
-                                                required >
+                                                required>
                                         </div>
                                     </div>
                                 </div>
@@ -578,7 +578,6 @@
                 } else if ($("#editBv").val()) {
                     km = $("#editBvKm").val()
                 }
-
             }
 
             const pv = {
@@ -614,8 +613,14 @@
             if (addressType === 'PV') {
                 data.pv = pv;
             } else {
-                data.rv = rv;
-                data.bv = bv;
+                if (bv.addressType && bv.distance && bv.remark) {
+                    data.bv = bv;
+                }
+                if (rv.addressType && rv.distance && rv.remark) {
+                    data.rv = rv;
+                }
+
+
             }
             $.ajax({
                 type: "POST",
