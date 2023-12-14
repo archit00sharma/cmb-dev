@@ -199,7 +199,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editRvKm">(Rv/Pv)Km:</label>
-                                            <input type="number" class="form-control" id="editRvKm" name="editRvKm"
+                                            <input type="number" class="form-control" id="editRvKm" name="editRvKm" readonly
                                                 required>
                                         </div>
                                     </div>
@@ -236,7 +236,7 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="editBvKm">(Bv)Km:</label>
-                                            <input type="number" class="form-control" id="editBvKm" name="editBvKm"
+                                            <input type="number" class="form-control" id="editBvKm" name="editBvKm" readonly
                                                 required>
                                         </div>
                                     </div>
@@ -527,7 +527,13 @@
                 $("#editFiToBeConducted").val(rowData.fiToBeConducted);
                 $("#editProduct").val(rowData.product);
                 $("#editRv").val(rowData.rv);
+                if (rowData.rv.trim() !== "") {
+                    $("#editRvKm").removeAttr("readonly");
+                }
                 $("#editBv").val(rowData.bv);
+                if (rowData.bv.trim() !== "") {
+                    $("#editBvKm").removeAttr("readonly");
+                }
                 $("#editPv").val(rowData.pv);
                 $("#editDate").val(rowData.date);
                 $("#editArea").val(rowData.area);
@@ -619,8 +625,6 @@
                 if (rv.addressType && rv.distance && rv.remark) {
                     data.rv = rv;
                 }
-
-
             }
             $.ajax({
                 type: "POST",
