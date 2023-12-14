@@ -626,7 +626,7 @@ const invoiceExcelDataSchema: Schema = new Schema(
         },
         uniqueId: {
             type: String,
-            require: true,
+            required: true,
         },
         branchId: {
             type: String,
