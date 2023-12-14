@@ -417,6 +417,8 @@
                 ],
             });
             $("#contestCategoryTable tbody").on("click", "button.btn-warning", function () {
+               
+                $("#editRateForm")[0].reset();
                 const button = $(this);
                 const id = button.data("id");
                 const bank = button.data("bank");
