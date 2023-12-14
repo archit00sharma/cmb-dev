@@ -7,31 +7,31 @@ const bankDetailsSchema: Schema = new Schema(
 
         templateName: {
             type: String,
-            require: true
+            required: true
         },
         bankName: {
             type: String,
-            require: true
+            required: true
         },
         branch: {
             type: String,
-            require: true
+            required: true
         },
         accountNo: {
             type: String,
-            require: true
+            required: true
         },
         rtgsCode: {
             type: String,
-            require: true
+            required: true
         },
         ifscCode: {
             type: String,
-            require: true
+            required: true
         },
         accountHolderName: {
             type: String,
-            require: true
+            required: true
         },
     }, {
     timestamps: {

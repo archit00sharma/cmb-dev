@@ -586,7 +586,7 @@ const invoiceExcelDataSchema: Schema = new Schema(
         },
         rate: {
             type: Number,
-            require: true
+            required: true
         },
         rv: {
             type: Object,

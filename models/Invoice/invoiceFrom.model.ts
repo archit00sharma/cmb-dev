@@ -6,81 +6,81 @@ const invoiceFromSchema: Schema = new Schema(
     {
         templateName: {
             type: String,
-            require: true
+            required: true
         },
         invoiceNo: {
             type: String,
-            require: true
+            required: true
         },
         companyName: {
             type: String,
-            require: true
+            required: true
         },
         address: {
             type: String,
-            require: true
+            required: true
         },
         pan: {
             type: String,
-            require: true
+            required: true
         },
         gstNumber: {
             type: String,
-            require: true
+            required: true
         },
         gstRegistrationState: {
             type: String,
-            require: true
+            required: true
         },
         reverseCharge: {
             type: String,
-            require: true
+            required: true
         },
         serviceCategory: {
             type: String,
-            require: true
+            required: true
         },
         iboxId: {
             type: String,
-            require: true
+            required: true
         },
         regdNo: {
             type: String,
-            require: true
+            required: true
         },
         cin: {
             type: String,
-            require: true
+            required: true
         },
         email: {
             type: String,
-            require: true
+            required: true
         },
         agencyCode: {
             type: String,
-            require: true
+            required: true
         },
         ifscNumber: {
             type: String,
-            require: true
+            required: true
         },
         state: {
             type: String,
-            require: true
+            required: true
         },
         stateCode: {
             type: String,
-            require: true
+            required: true
         },
         branch: {
             type: String,
-            require: true
+            required: true
         },
-        accountNo:{
+        accountNo: {
             type: String,
-            require: true
+            required: true
         },
-        hsnSac:{
+        hsnSac: {
             type: String,
         }
 

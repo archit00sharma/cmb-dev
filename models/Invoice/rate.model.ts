@@ -7,32 +7,32 @@ const rateSchema: Schema = new Schema(
     {
         bank: {
             type: String,
-            require: true
+            required: true
         },
         area: {
             type: String,
-            require: true
+            required: true
         },
         product: {
             type: String,
-            require: true
+            required: true
         },
         from: {
             type: Number,
-            require: true,
+            required: true,
         },
         to: {
             type: Number,
-            require: true,
+            required: true,
         },
         point: {
             type: Number,
-            require: true,
+            required: true,
             enum: [0, 1, 2]
         },
         rate: {
             type: Number,
-            require: true,
+            required: true,
         }
 
     }, {

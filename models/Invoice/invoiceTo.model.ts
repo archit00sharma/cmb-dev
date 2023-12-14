@@ -6,48 +6,48 @@ const invoiceToSchema: Schema = new Schema(
     {
         templateName: {
             type: String,
-            require: true
+            required: true
         },
         placeOfSupply: {
             type: String,
-            require: true
+            required: true
         },
         companyName: {
             type: String,
-            require: true
+            required: true
         },
         address: {
             type: String,
-            require: true
+            required: true
         },
         pan: {
             type: String,
-            require: true
+            required: true
         },
         gstNumber: {
             type: String,
-            require: true
+            required: true
         },
         sac: {
             type: String,
-            require: true
+            required: true
         },
         state: {
             type: String,
-            require: true
+            required: true
         },
         stateCode: {
             type: String,
-            require: true
+            required: true
         },
 
         serviceCategory: {
             type: String,
-            require: true
+            required: true
         },
         email: {
             type: String,
-            require: true
+            required: true
         },
     }, {
     timestamps: {
