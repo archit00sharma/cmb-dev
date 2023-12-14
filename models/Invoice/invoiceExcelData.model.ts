@@ -591,37 +591,46 @@ const invoiceExcelDataSchema: Schema = new Schema(
         rv: {
             type: Object,
             address: {
-                type: String
+                type: String,
+                required: true
             },
             remark: {
-                type: String
+                type: String,
+                required: true
             },
             distance: {
-                type: String
+                type: String,
+                required: true
             }
         },
         bv: {
             type: Object,
             address: {
-                type: String
+                type: String,
+                required: true
             },
             remark: {
-                type: String
+                type: String,
+                required: true
             },
             distance: {
-                type: String
+                type: String,
+                required: true
             }
         },
         pv: {
             type: Object,
             address: {
-                type: String
+                type: String,
+                required: true
             },
             remark: {
-                type: String
+                type: String,
+                required: true
             },
             distance: {
-                type: String
+                type: String,
+                required: true
             }
         },
         uniqueId: {
